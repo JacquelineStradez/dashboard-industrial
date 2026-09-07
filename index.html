@@ -3986,7 +3986,7 @@ const dataRodillo = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"V
 console.log(dataA);
 */
 const labels = dataA.labels.map(x => {
-    const fecha = new Date(x.Value);
+    const fecha = new Date(x.Fecha);
     return fecha.toLocaleDateString('es-MX', {
         day: '2-digit',
         month: '2-digit'
