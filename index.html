@@ -4102,6 +4102,10 @@ let dataInv1;
 	.then(data => {
 	    dataInv1 = data;
 	    console.log("JSON INV1", dataInv1);
+		const valuesInv1 =
+		dataInv1.values.map(x => Number(x.Value));
+		const valuesInv17 =
+		valuesInv1.slice(-7);
 	});
 const dataInv2 = {"labels":[{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"5.4"},{"Value":"7.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.5"},{"Value":"5.7"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"8"},{"Value":"6"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.9"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.5"},{"Value":"4.5"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"7.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.5"}],"lowerLimit":4,"upperLimit":7};
 
@@ -4473,15 +4477,12 @@ dataInv1.labels.map(x => {
 });
 const labelsInv7 =
 labelsInv.slice(-7);
-const valuesInv1 =
-dataInv1.values.map(x => Number(x.Value));
 const valuesInv2 =
 dataInv2.values.map(x => Number(x.Value));
 const valuesInv3 =
 dataInv3.values.map(x => Number(x.Value));
 const valuesInv4 =
 dataInv4.values.map(x => Number(x.Value));
-const valuesInv17 = valuesInv1.slice(-7);
 const valuesInv27 = valuesInv2.slice(-7);
 const valuesInv37 = valuesInv3.slice(-7);
 const valuesInv47 = valuesInv4.slice(-7);*/
