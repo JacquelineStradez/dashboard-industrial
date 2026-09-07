@@ -4095,19 +4095,8 @@ options: {
 });
 });	
 	
-/*const dataInv1 = {"labels":[{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"5.2"},{"Value":"5.1"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.5"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.1"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.5"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"}],"lowerLimit":4,"upperLimit":7};*/
-let dataInv1;
-	fetch("Item3CalentadorT3000.json")
-	.then(r => r.json())
-	.then(data => {
-	    dataInv1 = data;
-	    console.log("JSON INV1", dataInv1);
-		const valuesInv1 =
-		dataInv1.values.map(x => Number(x.Value));
-		const valuesInv17 =
-		valuesInv1.slice(-7);
-	});
-/*const dataInv2 = {"labels":[{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"5.4"},{"Value":"7.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.5"},{"Value":"5.7"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"8"},{"Value":"6"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.9"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.5"},{"Value":"4.5"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"7.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.5"}],"lowerLimit":4,"upperLimit":7};
+/*const dataInv1 = {"labels":[{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"5.2"},{"Value":"5.1"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.5"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.1"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.5"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"}],"lowerLimit":4,"upperLimit":7};
+const dataInv2 = {"labels":[{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"5.4"},{"Value":"7.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.5"},{"Value":"5.7"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"8"},{"Value":"6"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.9"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.5"},{"Value":"4.5"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"7.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.5"}],"lowerLimit":4,"upperLimit":7};
 const dataInv3 = {"labels":[{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"6.2"},{"Value":"27"},{"Value":"4.4"},{"Value":"6.3"},{"Value":"6.3"},{"Value":"6.4"},{"Value":"6.4"},{"Value":"6.3"},{"Value":"6.4"},{"Value":"6.4"},{"Value":"6.2"},{"Value":"6.4"},{"Value":"6.2"},{"Value":"6.4"},{"Value":"6.4"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"8.6"},{"Value":"4.4"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6.6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6.3"},{"Value":"5.6"},{"Value":"6"},{"Value":"6"},{"Value":"8"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6.2"},{"Value":"27"},{"Value":"4.4"},{"Value":"6.3"},{"Value":"6.3"},{"Value":"6.4"},{"Value":"6.4"},{"Value":"6.3"},{"Value":"6.4"},{"Value":"6.4"},{"Value":"6.2"},{"Value":"6.4"},{"Value":"6.2"},{"Value":"6.4"},{"Value":"6.4"}],"lowerLimit":4,"upperLimit":7};
 const dataInv4 = {"labels":[{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"6.8"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"6"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.6"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.6"},{"Value":"4.4"},{"Value":"5.2"},{"Value":"6.3"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"}],"lowerLimit":4,"upperLimit":7};
 const dataCoil1 = {"labels":[{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":"5.1"},{"Value":"5.1"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5"},{"Value":"5"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5"},{"Value":"5"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"4.4"},{"Value":"4.8"},{"Value":"5"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"4.5"},{"Value":"5"},{"Value":"5"},{"Value":"5"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"4.8"},{"Value":"4.8"},{"Value":"4.8"},{"Value":"4.8"},{"Value":"4.8"},{"Value":"4.8"},{"Value":"4.8"},{"Value":"4.8"},{"Value":"4.8"}],"lowerLimit":4,"upperLimit":7};
@@ -4121,6 +4110,26 @@ let dataCoil1;
 let dataCoil2;
 let dataCoil3;
 let dataCoil4;
+let labelsInv;
+let labelsInv7;
+let valuesInv1;
+let valuesInv2;
+let valuesInv3;
+let valuesInv4;
+let valuesInv17;
+let valuesInv27;
+let valuesInv37;
+let valuesInv47;
+let labelsCoil;
+let labelsCoil7;
+let valuesCoil1;
+let valuesCoil2;
+let valuesCoil3;
+let valuesCoil4;
+let valuesCoil17;
+let valuesCoil27;
+let valuesCoil37;
+let valuesCoil47;
 Promise.all([
     fetch("Item3CalentadorT3000.json").then(r => r.json()),
     fetch("Item4CalentadorT3000.json").then(r => r.json()),
@@ -4139,45 +4148,45 @@ Promise.all([
     dataCoil2 = coil2;
     dataCoil3 = coil3;
     dataCoil4 = coil4;
-	const labelsInv =
+	labelsInv =
 	dataInv1.labels.map(x => x.Fecha);
-	const labelsInv7 =
+	labelsInv7 =
 	labelsInv.slice(-7);
-	const valuesInv1 =
+	valuesInv1 =
 	dataInv1.values.map(x => Number(x.Value));
-	const valuesInv2 =
+	valuesInv2 =
 	dataInv2.values.map(x => Number(x.Value));
-	const valuesInv3 =
+	valuesInv3 =
 	dataInv3.values.map(x => Number(x.Value));
-	const valuesInv4 =
+	valuesInv4 =
 	dataInv4.values.map(x => Number(x.Value));
-	const valuesInv17 =
+	valuesInv17 =
 	valuesInv1.slice(-7);
-	const valuesInv27 =
+    valuesInv27 =
 	valuesInv2.slice(-7);
-	const valuesInv37 =
+	valuesInv37 =
 	valuesInv3.slice(-7);
-	const valuesInv47 =
+	valuesInv47 =
 	valuesInv4.slice(-7);
-	const labelsCoil =
+	labelsCoil =
 	dataCoil1.labels.map(x => x.Fecha);
-	const labelsCoil7 =
+	labelsCoil7 =
 	labelsCoil.slice(-7);
-	const valuesCoil1 =
+	valuesCoil1 =
 	dataCoil1.values.map(x => Number(x.Value));
-	const valuesCoil2 =
+	valuesCoil2 =
 	dataCoil2.values.map(x => Number(x.Value));
-	const valuesCoil3 =
+	valuesCoil3 =
 	dataCoil3.values.map(x => Number(x.Value));
-	const valuesCoil4 =
+	valuesCoil4 =
 	dataCoil4.values.map(x => Number(x.Value));
-	const valuesCoil17 =
+	valuesCoil17 =
 	valuesCoil1.slice(-7);
-	const valuesCoil27 =
+	valuesCoil27 =
 	valuesCoil2.slice(-7);
-	const valuesCoil37 =
+	valuesCoil37 =
 	valuesCoil3.slice(-7);
-	const valuesCoil47 =
+	valuesCoil47 =
 	valuesCoil4.slice(-7);
     console.log("INV/COIL LISTOS");
 });
