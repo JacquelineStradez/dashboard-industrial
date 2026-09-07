@@ -4201,86 +4201,30 @@ fetch("Item1CalentadorT3000.json")
         ].Value
     );
     document.getElementById("nivelLitros").innerHTML =
-    nivelCisterna + " L";
+    nivelCisterna + " L<br>" + estadoCisterna;
+	const porcentajeCisterna =
+	(nivelCisterna / 1950) * 100;
+	const estadoCisterna =
+	porcentajeCisterna < 25
+	? "🔴 Nivel Bajo"
+	: "✅ Normal";
+	document.getElementById("textoTanque").innerHTML =
+	porcentajeCisterna.toFixed(0) + "%";
+	document.getElementById("nivelTanque").style.height =
+	porcentajeCisterna + "%";
+	const barraCisterna =
+	document.getElementById("nivelTanque");
+	if (porcentajeCisterna < 25) {
+	    barraCisterna.style.background = "red";
+	}
+	else if (porcentajeCisterna < 50) {
+	    barraCisterna.style.background = "orange";
+	}
+	else {
+	    barraCisterna.style.background =
+	    "linear-gradient(to top,#0097a7,#4dd0e1)";
+	}
 });
-/*
-console.log(dataCisterna);
-let nivelCisterna =
-Number(
-    dataCisterna.values[
-        dataCisterna.values.length - 1
-    ].Value
-);
-const limiteInferiorCisterna =
-dataCisterna.lowerLimit;
-const limiteSuperiorCisterna =
-dataCisterna.upperLimit;
-console.log(
-    "Límite inferior cisterna:",
-    limiteInferiorCisterna
-);
-console.log(
-    "Límite superior cisterna:",
-    limiteSuperiorCisterna
-);
-const porcentajeCisterna =
-(nivelCisterna / 1950) * 100;
-document.getElementById("textoTanque").innerHTML =
-porcentajeCisterna.toFixed(0) + "%";
-document.getElementById("nivelTanque").style.height =
-porcentajeCisterna + "%";
-const barraCisterna =
-document.getElementById("nivelTanque");
-if (porcentajeCisterna < 25) {
-    barraCisterna.style.background = "red";
-}
-else if (porcentajeCisterna < 50) {
-    barraCisterna.style.background = "orange";
-}
-else {
-    barraCisterna.style.background =
-    "linear-gradient(to top,#0097a7,#4dd0e1)";
-}
-const estadoCisterna =
-porcentajeCisterna < 25
-? "🔴 Nivel Bajo"
-: "✅ Normal";
-console.log(
-    "Nivel:",
-    nivelCisterna
-);
-console.log(
-    "Mínimo:",
-    limiteInferiorCisterna
-);
-console.log(
-    "Máximo:",
-    limiteSuperiorCisterna
-);
-*/
-/*
-document.getElementById("nivelLitros").innerHTML =
-nivelCisterna + " L<br>" + estadoCisterna;
-const porcentajeCisterna =
-(nivelCisterna / 1950) * 100;
-document.getElementById("textoTanque").innerHTML =
-porcentajeCisterna.toFixed(0) + "%";
-document.getElementById("nivelTanque").style.height =
-porcentajeCisterna + "%";
-const barraCisterna =
-document.getElementById("nivelTanque");
-
-if (porcentajeCisterna < 25) {
-    barraCisterna.style.background = "red";
-}
-else if (porcentajeCisterna < 50) {
-    barraCisterna.style.background = "orange";
-}
-else {
-    barraCisterna.style.background =
-    "linear-gradient(to top,#0097a7,#4dd0e1)";
-}
-*/
 const ultimoValorB = valuesB[valuesB.length - 1];
 const valorAnteriorB =
 valuesB[valuesB.length - 2];
@@ -4290,12 +4234,10 @@ valuesC[valuesC.length - 2];
 const ultimoValorD = valuesD[valuesD.length - 1];
 const valorAnteriorD =
 valuesD[valuesD.length - 2];
-
 /*
 document.getElementById("nivelLitros").innerHTML =
 nivelCisterna + " L<br>" + estadoCisterna;
 */
-
 const tendenciaA =
 ultimoValor > valorAnteriorA
 ? "▲"
