@@ -4003,30 +4003,30 @@ fetch("Item2CalentadorT3000.json")
 .then(data => {
     dataRodillo = data;
     console.log("JSON RODILLO", dataRodillo);
-	console.log("LABELS RODILLO", dataRodillo.labels);
-	console.log("OBJETO COMPLETO", JSON.stringify(dataRodillo));
+    console.log("LABELS RODILLO", dataRodillo.labels);
+    console.log("OBJETO COMPLETO", JSON.stringify(dataRodillo));
+    const labelsRodillo =
+    dataRodillo.labels.map(x => {
+        const fecha = new Date(x.Value);
+        return fecha.toLocaleDateString(
+            'es-MX',
+            {
+                day:'2-digit',
+                month:'2-digit'
+            }
+        );
+    });
+    const labelsRodillo7 =
+    labelsRodillo.slice(-7);
+    const valuesRodillo =
+    dataRodillo.values.map(x => Number(x.Value));
+    const valuesRodillo7 =
+    valuesRodillo.slice(-7);
+    const ultimoValorRodillo =
+    valuesRodillo[valuesRodillo.length - 1];
+    document.getElementById("valorRodillo").innerHTML =
+    ultimoValorRodillo.toFixed(2);
 });
-const labelsRodillo =
-dataRodillo.labels.map(x => {
-    const fecha = new Date(x.Value);
-    return fecha.toLocaleDateString(
-        'es-MX',
-        {
-            day:'2-digit',
-            month:'2-digit'
-        }
-    );
-});
-const labelsRodillo7 =
-labelsRodillo.slice(-7);
-const valuesRodillo =
-dataRodillo.values.map(x => Number(x.Value));
-const valuesRodillo7 =
-valuesRodillo.slice(-7);
-const ultimoValorRodillo =
-valuesRodillo[valuesRodillo.length - 1];
-document.getElementById("valorRodillo").innerHTML =
-ultimoValorRodillo.toFixed(2);
 const ctxRodillo =
 document.getElementById('graficaPresionRodillo');
 new Chart(ctxRodillo, {
