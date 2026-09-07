@@ -4189,6 +4189,104 @@ Promise.all([
 	valuesCoil47 =
 	valuesCoil4.slice(-7);
     console.log("INV/COIL LISTOS");
+	const ctxInv =
+	document.getElementById('graficaInv');
+	new Chart(ctxInv, {
+	    type: 'line',
+	    data: {
+	        labels: labelsInv7,
+	        datasets: [
+	{
+	    label: 'INV 1',
+	    data: valuesInv17,
+	    borderColor: 'blue',
+	    fill: false,
+	    tension: 0.3,
+	    pointRadius: valuesInv17.map(v =>
+	        (v > 7 || v < 4)
+	        ? 8
+	        : 2
+	    ),
+	    pointBackgroundColor: valuesInv17.map(v =>
+	        (v > 7 || v < 4)
+	        ? 'red'
+	        : 'blue'
+	    )
+	},
+	{
+	    label: 'INV 2',
+	    data: valuesInv27,
+	    borderColor: 'green',
+	    fill: false,
+	    tension: 0.3,
+	    pointRadius: valuesInv27.map(v =>
+	        (v > 7 || v < 4)
+	        ? 8
+	        : 2
+	    ),
+	    pointBackgroundColor: valuesInv27.map(v =>
+	        (v > 7 || v < 4)
+	        ? 'red'
+	        : 'green'
+	    )
+	},
+	{
+	    label: 'INV 3',
+	    data: valuesInv37,
+	    borderColor: 'orange',
+	    fill: false,
+	    tension: 0.3,
+	    pointRadius: valuesInv37.map(v =>
+	        (v > 7 || v < 4)
+	        ? 8
+	        : 2
+	    ),
+	    pointBackgroundColor: valuesInv37.map(v =>
+	        (v > 7 || v < 4)
+	        ? 'red'
+	        : 'orange'
+	    )
+	},
+	{
+	    label: 'INV 4',
+	    data: valuesInv47,
+	    borderColor: 'purple',
+	    fill: false,
+	    tension: 0.3,
+	    pointRadius: valuesInv47.map(v =>
+	        (v > 7 || v < 4)
+	        ? 8
+	        : 2
+	    ),
+	    pointBackgroundColor: valuesInv47.map(v =>
+	        (v > 7 || v < 4)
+	        ? 'red'
+	        : 'purple'
+	    )
+	},
+	{
+	    label: 'Límite Inferior',
+	    data: Array(7).fill(4),
+	    borderColor: 'green',
+	    borderDash: [5,5],
+	    fill: false,
+	    pointRadius: 0
+	},
+	{
+	    label: 'Límite Superior',
+	    data: Array(7).fill(7),
+	    borderColor: 'red',
+	    borderDash: [5,5],
+	    fill: false,
+	    pointRadius: 0
+	}
+	]
+	    },
+	    options: {
+	        responsive: true,
+	        maintainAspectRatio: false
+	    }
+	});
 	document.getElementById("valorInv1").innerHTML =
 	valuesInv1[valuesInv1.length - 1].toFixed(1);
 	document.getElementById("valorInv2").innerHTML =
