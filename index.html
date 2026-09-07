@@ -4190,6 +4190,7 @@ Promise.all([
 	valuesCoil4.slice(-7);
     console.log("INV/COIL LISTOS");
 	console.log("CREANDO GRAFICA INV");
+	console.log("CREANDO GRAFICA COIL");
 	const ctxInv =
 	document.getElementById('graficaInv');
 	new Chart(ctxInv, {
@@ -4287,6 +4288,140 @@ Promise.all([
 	        responsive: true,
 	        maintainAspectRatio: false
 	    }
+	});
+	const ctxCoil =
+	document.getElementById('graficaCoil');
+	new Chart(ctxCoil, {
+	    type: 'line',
+	    data: {
+	        labels: labelsCoil7,
+	        datasets: [            
+	{
+	    label: 'COIL 1',
+	    data: valuesCoil17,
+	    borderColor: 'blue',
+	    fill: false,
+	    tension: 0.3,
+	    pointRadius: valuesCoil17.map(v =>
+	        (v > 7 || v < 4)
+	        ? 8
+	        : 2
+	    ),
+	    pointBackgroundColor: valuesCoil17.map(v =>
+	        (v > 7 || v < 4)
+	        ? 'red'
+	        : 'blue'
+	    )
+	},
+	{
+	    label: 'COIL 2',
+	    data: valuesCoil27,
+	    borderColor: 'green',
+	    fill: false,
+	    tension: 0.3,
+	    pointRadius: valuesCoil27.map(v =>
+	        (v > 7 || v < 4)
+	        ? 8
+	        : 2
+	    ),
+	    pointBackgroundColor: valuesCoil27.map(v =>
+	        (v > 7 || v < 4)
+	        ? 'red'
+	        : 'green'
+	    )
+	},
+	{
+	    label: 'COIL 3',
+	    data: valuesCoil37,
+	    borderColor: 'orange',
+	    fill: false,
+	    tension: 0.3,
+	    pointRadius: valuesCoil37.map(v =>
+	        (v > 7 || v < 4)
+	        ? 8
+	        : 2
+	    ),
+	    pointBackgroundColor: valuesCoil37.map(v =>
+	        (v > 7 || v < 4)
+	        ? 'red'
+	        : 'orange'
+	    )
+	},            
+	{
+	    label: 'COIL 4',
+	    data: valuesCoil47,
+	    borderColor: 'purple',
+	    fill: false,
+	    tension: 0.3,
+	    pointRadius: valuesCoil47.map(v =>
+	        (v > 7 || v < 4)
+	        ? 8
+	        : 2
+	    ),
+	    pointBackgroundColor: valuesCoil47.map(v =>
+	        (v > 7 || v < 4)
+	        ? 'red'
+	        : 'purple'
+	    )
+	            },
+	            {
+	                label: 'Límite Inferior',
+	                data: Array(7).fill(4),
+	                borderColor: 'green',
+	                borderDash: [5,5],
+	                fill: false,
+	                pointRadius: 0
+	            },
+	            {
+	                label: 'Límite Superior',
+	                data: Array(7).fill(7),
+	                borderColor: 'red',
+	                borderDash: [5,5],
+	                fill: false,
+	                pointRadius: 0
+	            }
+	        ]
+	    },
+	options: {
+	    responsive: true,
+	    maintainAspectRatio: false,
+	    plugins: {
+	        legend: {
+	            position: 'top',
+	            labels: {
+	                usePointStyle: true,
+	                padding: 20
+	            }
+	        },
+	        title: {
+	            display: true,
+	            text: 'T3000 - Agua Enfriamiento Manómetros Bobina'
+	        }
+	    },
+	    elements: {
+	        line: {
+	            borderWidth: 2
+	        },
+	        point: {
+	            radius: 2,
+	            hoverRadius: 5
+	        }
+	    },
+	    scales: {
+	        x: {
+	            grid: {
+	                color: '#eeeeee'
+	            }
+	        },
+	        y: {
+	            min: 3,
+	            max: 8,
+	            grid: {
+	                color: '#eeeeee'
+	            }
+	        }
+	    }
+	}
 	});
 	document.getElementById("valorInv1").innerHTML =
 	valuesInv1[valuesInv1.length - 1].toFixed(1);
@@ -5097,274 +5232,6 @@ if(totalAlarmas > 0){
     document.getElementById("contadorAlarmas")
         .style.color = "green";
 };
-/*const ctxInv =
-document.getElementById('graficaInv');
-new Chart(ctxInv, {
-    type: 'line',
-    data: {
-        labels: labelsInv7,
-        datasets: [
-{
-    label: 'INV 1',
-    data: valuesInv17,
-    borderColor: 'blue',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesInv17.map(v =>
-        (v > 7 || v < 4)
-        ? 8
-        : 2
-    ),
-    pointBackgroundColor: valuesInv17.map(v =>
-        (v > 7 || v < 4)
-        ? 'red'
-        : 'blue'
-    )
-},            
-{
-    label: 'INV 2',
-    data: valuesInv27,
-    borderColor: 'green',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesInv27.map(v =>
-        (v > 7 || v < 4)
-        ? 8
-        : 2
-    ),
-    pointBackgroundColor: valuesInv27.map(v =>
-        (v > 7 || v < 4)
-        ? 'red'
-        : 'green'
-    )
-},
-            {
-label: 'INV 3',
-    data: valuesInv37,
-    borderColor: 'orange',
-    fill: false,
-    tension: 0.3, 
-pointRadius: valuesInv37.map(v =>
-    (v > 7 || v < 4)
-    ? 8
-    : 2
-),
-pointBackgroundColor: valuesInv37.map(v =>
-    (v > 7 || v < 4)
-    ? 'red'
-    : 'orange'
-)
-            },
-{
-    label: 'INV 4',
-    data: valuesInv47,
-    borderColor: 'purple',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesInv47.map(v =>
-        (v > 7 || v < 4)
-        ? 8
-        : 2
-    ),
-    pointBackgroundColor: valuesInv47.map(v =>
-        (v > 7 || v < 4)
-        ? 'red'
-        : 'purple'
-    )
-},
-            {
-                label: 'Límite Inferior',
-                data: Array(7).fill(4),
-                borderColor: 'green',
-                borderDash: [5,5],
-                fill: false,
-                pointRadius: 0
-            },
-            {
-                label: 'Límite Superior',
-                data: Array(7).fill(7),
-                borderColor: 'red',
-                borderDash: [5,5],
-                fill: false,
-                pointRadius: 0
-            }
-        ]
-    },
-options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            position: 'top',
-            labels: {
-                usePointStyle: true,
-                padding: 20
-            }
-        },
-        title: {
-            display: true,
-            text: 'T3000 - Agua Enfriamiento Manómetros Inverter'
-        }
-    },
-    elements: {
-        line: {
-            borderWidth: 2
-        },
-        point: {
-            radius: 2,
-            hoverRadius: 5
-        }
-    },
-    scales: {
-        x: {
-            grid: {
-                color: '#eeeeee'
-            }
-        },
-        y: {
-            min: 3,
-            max: 8,
-            grid: {
-                color: '#eeeeee'
-            }
-        }
-    }
-}
-});
-const ctxCoil =
-document.getElementById('graficaCoil');
-new Chart(ctxCoil, {
-    type: 'line',
-    data: {
-        labels: labelsCoil7,
-        datasets: [            
-{
-    label: 'COIL 1',
-    data: valuesCoil17,
-    borderColor: 'blue',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesCoil17.map(v =>
-        (v > 7 || v < 4)
-        ? 8
-        : 2
-    ),
-    pointBackgroundColor: valuesCoil17.map(v =>
-        (v > 7 || v < 4)
-        ? 'red'
-        : 'blue'
-    )
-},
-{
-    label: 'COIL 2',
-    data: valuesCoil27,
-    borderColor: 'green',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesCoil27.map(v =>
-        (v > 7 || v < 4)
-        ? 8
-        : 2
-    ),
-    pointBackgroundColor: valuesCoil27.map(v =>
-        (v > 7 || v < 4)
-        ? 'red'
-        : 'green'
-    )
-},
-{
-    label: 'COIL 3',
-    data: valuesCoil37,
-    borderColor: 'orange',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesCoil37.map(v =>
-        (v > 7 || v < 4)
-        ? 8
-        : 2
-    ),
-    pointBackgroundColor: valuesCoil37.map(v =>
-        (v > 7 || v < 4)
-        ? 'red'
-        : 'orange'
-    )
-},            
-{
-    label: 'COIL 4',
-    data: valuesCoil47,
-    borderColor: 'purple',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesCoil47.map(v =>
-        (v > 7 || v < 4)
-        ? 8
-        : 2
-    ),
-    pointBackgroundColor: valuesCoil47.map(v =>
-        (v > 7 || v < 4)
-        ? 'red'
-        : 'purple'
-    )
-            },
-            {
-                label: 'Límite Inferior',
-                data: Array(7).fill(4),
-                borderColor: 'green',
-                borderDash: [5,5],
-                fill: false,
-                pointRadius: 0
-            },
-            {
-                label: 'Límite Superior',
-                data: Array(7).fill(7),
-                borderColor: 'red',
-                borderDash: [5,5],
-                fill: false,
-                pointRadius: 0
-            }
-        ]
-    },
-options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            position: 'top',
-            labels: {
-                usePointStyle: true,
-                padding: 20
-            }
-        },
-        title: {
-            display: true,
-            text: 'T3000 - Agua Enfriamiento Manómetros Bobina'
-        }
-    },
-    elements: {
-        line: {
-            borderWidth: 2
-        },
-        point: {
-            radius: 2,
-            hoverRadius: 5
-        }
-    },
-    scales: {
-        x: {
-            grid: {
-                color: '#eeeeee'
-            }
-        },
-        y: {
-            min: 3,
-            max: 8,
-            grid: {
-                color: '#eeeeee'
-            }
-        }
-    }
-}
-});*/
 const ctxTermInv =
 document.getElementById('graficaTermInv');
 new Chart(ctxTermInv, {
