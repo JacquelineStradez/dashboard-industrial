@@ -4189,6 +4189,22 @@ Promise.all([
 	valuesCoil47 =
 	valuesCoil4.slice(-7);
     console.log("INV/COIL LISTOS");
+	document.getElementById("valorInv1").innerHTML =
+	valuesInv1[valuesInv1.length - 1].toFixed(1);
+	document.getElementById("valorInv2").innerHTML =
+	valuesInv2[valuesInv2.length - 1].toFixed(1);
+	document.getElementById("valorInv3").innerHTML =
+	valuesInv3[valuesInv3.length - 1].toFixed(1);
+	document.getElementById("valorInv4").innerHTML =
+	valuesInv4[valuesInv4.length - 1].toFixed(1);
+	document.getElementById("valorCoil1").innerHTML =
+	valuesCoil1[valuesCoil1.length - 1].toFixed(1);
+	document.getElementById("valorCoil2").innerHTML =
+	valuesCoil2[valuesCoil2.length - 1].toFixed(1);
+	document.getElementById("valorCoil3").innerHTML =
+	valuesCoil3[valuesCoil3.length - 1].toFixed(1);
+	document.getElementById("valorCoil4").innerHTML =
+	valuesCoil4[valuesCoil4.length - 1].toFixed(1);
 });
 const dataTermInv2 = {"labels":[{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"26"},{"Value":"22"},{"Value":"30"},{"Value":"27"},{"Value":"26"},{"Value":"32"},{"Value":"31"},{"Value":"29"},{"Value":"30"},{"Value":"27"},{"Value":"29"},{"Value":"30"},{"Value":"28"},{"Value":"28"},{"Value":"30"},{"Value":"28"},{"Value":"26"},{"Value":"26"},{"Value":"28"},{"Value":"30"},{"Value":"29"},{"Value":"30"},{"Value":"28"},{"Value":"30"},{"Value":"24"},{"Value":"20"},{"Value":"26"},{"Value":"25"},{"Value":"24"},{"Value":"25"},{"Value":"25"},{"Value":"25"},{"Value":"25"},{"Value":"27"},{"Value":"26"},{"Value":"27"},{"Value":"17"},{"Value":"25"},{"Value":"26"},{"Value":"29"},{"Value":"19"},{"Value":"26"},{"Value":"29"},{"Value":"29"},{"Value":"27"},{"Value":"26"},{"Value":"22"},{"Value":"30"},{"Value":"27"},{"Value":"26"},{"Value":"32"},{"Value":"31"},{"Value":"29"},{"Value":"30"},{"Value":"27"},{"Value":"29"},{"Value":"30"},{"Value":"28"},{"Value":"28"},{"Value":"30"},{"Value":"28"},{"Value":"26"},{"Value":"26"},{"Value":"28"},{"Value":"30"},{"Value":"29"},{"Value":"30"},{"Value":"28"},{"Value":"30"},{"Value":"24"},{"Value":"20"},{"Value":"26"},{"Value":"25"}],"Limit":40};
 
@@ -4739,7 +4755,7 @@ document.getElementById("valorPanelFrontal").innerHTML =
 ultimoValorPanel.toFixed(1) + " °C";
 document.getElementById("valorConductividad").innerHTML =
 ultimoValorConductividad.toFixed(2);
-document.getElementById("valorInv1").innerHTML =
+/*document.getElementById("valorInv1").innerHTML =
 valuesInv1[valuesInv1.length - 1].toFixed(1);
 document.getElementById("valorInv2").innerHTML =
 valuesInv2[valuesInv2.length - 1].toFixed(1);
@@ -4754,7 +4770,7 @@ valuesCoil2[valuesCoil2.length - 1].toFixed(1);
 document.getElementById("valorCoil3").innerHTML =
 valuesCoil3[valuesCoil3.length - 1].toFixed(1);
 document.getElementById("valorCoil4").innerHTML =
-valuesCoil4[valuesCoil4.length - 1].toFixed(1);
+valuesCoil4[valuesCoil4.length - 1].toFixed(1);*/
 let hayAlarma = false;
 let totalAlarmas = 0;
 let listaAlarmas = [];
@@ -5077,7 +5093,7 @@ if(totalAlarmas > 0){
     document.getElementById("contadorAlarmas")
         .style.color = "green";
 };
-const ctxInv =
+/*const ctxInv =
 document.getElementById('graficaInv');
 new Chart(ctxInv, {
     type: 'line',
@@ -5344,7 +5360,7 @@ options: {
         }
     }
 }
-});
+});*/
 const ctxTermInv =
 document.getElementById('graficaTermInv');
 new Chart(ctxTermInv, {
