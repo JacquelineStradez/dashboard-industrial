@@ -4003,6 +4003,8 @@ fetch("Item2CalentadorT3000.json")
 .then(data => {
     dataRodillo = data;
     console.log("JSON RODILLO", dataRodillo);
+	console.log("LABELS RODILLO", dataRodillo.labels);
+	console.log("OBJETO COMPLETO", JSON.stringify(dataRodillo));
 });
 const labelsRodillo =
 dataRodillo.labels.map(x => {
