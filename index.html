@@ -4167,27 +4167,7 @@ const valuesD7 = valuesD.slice(-7);
 const ultimoValor = valuesA[valuesA.length - 1];
 const valorAnteriorA =
 valuesA[valuesA.length - 2];
-/*
-const dataCisterna = {
-    labels: [
-        { Fecha: "2026/08/25" }
-    ],
-    values: [
-        { Value: "1783" }
-    ]
-};
-*/
 console.log("INICIO CISSTERNA");
-/*
-fetch("https://samtechmx.sharepoint.com/SiteAssets/DashboardIndustrial/Datoss/T3000%20calentador/Item1CalentadorT3000.json")
-.then(r => r.json())
-.then(data => {
-    console.log("JSON CISSTERNA", data);
-})
-.catch(error => {
-    console.error("ERROR CISSTERNA", error);
-});
-*/
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
 .then(r => r.json())
@@ -4234,10 +4214,6 @@ valuesC[valuesC.length - 2];
 const ultimoValorD = valuesD[valuesD.length - 1];
 const valorAnteriorD =
 valuesD[valuesD.length - 2];
-/*
-document.getElementById("nivelLitros").innerHTML =
-nivelCisterna + " L<br>" + estadoCisterna;
-*/
 const tendenciaA =
 ultimoValor > valorAnteriorA
 ? "▲"
