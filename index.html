@@ -4450,9 +4450,6 @@ const valuesRodillo7 =
 valuesRodillo.slice(-7);
 const ultimoValorRodillo =
 valuesRodillo[valuesRodillo.length - 1];
-let hayAlarma = false;
-let totalAlarmas = 0;
-let listaAlarmas = [];
 console.log("TOTAL ALARMAS CREADO", totalAlarmas);
 if (
     ultimoValorRodillo > dataRodillo.upperLimit ||
@@ -4790,7 +4787,9 @@ document.getElementById("valorCoil3").innerHTML =
 valuesCoil3[valuesCoil3.length - 1].toFixed(1);
 document.getElementById("valorCoil4").innerHTML =
 valuesCoil4[valuesCoil4.length - 1].toFixed(1);
-
+let hayAlarma = false;
+let totalAlarmas = 0;
+let listaAlarmas = [];
 const alarmaIntercambiador =
 ultimoValorIntercambiador > dataIntercambiador.upperLimit ||
 ultimoValorIntercambiador < dataIntercambiador.lowerLimit;
