@@ -4002,9 +4002,10 @@ fetch("Item2CalentadorT3000.json")
 .then(r => r.json())
 .then(data => {
     dataRodillo = data;
+	/*
     console.log("JSON RODILLO", dataRodillo);
     console.log("LABELS RODILLO", dataRodillo.labels);
-    console.log("OBJETO COMPLETO", JSON.stringify(dataRodillo));
+    console.log("OBJETO COMPLETO", JSON.stringify(dataRodillo));*/
     const labelsRodillo =
 	dataRodillo.labels.map(x => x.Fecha);
 	console.log("labelsRodillo", labelsRodillo);
@@ -4018,10 +4019,10 @@ fetch("Item2CalentadorT3000.json")
     valuesRodillo[valuesRodillo.length - 1];
     document.getElementById("valorRodillo").innerHTML =
     ultimoValorRodillo.toFixed(2);
-	console.log(
+	/*console.log(
         "RODILLO ÚLTIMO VALOR:",
         ultimoValorRodillo
-    );
+    );*/
 	const ctxRodillo =
 document.getElementById('graficaPresionRodillo');
 new Chart(ctxRodillo, {
