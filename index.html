@@ -4458,7 +4458,7 @@ if (
     ultimoValorRodillo < dataRodillo.lowerLimit
 ){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     listaAlarmas.push(
         "RODILLO (" +
         ultimoValorRodillo.toFixed(2) +
@@ -4827,7 +4827,7 @@ document.getElementById("tarjetaTermBobina")
 };
 if(alarmaInterno){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
 
     listaAlarmas.push(
         "INTERNO (" +
@@ -4837,7 +4837,7 @@ if(alarmaInterno){
 };
 if(alarmaBobina){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     listaAlarmas.push(
         "BOBINA (" +
         ultimoValorBobina.toFixed(2) +
@@ -4846,7 +4846,7 @@ if(alarmaBobina){
 };
 if(alarmaPresionAire){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     listaAlarmas.push(
         "PRESIÓN AIRE (" +
         ultimoValorPresionAire.toFixed(2) +
@@ -4855,7 +4855,7 @@ if(alarmaPresionAire){
 };
 if(alarmaTermInv){
 hayAlarma = true;
-totalAlarmas++;
+totalAlarmas;
 listaAlarmas.push(
 "TEMP PANEL INVERSOR (" +
 ultimoValorTermInv.toFixed(1) +
@@ -4864,7 +4864,7 @@ ultimoValorTermInv.toFixed(1) +
 };
 if(alarmaTermBobina){
 hayAlarma = true;
-totalAlarmas++;
+totalAlarmas;
 listaAlarmas.push(
 "TEMP PANEL BOBINA (" +
 ultimoValorTermBobina.toFixed(1) +
@@ -4892,7 +4892,7 @@ if(alarmaPresionAire){
 };
 if(valuesInv1.some(v => v > 7 || v < 4)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxInv1 = Math.max(...valuesInv1);
     listaAlarmas.push(
         "INV 1 (" +
@@ -4901,7 +4901,7 @@ if(valuesInv1.some(v => v > 7 || v < 4)){
 };
 if(valuesInv2.some(v => v > 7 || v < 4)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxInv2 = Math.max(...valuesInv2);
     listaAlarmas.push(
         "INV 2 (" +
@@ -4911,7 +4911,7 @@ if(valuesInv2.some(v => v > 7 || v < 4)){
 };
 if(valuesInv3.some(v => v > 7 || v < 4)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxInv3 = Math.max(...valuesInv3);
     listaAlarmas.push(
         "INV 3 (" +
@@ -4921,7 +4921,7 @@ if(valuesInv3.some(v => v > 7 || v < 4)){
 };
 if(valuesInv4.some(v => v > 7 || v < 4)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxInv4 = Math.max(...valuesInv4);
     listaAlarmas.push(
         "INV 4 (" +
@@ -4931,7 +4931,7 @@ if(valuesInv4.some(v => v > 7 || v < 4)){
 };
 if(valuesCoil1.some(v => v > 7 || v < 4)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxCoil1 = Math.max(...valuesCoil1);
     listaAlarmas.push(
         "COIL 1 (" +
@@ -4941,7 +4941,7 @@ if(valuesCoil1.some(v => v > 7 || v < 4)){
 };
 if(valuesCoil2.some(v => v > 7 || v < 4)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxCoil2 = Math.max(...valuesCoil2);
     listaAlarmas.push(
         "COIL 2 (" +
@@ -4951,7 +4951,7 @@ if(valuesCoil2.some(v => v > 7 || v < 4)){
 };
 if(valuesCoil3.some(v => v > 7 || v < 4)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxCoil3 = Math.max(...valuesCoil3);
     listaAlarmas.push(
         "COIL 3 (" +
@@ -4961,7 +4961,7 @@ if(valuesCoil3.some(v => v > 7 || v < 4)){
 };
 if(valuesCoil4.some(v => v > 7 || v < 4)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxCoil4 = Math.max(...valuesCoil4);
     listaAlarmas.push(
         "COIL 4 (" +
@@ -4971,7 +4971,7 @@ if(valuesCoil4.some(v => v > 7 || v < 4)){
 };
 if(valuesTermInv2.some(v => v > 30)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxTermInv2 =
     Math.max(...valuesTermInv2);
     listaAlarmas.push(
@@ -4982,7 +4982,7 @@ if(valuesTermInv2.some(v => v > 30)){
 };
 if(valuesTermInv3.some(v => v > 30)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxTermInv3 =
     Math.max(...valuesTermInv3);
     listaAlarmas.push(
@@ -4993,7 +4993,7 @@ if(valuesTermInv3.some(v => v > 30)){
 };
 if(valuesTermInv4.some(v => v > 30)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxTermInv4 =
     Math.max(...valuesTermInv4);
     listaAlarmas.push(
@@ -5004,7 +5004,7 @@ if(valuesTermInv4.some(v => v > 30)){
 };
 if(valuesTermCoil2.some(v => v > 38)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxTermCoil2 =
     Math.max(...valuesTermCoil2);
     listaAlarmas.push(
@@ -5015,7 +5015,7 @@ if(valuesTermCoil2.some(v => v > 38)){
 };
 if(valuesTermCoil3.some(v => v > 38)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxTermCoil3 =
     Math.max(...valuesTermCoil3);
     listaAlarmas.push(
@@ -5026,7 +5026,7 @@ if(valuesTermCoil3.some(v => v > 38)){
 };
 if(valuesTermCoil4.some(v => v > 30)){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     const maxTermCoil4 =
     Math.max(...valuesTermCoil4);
     listaAlarmas.push(
@@ -5037,7 +5037,7 @@ if(valuesTermCoil4.some(v => v > 30)){
 };
 if(alarmaIntercambiador){
     hayAlarma = true;
-    totalAlarmas++;
+    totalAlarmas;
     listaAlarmas.push(
         "INTERCAMBIADOR (" +
         ultimoValorIntercambiador.toFixed(2) +
