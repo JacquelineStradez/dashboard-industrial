@@ -4025,6 +4025,92 @@ const ultimoValorRodillo =
 valuesRodillo[valuesRodillo.length - 1];
 document.getElementById("valorRodillo").innerHTML =
 ultimoValorRodillo.toFixed(2);
+const ctxRodillo =
+document.getElementById('graficaPresionRodillo');
+new Chart(ctxRodillo, {
+    type: 'line',
+    data: {
+        labels: labelsRodillo7,
+        datasets: [
+{
+    label: 'Presión Rodillo',
+    data: valuesRodillo7,
+    borderColor: 'blue',
+    fill: false,
+    pointRadius: valuesRodillo7.map(v =>
+        (v > dataRodillo.upperLimit ||
+         v < dataRodillo.lowerLimit)
+        ? 8
+        : 2
+    ),
+    pointBackgroundColor: valuesRodillo7.map(v =>
+        (v > dataRodillo.upperLimit ||
+         v < dataRodillo.lowerLimit)
+        ? 'red'
+        : 'blue'
+    )
+},
+            {
+                label: 'Límite Inferior',
+                data: Array(7)
+                    .fill(dataRodillo.lowerLimit),
+                borderColor: 'green',
+                borderDash: [5,5],
+                fill: false,
+                pointRadius: 0
+            },
+            {
+                label: 'Límite Superior',
+                data: Array(7)
+                    .fill(dataRodillo.upperLimit),
+                borderColor: 'red',
+                borderDash: [5,5],
+                fill: false,
+                pointRadius: 0
+            }
+        ]	
+    },
+options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: {
+            position: 'top',
+            labels: {
+                usePointStyle: true,
+                padding: 20
+            }
+        },
+        title: {
+            display: true,
+            text:
+            'T3000 - Presión Rodillo | Actual: ' +
+            ultimoValorRodillo.toFixed(2)
+        }
+    },
+    elements: {
+        line: {
+            borderWidth: 2
+        },
+        point: {
+            radius: 2,
+            hoverRadius: 5
+        }
+    },
+    scales: {
+        x: {
+            grid: {
+                color: '#eeeeee'
+            }
+        },
+        y: {
+            grid: {
+                color: '#eeeeee'
+            }
+        }
+    }
+}
+});
 	
 const dataInv1 = {"labels":[{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"5.2"},{"Value":"5.1"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.5"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.1"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.5"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.3"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.2"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"5.4"}],"lowerLimit":4,"upperLimit":7};
 
@@ -4473,92 +4559,6 @@ if(
 ){
     hayAlarma = true;
 };
-const ctxRodillo =
-document.getElementById('graficaPresionRodillo');
-new Chart(ctxRodillo, {
-    type: 'line',
-    data: {
-        labels: labelsRodillo7,
-        datasets: [
-{
-    label: 'Presión Rodillo',
-    data: valuesRodillo7,
-    borderColor: 'blue',
-    fill: false,
-    pointRadius: valuesRodillo7.map(v =>
-        (v > dataRodillo.upperLimit ||
-         v < dataRodillo.lowerLimit)
-        ? 8
-        : 2
-    ),
-    pointBackgroundColor: valuesRodillo7.map(v =>
-        (v > dataRodillo.upperLimit ||
-         v < dataRodillo.lowerLimit)
-        ? 'red'
-        : 'blue'
-    )
-},
-            {
-                label: 'Límite Inferior',
-                data: Array(7)
-                    .fill(dataRodillo.lowerLimit),
-                borderColor: 'green',
-                borderDash: [5,5],
-                fill: false,
-                pointRadius: 0
-            },
-            {
-                label: 'Límite Superior',
-                data: Array(7)
-                    .fill(dataRodillo.upperLimit),
-                borderColor: 'red',
-                borderDash: [5,5],
-                fill: false,
-                pointRadius: 0
-            }
-        ]	
-    },
-options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            position: 'top',
-            labels: {
-                usePointStyle: true,
-                padding: 20
-            }
-        },
-        title: {
-            display: true,
-            text:
-            'T3000 - Presión Rodillo | Actual: ' +
-            ultimoValorRodillo.toFixed(2)
-        }
-    },
-    elements: {
-        line: {
-            borderWidth: 2
-        },
-        point: {
-            radius: 2,
-            hoverRadius: 5
-        }
-    },
-    scales: {
-        x: {
-            grid: {
-                color: '#eeeeee'
-            }
-        },
-        y: {
-            grid: {
-                color: '#eeeeee'
-            }
-        }
-    }
-}
-});
 */
 const labelsInv =
 dataInv1.labels.map(x => {
