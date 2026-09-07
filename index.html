@@ -4121,55 +4121,26 @@ let dataCoil1;
 let dataCoil2;
 let dataCoil3;
 let dataCoil4;
-fetch("Item3CalentadorT3000.json")
-.then(r => r.json())
-.then(data => {
-    dataInv1 = data;
-    console.log("JSON INV1", dataInv1);
+Promise.all([
+    fetch("Item3CalentadorT3000.json").then(r => r.json()),
+    fetch("Item4CalentadorT3000.json").then(r => r.json()),
+    fetch("Item5CalentadorT3000.json").then(r => r.json()),
+    fetch("Item6CalentadorT3000.json").then(r => r.json()),
+    fetch("Item7CalentadorT3000.json").then(r => r.json()),
+    fetch("Item8CalentadorT3000.json").then(r => r.json()),
+    fetch("Item9CalentadorT3000.json").then(r => r.json()),
+    fetch("Item10CalentadorT3000.json").then(r => r.json())
+]).then(([inv1, inv2, inv3, inv4, coil1, coil2, coil3, coil4]) => {
+    dataInv1 = inv1;
+    dataInv2 = inv2;
+    dataInv3 = inv3;
+    dataInv4 = inv4;
+    dataCoil1 = coil1;
+    dataCoil2 = coil2;
+    dataCoil3 = coil3;
+    dataCoil4 = coil4;
+    console.log("INV/COIL LISTOS");
 });
-fetch("Item4CalentadorT3000.json")
-.then(r => r.json())
-.then(data => {
-    dataInv2 = data;
-    console.log("JSON INV2", dataInv2);
-});
-fetch("Item5CalentadorT3000.json")
-.then(r => r.json())
-.then(data => {
-    dataInv3 = data;
-    console.log("JSON INV3", dataInv3);
-});
-fetch("Item6CalentadorT3000.json")
-.then(r => r.json())
-.then(data => {
-    dataInv4 = data;
-    console.log("JSON INV4", dataInv4);
-});
-fetch("Item7CalentadorT3000.json")
-.then(r => r.json())
-.then(data => {
-    dataCoil1 = data;
-    console.log("JSON COIL1", dataCoil1);
-});
-fetch("Item8CalentadorT3000.json")
-.then(r => r.json())
-.then(data => {
-    dataCoil2 = data;
-    console.log("JSON COIL2", dataCoil2);
-});
-fetch("Item9CalentadorT3000.json")
-.then(r => r.json())
-.then(data => {
-    dataCoil3 = data;
-    console.log("JSON COIL3", dataCoil3);
-});
-fetch("Item10CalentadorT3000.json")
-.then(r => r.json())
-.then(data => {
-    dataCoil4 = data;
-    console.log("JSON COIL4", dataCoil4);
-});
-	
 const dataTermInv2 = {"labels":[{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"26"},{"Value":"22"},{"Value":"30"},{"Value":"27"},{"Value":"26"},{"Value":"32"},{"Value":"31"},{"Value":"29"},{"Value":"30"},{"Value":"27"},{"Value":"29"},{"Value":"30"},{"Value":"28"},{"Value":"28"},{"Value":"30"},{"Value":"28"},{"Value":"26"},{"Value":"26"},{"Value":"28"},{"Value":"30"},{"Value":"29"},{"Value":"30"},{"Value":"28"},{"Value":"30"},{"Value":"24"},{"Value":"20"},{"Value":"26"},{"Value":"25"},{"Value":"24"},{"Value":"25"},{"Value":"25"},{"Value":"25"},{"Value":"25"},{"Value":"27"},{"Value":"26"},{"Value":"27"},{"Value":"17"},{"Value":"25"},{"Value":"26"},{"Value":"29"},{"Value":"19"},{"Value":"26"},{"Value":"29"},{"Value":"29"},{"Value":"27"},{"Value":"26"},{"Value":"22"},{"Value":"30"},{"Value":"27"},{"Value":"26"},{"Value":"32"},{"Value":"31"},{"Value":"29"},{"Value":"30"},{"Value":"27"},{"Value":"29"},{"Value":"30"},{"Value":"28"},{"Value":"28"},{"Value":"30"},{"Value":"28"},{"Value":"26"},{"Value":"26"},{"Value":"28"},{"Value":"30"},{"Value":"29"},{"Value":"30"},{"Value":"28"},{"Value":"30"},{"Value":"24"},{"Value":"20"},{"Value":"26"},{"Value":"25"}],"Limit":40};
 
 const dataTermInv3 = {"labels":[{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"27"},{"Value":"25"},{"Value":"26"},{"Value":"27"},{"Value":"32"},{"Value":"27"},{"Value":"26"},{"Value":"25"},{"Value":"26"},{"Value":"30"},{"Value":"32"},{"Value":"28"},{"Value":"28"},{"Value":"26"},{"Value":"26"},{"Value":"23"},{"Value":"28"},{"Value":"27"},{"Value":"27"},{"Value":"30"},{"Value":"26"},{"Value":"29"},{"Value":"24"},{"Value":"19"},{"Value":"26"},{"Value":"23"},{"Value":"24"},{"Value":"25"},{"Value":"23"},{"Value":"23"},{"Value":"24"},{"Value":"26"},{"Value":"26"},{"Value":"27"},{"Value":"17"},{"Value":"24"},{"Value":"27"},{"Value":"27"},{"Value":"19"},{"Value":"25"},{"Value":"28"},{"Value":"24"},{"Value":"25"},{"Value":"6"},{"Value":"22"},{"Value":"27"},{"Value":"25"},{"Value":"26"},{"Value":"27"},{"Value":"32"},{"Value":"27"},{"Value":"26"},{"Value":"25"},{"Value":"26"},{"Value":"30"},{"Value":"32"},{"Value":"28"},{"Value":"28"},{"Value":"26"},{"Value":"26"},{"Value":"23"},{"Value":"28"},{"Value":"27"},{"Value":"27"},{"Value":"30"},{"Value":"26"},{"Value":"29"},{"Value":"24"},{"Value":"19"},{"Value":"26"},{"Value":"23"}],"Limit":40};
@@ -4534,7 +4505,7 @@ const valuesInv4 =
 dataInv4.values.map(x => Number(x.Value));
 const valuesInv27 = valuesInv2.slice(-7);
 const valuesInv37 = valuesInv3.slice(-7);
-const valuesInv47 = valuesInv4.slice(-7);*/
+const valuesInv47 = valuesInv4.slice(-7);
 const labelsCoil =
 dataCoil1.labels.map(x => {
     const fecha = new Date(x.Value);
@@ -4559,7 +4530,7 @@ dataCoil4.values.map(x => Number(x.Value));
 const valuesCoil17 = valuesCoil1.slice(-7);
 const valuesCoil27 = valuesCoil2.slice(-7);
 const valuesCoil37 = valuesCoil3.slice(-7);
-const valuesCoil47 = valuesCoil4.slice(-7);
+const valuesCoil47 = valuesCoil4.slice(-7);*/
 const labelsTermInv =
 dataTermInv2.labels.map(x => {
     const fecha = new Date(x.Value);
