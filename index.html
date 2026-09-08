@@ -4512,6 +4512,8 @@ Promise.all([
     valuesTermCoil4.slice(-7);
     ultimoValorTermInv =
     valuesTermInv2[valuesTermInv2.length - 1];
+	console.log("valuesTermInv2", valuesTermInv2);
+	console.log("ultimoValorTermInv", ultimoValorTermInv);
     ultimoValorTermBobina =
     valuesTermCoil2[valuesTermCoil2.length - 1];
     labelsPanelFrontal =
@@ -4822,8 +4824,10 @@ dataTermInv2.labels.map(x => {
 });
 const labelsTermInv7 =
 labelsTermInv.slice(-7);
-const valuesTermInv2 =
-dataTermInv2.values.map(x => Number(x.Value));
+valuesTermInv2 =
+dataTermInv2.values
+    .map(x => Number(x.Value))
+    .filter(v => !isNaN(v));
 const valuesTermInv3 =
 dataTermInv3.values.map(x => Number(x.Value));
 const valuesTermInv4 =
