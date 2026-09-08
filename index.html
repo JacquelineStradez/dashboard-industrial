@@ -4473,6 +4473,8 @@ Promise.all([
     fetch("Item16CalentadorT3000.json").then(r => r.json())
 ]).then(([termInv2, termInv3, termInv4, termCoil2, termCoil3, termCoil4]) => {
     dataTermInv2 = termInv2;
+	console.log("JSON TERM INV2", dataTermInv2);
+	console.log("PRIMER VALOR TERM INV2", dataTermInv2.values[0]);
     dataTermInv3 = termInv3;
     dataTermInv4 = termInv4;
     dataTermCoil2 = termCoil2;
