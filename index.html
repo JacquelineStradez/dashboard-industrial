@@ -4486,11 +4486,12 @@ Promise.all([
     labelsTermInv7 =
     labelsTermInv.slice(-7);
     valuesTermInv2 =
-    dataTermInv2.values.map(x => Number(x.Value));
+	dataTermInv2.values.map(x => parseFloat(x.Value));
+	console.log("valuesTermInv2 corregido", valuesTermInv2);
     valuesTermInv3 =
-    dataTermInv3.values.map(x => Number(x.Value));
+    dataTermInv3.values.map(x => parseFloat(x.Value));
     valuesTermInv4 =
-    dataTermInv4.values.map(x => Number(x.Value));
+    dataTermInv4.values.map(x => parseFloat(x.Value));
     valuesTermInv27 =
     valuesTermInv2.slice(-7);
     valuesTermInv37 =
@@ -4502,11 +4503,11 @@ Promise.all([
     labelsTermCoil7 =
     labelsTermCoil.slice(-7);
     valuesTermCoil2 =
-    dataTermCoil2.values.map(x => Number(x.Value));
+    dataTermCoil2.values.map(x => parseFloat(x.Value));
     valuesTermCoil3 =
-    dataTermCoil3.values.map(x => Number(x.Value));
+    dataTermCoil3.values.map(x => parseFloat(x.Value));
     valuesTermCoil4 =
-    dataTermCoil4.values.map(x => Number(x.Value));
+    dataTermCoil4.values.map(x => parseFloat(x.Value));
     valuesTermCoil27 =
     valuesTermCoil2.slice(-7);
     valuesTermCoil37 =
