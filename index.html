@@ -4473,6 +4473,8 @@ Promise.all([
     fetch("Item16CalentadorT3000.json").then(r => r.json())
 ]).then(([termInv2, termInv3, termInv4, termCoil2, termCoil3, termCoil4]) => {
     dataTermInv2 = termInv2;
+	console.log("LABEL 0 TERM INV2", dataTermInv2.labels[0]);
+	console.log("VALUE 0 TERM INV2", dataTermInv2.values[0]);
 	console.log("JSON TERM INV2", dataTermInv2);
 	console.log("VALUES TERM INV2", dataTermInv2.values);
 	console.log("PRIMER REGISTRO TERM INV2", dataTermInv2.values[0]);
@@ -4485,7 +4487,8 @@ Promise.all([
     dataTermInv2.labels.map(x => x.Fecha);
     labelsTermInv7 =
     labelsTermInv.slice(-7);
-    valuesTermInv2 =
+	console.log("VALUE0", dataTermInv2.values[0]);
+	valuesTermInv2 =
 	dataTermInv2.values.map(x => parseFloat(x.Value));
 	console.log("valuesTermInv2 corregido", valuesTermInv2);
     valuesTermInv3 =
@@ -4813,64 +4816,7 @@ y: {
     }
 }
     }
-}
-});
-/*const labelsTermInv =
-dataTermInv2.labels.map(x => {
-    const fecha = new Date(x.Value);
-    return fecha.toLocaleDateString(
-        'es-MX',
-        {
-            day:'2-digit',
-            month:'2-digit'
-        }
-    );
-});
-const labelsTermInv7 =
-labelsTermInv.slice(-7);
-valuesTermInv2 =
-dataTermInv2.values
-    .map(x => Number(x.Value))
-    .filter(v => !isNaN(v));
-const valuesTermInv3 =
-dataTermInv3.values.map(x => Number(x.Value));
-const valuesTermInv4 =
-dataTermInv4.values.map(x => Number(x.Value));
-const ultimoValorTermInv =
-valuesTermInv2[valuesTermInv2.length - 1];
-const valuesTermInv27 = valuesTermInv2.slice(-7);
-const valuesTermInv37 = valuesTermInv3.slice(-7);
-const valuesTermInv47 = valuesTermInv4.slice(-7);
-const labelsTermCoil =
-dataTermCoil2.labels.map(x => {
-    const fecha = new Date(x.Value);
-    return fecha.toLocaleDateString(
-        'es-MX',
-        {
-            day:'2-digit',
-            month:'2-digit'
-        }
-    );
-});
-const labelsTermCoil7 =
-labelsTermCoil.slice(-7);
-const valuesTermCoil2 =
-dataTermCoil2.values.map(x => Number(x.Value));
-const valuesTermCoil3 =
-dataTermCoil3.values.map(x => Number(x.Value));
-const valuesTermCoil4 =
-dataTermCoil4.values.map(x => Number(x.Value));
-const ultimoValorTermBobina =
-valuesTermCoil2[valuesTermCoil2.length - 1];
-const valuesTermCoil27 = valuesTermCoil2.slice(-7);
-const valuesTermCoil37 = valuesTermCoil3.slice(-7);
-const valuesTermCoil47 = valuesTermCoil4.slice(-7);*/
-/*const labelsPanelFrontal =
-labelsTermInv7;
-const valuesPanelInv =
-valuesTermInv27;
-const valuesPanelBobina =
-valuesTermCoil27;*/
+} 
 const labelsIntercambiador =
 dataIntercambiador.labels.map(x => {
     const fecha = new Date(x.Value);
