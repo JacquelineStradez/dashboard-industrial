@@ -4458,7 +4458,7 @@ Promise.all([
     dataTermCoil3 = termCoil3;
     dataTermCoil4 = termCoil4;
 		labelsTermInv =
-	dataTermInv2.labels.map(x => x.Fecha);
+	dataTermInv2.labels.map(x => x.Value);
 	labelsTermInv7 =
 	labelsTermInv.slice(-7);
 	valuesTermInv2 =
@@ -4474,7 +4474,7 @@ Promise.all([
 	valuesTermInv47 =
 	valuesTermInv4.slice(-7);
 	labelsTermCoil =
-	dataTermCoil2.labels.map(x => x.Fecha);
+	dataTermCoil2.labels.map(x => x.Value);
 	labelsTermCoil7 =
 	labelsTermCoil.slice(-7);
 	valuesTermCoil2 =
@@ -4491,6 +4491,8 @@ Promise.all([
 	valuesTermCoil4.slice(-7);
 	ultimoValorTermInv =
 	valuesTermInv2[valuesTermInv2.length - 1];
+	console.log("ULTIMO INV", ultimoValorTermInv);
+	console.log("VALUES INV", valuesTermInv2);
 	ultimoValorTermBobina =
 	valuesTermCoil2[valuesTermCoil2.length - 1];
     console.log("TERMOMETROS LISTOS");
