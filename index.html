@@ -4457,6 +4457,42 @@ Promise.all([
     dataTermCoil2 = termCoil2;
     dataTermCoil3 = termCoil3;
     dataTermCoil4 = termCoil4;
+		labelsTermInv =
+	dataTermInv2.labels.map(x => x.Fecha);
+	labelsTermInv7 =
+	labelsTermInv.slice(-7);
+	valuesTermInv2 =
+	dataTermInv2.values.map(x => parseFloat(x.Value));
+	valuesTermInv3 =
+	dataTermInv3.values.map(x => parseFloat(x.Value));
+	valuesTermInv4 =
+	dataTermInv4.values.map(x => parseFloat(x.Value));
+	valuesTermInv27 =
+	valuesTermInv2.slice(-7);
+	valuesTermInv37 =
+	valuesTermInv3.slice(-7);
+	valuesTermInv47 =
+	valuesTermInv4.slice(-7);
+	labelsTermCoil =
+	dataTermCoil2.labels.map(x => x.Fecha);
+	labelsTermCoil7 =
+	labelsTermCoil.slice(-7);
+	valuesTermCoil2 =
+	dataTermCoil2.values.map(x => parseFloat(x.Value));
+	valuesTermCoil3 =
+	dataTermCoil3.values.map(x => parseFloat(x.Value));
+	valuesTermCoil4 =
+	dataTermCoil4.values.map(x => parseFloat(x.Value));
+	valuesTermCoil27 =
+	valuesTermCoil2.slice(-7);
+	valuesTermCoil37 =
+	valuesTermCoil3.slice(-7);
+	valuesTermCoil47 =
+	valuesTermCoil4.slice(-7);
+	ultimoValorTermInv =
+	valuesTermInv2[valuesTermInv2.length - 1];
+	ultimoValorTermBobina =
+	valuesTermCoil2[valuesTermCoil2.length - 1];
     console.log("TERMOMETROS LISTOS");
 	const ctxTermInv =
 	document.getElementById('graficaTermInv');
@@ -4547,42 +4583,6 @@ Promise.all([
 	        maintainAspectRatio: false
 	    }
 	});
-	labelsTermInv =
-	dataTermInv2.labels.map(x => x.Fecha);
-	labelsTermInv7 =
-	labelsTermInv.slice(-7);
-	valuesTermInv2 =
-	dataTermInv2.values.map(x => parseFloat(x.Value));
-	valuesTermInv3 =
-	dataTermInv3.values.map(x => parseFloat(x.Value));
-	valuesTermInv4 =
-	dataTermInv4.values.map(x => parseFloat(x.Value));
-	valuesTermInv27 =
-	valuesTermInv2.slice(-7);
-	valuesTermInv37 =
-	valuesTermInv3.slice(-7);
-	valuesTermInv47 =
-	valuesTermInv4.slice(-7);
-	labelsTermCoil =
-	dataTermCoil2.labels.map(x => x.Fecha);
-	labelsTermCoil7 =
-	labelsTermCoil.slice(-7);
-	valuesTermCoil2 =
-	dataTermCoil2.values.map(x => parseFloat(x.Value));
-	valuesTermCoil3 =
-	dataTermCoil3.values.map(x => parseFloat(x.Value));
-	valuesTermCoil4 =
-	dataTermCoil4.values.map(x => parseFloat(x.Value));
-	valuesTermCoil27 =
-	valuesTermCoil2.slice(-7);
-	valuesTermCoil37 =
-	valuesTermCoil3.slice(-7);
-	valuesTermCoil47 =
-	valuesTermCoil4.slice(-7);
-	ultimoValorTermInv =
-	valuesTermInv2[valuesTermInv2.length - 1];
-	ultimoValorTermBobina =
-	valuesTermCoil2[valuesTermCoil2.length - 1];
 	document.getElementById("valorTermInv").innerHTML =
 	ultimoValorTermInv.toFixed(1) + " °C";
 	document.getElementById("valorTermBobina").innerHTML =
