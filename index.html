@@ -4457,12 +4457,18 @@ Promise.all([
     dataTermCoil2 = termCoil2;
     dataTermCoil3 = termCoil3;
     dataTermCoil4 = termCoil4;
-		labelsTermInv =
+	labelsTermInv =
 	dataTermInv2.labels.map(x => x.Value);
 	labelsTermInv7 =
 	labelsTermInv.slice(-7);
+	console.log("VALORES CRUDOS", dataTermInv2.values);
 	valuesTermInv2 =
-	dataTermInv2.values.map(x => parseFloat(x.Value));
+	dataTermInv2.values.map(x => {
+	    console.log("ELEMENTO", x);
+	    return parseFloat(x.Value);
+	});
+	console.log("ULTIMO", valuesTermInv2[valuesTermInv2.length - 1]);
+	console.log("CONVERTIDOS", valuesTermInv2);
 	valuesTermInv3 =
 	dataTermInv3.values.map(x => parseFloat(x.Value));
 	valuesTermInv4 =
