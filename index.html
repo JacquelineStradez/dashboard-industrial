@@ -4458,6 +4458,95 @@ Promise.all([
     dataTermCoil3 = termCoil3;
     dataTermCoil4 = termCoil4;
     console.log("TERMOMETROS LISTOS");
+	const ctxTermInv =
+	document.getElementById('graficaTermInv');
+	
+	new Chart(ctxTermInv, {
+	    type: 'line',
+	    data: {
+	        labels: labelsTermInv7,
+	        datasets: [
+	        {
+	            label: 'INV T2',
+	            data: valuesTermInv27,
+	            borderColor: 'blue',
+	            fill: false,
+	            tension: 0.3
+	        },
+	        {
+	            label: 'INV T3',
+	            data: valuesTermInv37,
+	            borderColor: 'green',
+	            fill: false,
+	            tension: 0.3
+	        },
+	        {
+	            label: 'INV T4',
+	            data: valuesTermInv47,
+	            borderColor: 'orange',
+	            fill: false,
+	            tension: 0.3
+	        },
+	        {
+	            label: 'Límite Máximo',
+	            data: Array(7).fill(30),
+	            borderColor: 'red',
+	            borderDash: [5,5],
+	            fill: false,
+	            pointRadius: 0
+	        }
+	        ]
+	    },
+	    options: {
+	        responsive: true,
+	        maintainAspectRatio: false
+	    }
+	});
+	
+	const ctxTermCoil =
+	document.getElementById('graficaTermCoil');
+	
+	new Chart(ctxTermCoil, {
+	    type: 'line',
+	    data: {
+	        labels: labelsTermCoil7,
+	        datasets: [
+	        {
+	            label: 'COIL T2',
+	            data: valuesTermCoil27,
+	            borderColor: 'blue',
+	            fill: false,
+	            tension: 0.3
+	        },
+	        {
+	            label: 'COIL T3',
+	            data: valuesTermCoil37,
+	            borderColor: 'green',
+	            fill: false,
+	            tension: 0.3
+	        },
+	        {
+	            label: 'COIL T4',
+	            data: valuesTermCoil47,
+	            borderColor: 'orange',
+	            fill: false,
+	            tension: 0.3
+	        },
+	        {
+	            label: 'Límite Máximo',
+	            data: Array(7).fill(38),
+	            borderColor: 'red',
+	            borderDash: [5,5],
+	            fill: false,
+	            pointRadius: 0
+	        }
+	        ]
+	    },
+	    options: {
+	        responsive: true,
+	        maintainAspectRatio: false
+	    }
+	});
 	labelsTermInv =
 	dataTermInv2.labels.map(x => x.Fecha);
 	labelsTermInv7 =
