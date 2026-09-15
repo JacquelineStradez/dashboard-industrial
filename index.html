@@ -4004,13 +4004,8 @@ Promise.all([
     dataC = gldC;
     dataD = gldD;
 	console.log(dataA.labels[0]);
-	const labels = dataA.labels.map(x => {
-	    const fecha = new Date(x.Fecha);
-	    return fecha.toLocaleDateString('es-MX', {
-	        day: '2-digit',
-	        month: '2-digit'
-	    });
-	});
+	const labels =
+	dataA.labels.map(x => x.Fecha);
 	const labels7 =
 	labels.slice(-7);
 	const valuesA = dataA.values.map(x => x.Value);
