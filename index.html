@@ -3988,23 +3988,245 @@ document.getElementById("btnTemperaturas")
         .style.display = "block";
 });
 
-const dataA = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"}],"values":[{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.2},{"Value":0.2},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1}],"limit":9};
-
+let dataA;
+let dataB;
+let dataC;
+let dataD;
+Promise.all([
+    fetch("Item18CalentadorT3000.json").then(r => r.json()),
+    fetch("Item19CalentadorT3000.json").then(r => r.json()),
+    fetch("Item20CalentadorT3000.json").then(r => r.json()),
+    fetch("Item21CalentadorT3000.json").then(r => r.json())
+])
+.then(([gldA, gldB, gldC, gldD]) => {
+    dataA = gldA;
+    dataB = gldB;
+    dataC = gldC;
+    dataD = gldD;
+	console.log(dataA.labels[0]);
+	const labels = dataA.labels.map(x => {
+	    const fecha = new Date(x.Fecha);
+	    return fecha.toLocaleDateString('es-MX', {
+	        day: '2-digit',
+	        month: '2-digit'
+	    });
+	});
+	const labels7 =
+	labels.slice(-7);
+	const valuesA = dataA.values.map(x => x.Value);
+	const valuesB = dataB.values.map(x => x.Value);
+	const valuesC = dataC.values.map(x => x.Value);
+	const valuesD = dataD.values.map(x => x.Value);
+	const valuesA7 =
+	valuesA.slice(-7);
+	const valuesB7 = valuesB.slice(-7);
+	const valuesC7 = valuesC.slice(-7);
+	const valuesD7 = valuesD.slice(-7);
+	const ultimoValor = valuesA[valuesA.length - 1];
+	const valorAnteriorA =
+	valuesA[valuesA.length - 2];
+	const ultimoValorB = valuesB[valuesB.length - 1];
+	const valorAnteriorB =
+	valuesB[valuesB.length - 2];
+	const ultimoValorC = valuesC[valuesC.length - 1];
+	const valorAnteriorC =
+	valuesC[valuesC.length - 2];
+	const ultimoValorD = valuesD[valuesD.length - 1];
+	const valorAnteriorD =
+	valuesD[valuesD.length - 2];
+	const tendenciaA =
+	ultimoValor > valorAnteriorA
+	? "▲"
+	: ultimoValor < valorAnteriorA
+	? "▼"
+	: "►";
+	document.getElementById("ultimoValor").innerHTML =
+	ultimoValor.toFixed(1);
+	const tendenciaB =
+	ultimoValorB > valorAnteriorB
+	? "▲"
+	: ultimoValorB < valorAnteriorB
+	? "▼"
+	: "►";
+	document.getElementById("ultimoValorB").innerHTML =
+	ultimoValorB.toFixed(1);
+	const tendenciaC =
+	ultimoValorC > valorAnteriorC
+	? "▲"
+	: ultimoValorC < valorAnteriorC
+	? "▼"
+	: "►";
+	document.getElementById("ultimoValorC").innerHTML =
+	ultimoValorC.toFixed(1);
+	const tendenciaD =
+	ultimoValorD > valorAnteriorD
+	? "▲"
+	: ultimoValorD < valorAnteriorD
+	? "▼"
+	: "►";
+	document.getElementById("ultimoValorD").innerHTML =
+	ultimoValorD.toFixed(1);
+	const valorMaximo = Math.max(
+	    ultimoValor,
+	    ultimoValorB,
+	    ultimoValorC,
+	    ultimoValorD
+	);
+	let moduloMaximo = "GLDMódulo A";
+	if(ultimoValorB === valorMaximo){
+	    moduloMaximo = "GLDMódulo B";
+	}
+	if(ultimoValorC === valorMaximo){
+	    moduloMaximo = "GLDMódulo C";
+	}
+	if(ultimoValorD === valorMaximo){
+	    moduloMaximo = "GLDMódulo D";
+	}
+	const tarjetasGLD = document.querySelectorAll(
+	    '.tarjetaA, .tarjetaB, .tarjetaC, .tarjetaD'
+	);
+	tarjetasGLD.forEach(t =>
+	    t.style.background = 'white'
+	);
+	const ctx = document.getElementById('grafica');
+	new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	        labels: labels7,
+	datasets: [ 
+	{
+	    label: 'GLDMódulo A',
+	    data: valuesA7,
+	    borderColor: 'blue',
+	    fill: false,
+	    tension: 0.3,
+	    pointRadius: valuesA7.map((v,i) =>
+	        i === valuesA7.length - 1
+	        ? 6
+	        : 2
+	    ),
+	    pointBackgroundColor: valuesA7.map(v =>
+	        v > 9 ? 'red' : 'blue'
+	    )
+	}, 
+	{
+	    label: 'GLDMódulo B',
+	    data: valuesB7,
+	    borderColor: 'green',
+	    fill: false,
+	    tension: 0.3,
+	    pointRadius: valuesB7.map((v,i) =>
+	        i === valuesB7.length - 1
+	        ? 6
+	        : (v > 9 ? 8 : 2)
+	    ),
+	    pointBackgroundColor: valuesB7.map(v =>
+	        v > 9 ? 'red' : 'green'
+	    )
+	},
+	{
+	    label: 'GLDMódulo C',
+	    data: valuesC7,
+	    borderColor: 'orange',
+	    fill: false,
+	    tension: 0.3,
+	    pointRadius: valuesC7.map((v,i) =>
+	        i === valuesC7.length - 1
+	        ? 6
+	        : (v > 9 ? 8 : 2)
+	    ),
+	    pointBackgroundColor: valuesC7.map(v =>
+	        v > 9 ? 'red' : 'orange'
+	    )
+	},
+	{
+	    label: 'GLDMódulo D',
+	    data: valuesD7,
+	    borderColor: 'pink',
+	    fill: false,
+	    tension: 0.3,
+	    pointRadius: valuesD7.map((v,i) =>
+	        i === valuesD7.length - 1
+	        ? 6
+	        : (v > 9 ? 8 : 2)
+	    ),
+	    pointBackgroundColor: valuesD7.map(v =>
+	        v > 9 ? 'red' : 'pink'
+	    )
+	},
+	    {
+	        label: 'Límite Superior',
+	        data: Array(7).fill(9),
+	        borderColor: 'red',
+	        borderDash: [5,5],
+	        fill: false,
+	        pointRadius:0,
+	    }
+	]
+	    },
+	options: {
+	    responsive: true,
+	    maintainAspectRatio: false,
+	    interaction:{
+	        mode:'index',
+	        intersect:false
+	    },
+	    plugins: {
+	        legend: {
+	            position: 'top',
+	            align:'center',
+	            labels: {
+	                usePointStyle: true,
+	                boxWidth: 8,
+	                padding: 15
+	            }
+	        },
+	        title: {
+	            display: true,
+		    text:
+	            'T3000 - GLD | A:' + ultimoValor.toFixed(1) +
+	            ' B:' + ultimoValorB.toFixed(1) +
+	            ' C:' + ultimoValorC.toFixed(1) +
+	            ' D:' + ultimoValorD.toFixed(1),
+	            font:{
+	                size:12
+	            }
+	        }
+	    },
+	    elements:{
+	        line:{
+	            borderWidth:2
+	        },
+	        point:{
+	            radius:2,
+	            hoverRadius:5
+	        }
+	    },
+	    scales: {
+	x: {
+	    ticks: {
+	        maxTicksLimit: 12
+	    },
+	    grid: {
+	        color:'#eeeeee'
+	    }
+	},
+	y: {
+	    min: 0,
+	    max: 10,
+	    grid: {
+	        color:'#eeeeee'
+	    }
+	}
+	    }
+	}
+	});
+	
+/*const dataA = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"}],"values":[{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.2},{"Value":0.2},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1}],"limit":9};
 const dataB = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"}],"values":[{"Value":2.9},{"Value":2.9},{"Value":3.0},{"Value":3.0},{"Value":3.0},{"Value":3.2},{"Value":3.2},{"Value":2.9},{"Value":2.8},{"Value":2.7},{"Value":2.7},{"Value":3.2},{"Value":2.7},{"Value":2.9},{"Value":3.2},{"Value":3.2},{"Value":3.1},{"Value":3.0},{"Value":3.3},{"Value":3.4},{"Value":3.0},{"Value":2.7},{"Value":3.1},{"Value":3.3},{"Value":2.8},{"Value":2.7},{"Value":2.6},{"Value":2.7},{"Value":2.9},{"Value":2.8},{"Value":2.6},{"Value":3.0},{"Value":2.7},{"Value":2.6},{"Value":2.6},{"Value":2.6},{"Value":2.8},{"Value":2.8},{"Value":2.7},{"Value":2.7},{"Value":2.9},{"Value":2.9},{"Value":2.8},{"Value":2.5}],"limit":9};
-
 const dataC = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"}],"values":[{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.2},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.2},{"Value":0.0},{"Value":0.0},{"Value":0.2},{"Value":0.2},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.2},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.0}],"limit":9};
-
-const dataD = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"}],"values":[{"Value":0.0},{"Value":0.0},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.0},{"Value":0.0},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.0},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.0},{"Value":0.1},{"Value":0.1},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.0},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.0}],"limit":9};
-
-const labels = dataA.labels.map(x => {
-    const fecha = new Date(x.Fecha);
-    return fecha.toLocaleDateString('es-MX', {
-        day: '2-digit',
-        month: '2-digit'
-    });
-});	
-const labels7 =
-labels.slice(-7);
+const dataD = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"}],"values":[{"Value":0.0},{"Value":0.0},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.0},{"Value":0.0},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.0},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.0},{"Value":0.1},{"Value":0.1},{"Value":0.0},{"Value":0.0},{"Value":0.0},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.0},{"Value":0.1},{"Value":0.1},{"Value":0.1},{"Value":0.0}],"limit":9};*/
+	
 let dataRodillo;	
 fetch("Item2CalentadorT3000.json")
 .then(r => r.json())
@@ -4949,7 +5171,7 @@ fetch("Item17CalentadorT3000.json")
 	});
 });
 
-const dataConductividad = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"}],"values":[{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.06"},{"Value":"0.07"},{"Value":"0.06"},{"Value":"0.08"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.13"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.13"},{"Value":"0.06"},{"Value":"0.06"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.12"},{"Value":"0.12"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.14"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.06"},{"Value":"0.06"},{"Value":"0"},{"Value":"0.06"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.12"},{"Value":"0.07"},{"Value":"0.08"},{"Value":"0.13"},{"Value":"0.07"},{"Value":"0.08"}],"lowerLimit":0,"upperLimit":20};
+const dataConductividad = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"}],"values":[{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.06"},{"Value":"0.07"},{"Value":"0.06"},{"Value":"0.08"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.13"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.13"},{"Value":"0.06"},{"Value":"0.06"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.12"},{"Value":"0.12"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.14"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.06"},{"Value":"0.06"},{"Value":"0"},{"Value":"0.06"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.12"},{"Value":"0.07"},{"Value":"0.08"},{"Value":"0.13"},{"Value":"0.07"},{"Value":"0.08"}],"lowerLimit":0,"upperLimit":20};	
 
 const dataInterno = {"labels":[{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"}],"values":[{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"3.2"},{"Value":"5.8"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.3"},{"Value":"4.4"},{"Value":"4.1"},{"Value":"4.1"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"}],"lowerLimit":4.0,"upperLimit":5.2};
 
@@ -4969,18 +5191,6 @@ document.getElementById("fechaActualizacion").innerHTML =
 ultimaFecha +
 " | Visualizado: " +
 ahora.toLocaleString('es-MX');
-const valuesA = dataA.values.map(x => x.Value);
-const valuesA7 =
-valuesA.slice(-7);
-const valuesB = dataB.values.map(x => x.Value);
-const valuesC = dataC.values.map(x => x.Value);
-const valuesD = dataD.values.map(x => x.Value);
-const valuesB7 = valuesB.slice(-7);
-const valuesC7 = valuesC.slice(-7);
-const valuesD7 = valuesD.slice(-7);
-const ultimoValor = valuesA[valuesA.length - 1];
-const valorAnteriorA =
-valuesA[valuesA.length - 2];
 console.log("INICIO CISSTERNA");
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
@@ -5019,69 +5229,6 @@ fetch("Item1CalentadorT3000.json")
 	    "linear-gradient(to top,#0097a7,#4dd0e1)";
 	}
 });
-const ultimoValorB = valuesB[valuesB.length - 1];
-const valorAnteriorB =
-valuesB[valuesB.length - 2];
-const ultimoValorC = valuesC[valuesC.length - 1];
-const valorAnteriorC =
-valuesC[valuesC.length - 2];
-const ultimoValorD = valuesD[valuesD.length - 1];
-const valorAnteriorD =
-valuesD[valuesD.length - 2];
-const tendenciaA =
-ultimoValor > valorAnteriorA
-? "▲"
-: ultimoValor < valorAnteriorA
-? "▼"
-: "►";
-document.getElementById("ultimoValor").innerHTML =
-ultimoValor.toFixed(1);
-const tendenciaB =
-ultimoValorB > valorAnteriorB
-? "▲"
-: ultimoValorB < valorAnteriorB
-? "▼"
-: "►";
-document.getElementById("ultimoValorB").innerHTML =
-ultimoValorB.toFixed(1);
-const tendenciaC =
-ultimoValorC > valorAnteriorC
-? "▲"
-: ultimoValorC < valorAnteriorC
-? "▼"
-: "►";
-document.getElementById("ultimoValorC").innerHTML =
-ultimoValorC.toFixed(1);
-const tendenciaD =
-ultimoValorD > valorAnteriorD
-? "▲"
-: ultimoValorD < valorAnteriorD
-? "▼"
-: "►";
-document.getElementById("ultimoValorD").innerHTML =
-ultimoValorD.toFixed(1);
-const valorMaximo = Math.max(
-    ultimoValor,
-    ultimoValorB,
-    ultimoValorC,
-    ultimoValorD
-);
-let moduloMaximo = "GLDMódulo A";
-if(ultimoValorB === valorMaximo){
-    moduloMaximo = "GLDMódulo B";
-}
-if(ultimoValorC === valorMaximo){
-    moduloMaximo = "GLDMódulo C";
-}
-if(ultimoValorD === valorMaximo){
-    moduloMaximo = "GLDMódulo D";
-}
-const tarjetasGLD = document.querySelectorAll(
-    '.tarjetaA, .tarjetaB, .tarjetaC, .tarjetaD'
-);
-tarjetasGLD.forEach(t =>
-    t.style.background = 'white'
-);
 document.getElementById("valorLubPresion")
     .innerHTML = "5.2 bar";
 document.getElementById("valorLubTemperatura")
@@ -5092,139 +5239,6 @@ let totalAlarmasPrensa = 0;
 let listaAlarmasPrensa = [];
 document.getElementById("contadorAlarmasPrensa")
     .innerHTML = totalAlarmasPrensa;
-const ctx = document.getElementById('grafica');
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: labels7,
-datasets: [ 
-{
-    label: 'GLDMódulo A',
-    data: valuesA7,
-    borderColor: 'blue',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesA7.map((v,i) =>
-        i === valuesA7.length - 1
-        ? 6
-        : 2
-    ),
-    pointBackgroundColor: valuesA7.map(v =>
-        v > 9 ? 'red' : 'blue'
-    )
-}, 
-{
-    label: 'GLDMódulo B',
-    data: valuesB7,
-    borderColor: 'green',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesB7.map((v,i) =>
-        i === valuesB7.length - 1
-        ? 6
-        : (v > 9 ? 8 : 2)
-    ),
-    pointBackgroundColor: valuesB7.map(v =>
-        v > 9 ? 'red' : 'green'
-    )
-},
-{
-    label: 'GLDMódulo C',
-    data: valuesC7,
-    borderColor: 'orange',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesC7.map((v,i) =>
-        i === valuesC7.length - 1
-        ? 6
-        : (v > 9 ? 8 : 2)
-    ),
-    pointBackgroundColor: valuesC7.map(v =>
-        v > 9 ? 'red' : 'orange'
-    )
-},
-{
-    label: 'GLDMódulo D',
-    data: valuesD7,
-    borderColor: 'pink',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesD7.map((v,i) =>
-        i === valuesD7.length - 1
-        ? 6
-        : (v > 9 ? 8 : 2)
-    ),
-    pointBackgroundColor: valuesD7.map(v =>
-        v > 9 ? 'red' : 'pink'
-    )
-},
-    {
-        label: 'Límite Superior',
-        data: Array(7).fill(9),
-        borderColor: 'red',
-        borderDash: [5,5],
-        fill: false,
-        pointRadius:0,
-    }
-]
-    },
-options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    interaction:{
-        mode:'index',
-        intersect:false
-    },
-    plugins: {
-        legend: {
-            position: 'top',
-            align:'center',
-            labels: {
-                usePointStyle: true,
-                boxWidth: 8,
-                padding: 15
-            }
-        },
-        title: {
-            display: true,
-	    text:
-            'T3000 - GLD | A:' + ultimoValor.toFixed(1) +
-            ' B:' + ultimoValorB.toFixed(1) +
-            ' C:' + ultimoValorC.toFixed(1) +
-            ' D:' + ultimoValorD.toFixed(1),
-            font:{
-                size:12
-            }
-        }
-    },
-    elements:{
-        line:{
-            borderWidth:2
-        },
-        point:{
-            radius:2,
-            hoverRadius:5
-        }
-    },
-    scales: {
-x: {
-    ticks: {
-        maxTicksLimit: 12
-    },
-    grid: {
-        color:'#eeeeee'
-    }
-},
-y: {
-    min: 0,
-    max: 10,
-    grid: {
-        color:'#eeeeee'
-    }
-}
-    }
-}
-});
 const labelsConductividad =
 dataConductividad.labels.map(x => {
     const fecha = new Date(x.Value);
