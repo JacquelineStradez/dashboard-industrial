@@ -5297,8 +5297,6 @@ fetch("Item23CalentadorT3000.json")
 	valuesInterno[valuesInterno.length - 1];
 	document.getElementById("valorInterno").innerHTML =
 	ultimoValorInterno.toFixed(2);
-	document.getElementById("valorBobina").innerHTML =
-	ultimoValorBobina.toFixed(2);
 	const alarmaInterno =
 	ultimoValorInterno > dataInterno.upperLimit ||
 	ultimoValorInterno < dataInterno.lowerLimit;
@@ -5406,9 +5404,115 @@ fetch("Item24CalentadorT3000.json")
 .then(data => {
     dataBobina = data;
 	console.log(dataBobina.labels[0]);
+	const labelsBobina =
+	dataBobina.labels.map(x => {
+	    const fecha = new Date(x.Value);
+	    return fecha.toLocaleDateString('es-MX', {
+	        day:'2-digit',
+	        month:'2-digit'
+	    });
+	});
+	const valuesBobina =
+	dataBobina.values.map(x => Number(x.Value));
+	const labelsBobina7 =
+	labelsBobina.slice(-7);
+	const valuesBobina7 =
+	valuesBobina.slice(-7);
+	const ultimoValorBobina =
+	valuesBobina[valuesBobina.length - 1];
+	document.getElementById("valorBobina").innerHTML =
+	ultimoValorBobina.toFixed(2);
+	const ctxBobina =
+	document.getElementById('graficaBobina');
+	new Chart(ctxBobina, {
+	    type: 'line',
+	    data: {
+	        labels: labelsBobina7,
+	        datasets: [
+	        {
+	            label: 'Presión Agua Refrigerante Bobina',
+	            data: valuesBobina7,
+	            borderColor: 'blue',
+	            backgroundColor: '#0078D4',
+	            fill: false,
+	            tension: 0.3,
+	            pointRadius: valuesBobina7.map(v =>
+	                (v > dataBobina.upperLimit ||
+	                 v < dataBobina.lowerLimit)
+	                ? 8
+	                : 2
+	            ),
+	            pointBackgroundColor: valuesBobina7.map(v =>
+	                (v > dataBobina.upperLimit ||
+	                 v < dataBobina.lowerLimit)
+	                ? 'red'
+	                : 'blue'
+	            ),
+	            borderWidth: 2
+	        },
+	        {
+	            label: 'Límite Inferior',
+	            data: Array(7).fill(
+	                dataBobina.lowerLimit
+	            ),
+	            borderColor: 'green',
+	            borderDash: [5,5],
+	            fill: false,
+	            pointRadius: 0
+	        },
+	        {
+	            label: 'Límite Superior',
+	            data: Array(7).fill(
+	                dataBobina.upperLimit
+	            ),
+	            borderColor: 'red',
+	            borderDash: [5,5],
+	            fill: false,
+	            pointRadius: 0
+	        }
+	        ]
+	    },
+	    options: {
+	        responsive: true,
+	        maintainAspectRatio: false,
+	        interaction:{
+	            mode:'index',
+	            intersect:false
+	        },
+	        plugins: {
+	            legend: {
+	                position: 'top',
+	                labels: {
+	                    usePointStyle: true,
+	                    padding: 20
+	                }
+	            },
+	            title: {
+	                display: true,
+	                text:
+	                'T3000 - Presión Agua Refrigerante Bobina | Actual: ' +
+	                ultimoValorBobina.toFixed(2)
+	            }
+	        },
+	        scales: {
+	            x: {
+	                grid: {
+	                    color:'#eeeeee'
+	                }
+	            },
+	            y: {
+	                min:
+	                dataBobina.lowerLimit - 1,
+	                max:
+	                dataBobina.upperLimit + 1,
+	                grid: {
+	                    color:'#eeeeee'
+	                }
+	            }
+	        }
+	    }
+	});
 });
-	
-/*const dataBobina = {"labels":[{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"}],"values":[{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.3"},{"Value":"4"},{"Value":"22"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"3.4"},{"Value":"4"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"3.7"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.2"},{"Value":"4"},{"Value":"4"},{"Value":"4"},{"Value":"4"},{"Value":"4.2"},{"Value":"4"},{"Value":"4.1"},{"Value":"4.2"},{"Value":"3.6"},{"Value":"3.8"},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.3"},{"Value":"4"},{"Value":"22"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"3.4"},{"Value":"4"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"3.7"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.2"},{"Value":"4"},{"Value":"4"},{"Value":"4"},{"Value":"4"},{"Value":"4.2"},{"Value":"4"},{"Value":"4.1"},{"Value":"4.2"},{"Value":"3.6"},{"Value":"3.8"}],"lowerLimit":3.3,"upperLimit":5.2};*/
 
 const dataPresionAire = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"},{"Value":"2026-07-22"}],"values":[{"Value":"7"},{"Value":"5.6"},{"Value":"5.7"},{"Value":"5.7"},{"Value":"5.6"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"5.5"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"4.6"},{"Value":"5.4"},{"Value":"6.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"6.3"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"4.8"},{"Value":"5.4"},{"Value":"4.3"},{"Value":"5.2"},{"Value":"5.8"},{"Value":"5.6"},{"Value":"4.4"},{"Value":"6.4"},{"Value":"6.4"},{"Value":"6"},{"Value":"5.8"},{"Value":"5.8"},{"Value":"6.5"},{"Value":"5.8"},{"Value":"6.6"},{"Value":"4.4"},{"Value":"6.4"},{"Value":"5.5"},{"Value":"6.4"},{"Value":"6.4"},{"Value":"6.2"},{"Value":"5.6"},{"Value":"5.6"},{"Value":"5.6"},{"Value":"5.7"},{"Value":"5.7"},{"Value":"5.6"}],"lowerLimit":5,"upperLimit":6.5};
 
@@ -5464,14 +5568,6 @@ let totalAlarmasPrensa = 0;
 let listaAlarmasPrensa = [];
 document.getElementById("contadorAlarmasPrensa")
     .innerHTML = totalAlarmasPrensa;
-const labelsBobina =
-dataBobina.labels.map(x => {
-    const fecha = new Date(x.Value);
-    return fecha.toLocaleDateString('es-MX', {
-        day:'2-digit',
-        month:'2-digit'
-    });
-});
 const labelsPresionAire =
 dataPresionAire.labels.map(x => {
     const fecha = new Date(x.Value);
@@ -5492,14 +5588,6 @@ const ultimoValorPresionAire =
 valuesPresionAire[valuesPresionAire.length - 1];
 document.getElementById("valorPresionAire").innerHTML =
 ultimoValorPresionAire.toFixed(2);
-const valuesBobina =
-dataBobina.values.map(x => Number(x.Value));
-const labelsBobina7 =
-labelsBobina.slice(-7);
-const valuesBobina7 =
-valuesBobina.slice(-7);
-const ultimoValorBobina =
-valuesBobina[valuesBobina.length - 1];
 console.log("Bobina 7:", valuesBobina7);
 console.log("Último Bobina:", ultimoValorBobina);
 
@@ -5606,97 +5694,6 @@ if(totalAlarmas > 0){
         .style.color = "green";
 };
 
-
-const ctxBobina =
-document.getElementById('graficaBobina');
-new Chart(ctxBobina, {
-    type: 'line',
-    data: {
-        labels: labelsBobina7,
-        datasets: [
-        {
-            label: 'Presión Agua Refrigerante Bobina',
-            data: valuesBobina7,
-            borderColor: 'blue',
-            backgroundColor: '#0078D4',
-            fill: false,
-            tension: 0.3,
-            pointRadius: valuesBobina7.map(v =>
-                (v > dataBobina.upperLimit ||
-                 v < dataBobina.lowerLimit)
-                ? 8
-                : 2
-            ),
-            pointBackgroundColor: valuesBobina7.map(v =>
-                (v > dataBobina.upperLimit ||
-                 v < dataBobina.lowerLimit)
-                ? 'red'
-                : 'blue'
-            ),
-            borderWidth: 2
-        },
-        {
-            label: 'Límite Inferior',
-            data: Array(7).fill(
-                dataBobina.lowerLimit
-            ),
-            borderColor: 'green',
-            borderDash: [5,5],
-            fill: false,
-            pointRadius: 0
-        },
-        {
-            label: 'Límite Superior',
-            data: Array(7).fill(
-                dataBobina.upperLimit
-            ),
-            borderColor: 'red',
-            borderDash: [5,5],
-            fill: false,
-            pointRadius: 0
-        }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction:{
-            mode:'index',
-            intersect:false
-        },
-        plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                    usePointStyle: true,
-                    padding: 20
-                }
-            },
-            title: {
-                display: true,
-                text:
-                'T3000 - Presión Agua Refrigerante Bobina | Actual: ' +
-                ultimoValorBobina.toFixed(2)
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color:'#eeeeee'
-                }
-            },
-            y: {
-                min:
-                dataBobina.lowerLimit - 1,
-                max:
-                dataBobina.upperLimit + 1,
-                grid: {
-                    color:'#eeeeee'
-                }
-            }
-        }
-    }
-});
 const ctxPresionAire =
 document.getElementById('graficaPresionAire');
 new Chart(ctxPresionAire, {
