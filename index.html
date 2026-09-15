@@ -4573,41 +4573,104 @@ Promise.all([
 	    data: {
 	        labels: labelsTermCoil7,
 	        datasets: [
-	        {
-	            label: 'COIL T2',
-	            data: valuesTermCoil27,
-	            borderColor: 'blue',
-	            fill: false,
-	            tension: 0.3
-	        },
-	        {
-	            label: 'COIL T3',
-	            data: valuesTermCoil37,
-	            borderColor: 'green',
-	            fill: false,
-	            tension: 0.3
-	        },
-	        {
-	            label: 'COIL T4',
-	            data: valuesTermCoil47,
-	            borderColor: 'orange',
-	            fill: false,
-	            tension: 0.3
-	        },
-	        {
-	            label: 'Límite Máximo',
-	            data: Array(7).fill(38),
-	            borderColor: 'red',
-	            borderDash: [5,5],
-	            fill: false,
-	            pointRadius: 0
-	        }
-	        ]
+	            {
+	                label: 'COIL T2',
+	                data: valuesTermCoil27,
+	                borderColor: 'blue',
+	                fill: false,
+	                tension: 0.3,
+	                pointRadius: valuesTermCoil27.map(v =>
+	                    v > 38 ? 8 : 2
+	                ),
+	                pointBackgroundColor: valuesTermCoil27.map(v =>
+	                    v > 38 ? 'red' : 'blue'
+	                )
+	            },
+	            {
+	                label: 'COIL T3',
+	                data: valuesTermCoil37,
+	                borderColor: 'green',
+	                fill: false,
+	                tension: 0.3,
+	                pointRadius: valuesTermCoil37.map(v =>
+	                    v > 38 ? 8 : 2
+	                ),
+	                pointBackgroundColor: valuesTermCoil37.map(v =>
+	                    v > 38 ? 'red' : 'green'
+	                ),
+	datalabels: {
+	    display: function(context){
+	        return context.dataset.data[context.dataIndex] > 38;
 	    },
-	    options: {
-	        responsive: true,
-	        maintainAspectRatio: false
+	    color: 'red',
+	    font: {
+	        weight: 'bold'
 	    }
+	}
+	            },
+	            {
+	                label: 'COIL T4',
+	                data: valuesTermCoil47,
+	                borderColor: 'orange',
+	                fill: false,
+	                tension: 0.3,
+	                pointRadius: valuesTermCoil47.map(v =>
+	                    v > 30 ? 8 : 2
+	                ),
+	                pointBackgroundColor: valuesTermCoil47.map(v =>
+	                    v > 30 ? 'red' : 'orange'
+	                )
+	            },
+	            {
+	                label: 'Límite Máximo',
+	                data: Array(7).fill(38),
+	                borderColor: 'red',
+	                borderDash: [5,5],
+	                fill: false,
+	                pointRadius: 0
+	            }
+	        ]
+	    }, 
+	options: {
+	    responsive: true,
+	    maintainAspectRatio: false,
+	    plugins: {
+	        legend: {
+	            position: 'top',
+	            labels: {
+	                usePointStyle: true,
+	                padding: 20
+	            }
+	        },
+	        title: {
+	            display: true,
+	            text: 'T3000 - Agua Enfriamiento Termómetros Bobina'
+	        }
+	    },
+	    elements: {
+	        line: {
+	            borderWidth: 2
+	        },
+	        point: {
+	            radius: 2,
+	            hoverRadius: 5
+	        }
+	    },
+	    scales: {
+	        x: {
+	            grid: {
+	                color: '#eeeeee'
+	            }
+	        },
+	        y: {
+	            min: 0,
+	            max: 38,
+	            grid: {
+	                color: '#eeeeee'
+	            }
+	        }
+	    }
+	}
 	});
 	document.getElementById("valorTermInv").innerHTML =
 	ultimoValorTermInv.toFixed(1) + " °C";
@@ -5393,112 +5456,7 @@ options: {
     }
 }
 });
-const ctxTermCoil =
-document.getElementById('graficaTermCoil');
-new Chart(ctxTermCoil, {
-    type: 'line',
-    data: {
-        labels: labelsTermCoil7,
-        datasets: [
-            {
-                label: 'COIL T2',
-                data: valuesTermCoil27,
-                borderColor: 'blue',
-                fill: false,
-                tension: 0.3,
-                pointRadius: valuesTermCoil27.map(v =>
-                    v > 38 ? 8 : 2
-                ),
-                pointBackgroundColor: valuesTermCoil27.map(v =>
-                    v > 38 ? 'red' : 'blue'
-                )
-            },
-            {
-                label: 'COIL T3',
-                data: valuesTermCoil37,
-                borderColor: 'green',
-                fill: false,
-                tension: 0.3,
-                pointRadius: valuesTermCoil37.map(v =>
-                    v > 38 ? 8 : 2
-                ),
-                pointBackgroundColor: valuesTermCoil37.map(v =>
-                    v > 38 ? 'red' : 'green'
-                ),
-datalabels: {
-    display: function(context){
-        return context.dataset.data[context.dataIndex] > 38;
-    },
-    color: 'red',
-    font: {
-        weight: 'bold'
-    }
-}
-            },
-            {
-                label: 'COIL T4',
-                data: valuesTermCoil47,
-                borderColor: 'orange',
-                fill: false,
-                tension: 0.3,
-                pointRadius: valuesTermCoil47.map(v =>
-                    v > 30 ? 8 : 2
-                ),
-                pointBackgroundColor: valuesTermCoil47.map(v =>
-                    v > 30 ? 'red' : 'orange'
-                )
-            },
-            {
-                label: 'Límite Máximo',
-                data: Array(7).fill(38),
-                borderColor: 'red',
-                borderDash: [5,5],
-                fill: false,
-                pointRadius: 0
-            }
-        ]
-    }, 
-options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            position: 'top',
-            labels: {
-                usePointStyle: true,
-                padding: 20
-            }
-        },
-        title: {
-            display: true,
-            text: 'T3000 - Agua Enfriamiento Termómetros Bobina'
-        }
-    },
-    elements: {
-        line: {
-            borderWidth: 2
-        },
-        point: {
-            radius: 2,
-            hoverRadius: 5
-        }
-    },
-    scales: {
-        x: {
-            grid: {
-                color: '#eeeeee'
-            }
-        },
-        y: {
-            min: 0,
-            max: 38,
-            grid: {
-                color: '#eeeeee'
-            }
-        }
-    }
-}
-});*/
+*/
 const ctxIntercambiador =
 document.getElementById('graficaIntercambiador');
 new Chart(ctxIntercambiador, {
