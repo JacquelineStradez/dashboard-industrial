@@ -5403,15 +5403,8 @@ fetch("Item24CalentadorT3000.json")
 .then(r => r.json())
 .then(data => {
     dataBobina = data;
-	console.log(dataBobina.labels[0]);
 	const labelsBobina =
-	dataBobina.labels.map(x => {
-	    const fecha = new Date(x.Value);
-	    return fecha.toLocaleDateString('es-MX', {
-	        day:'2-digit',
-	        month:'2-digit'
-	    });
-	});
+	dataBobina.labels.map(x => x.Fecha);
 	const valuesBobina =
 	dataBobina.values.map(x => Number(x.Value));
 	const labelsBobina7 =
@@ -5422,6 +5415,24 @@ fetch("Item24CalentadorT3000.json")
 	valuesBobina[valuesBobina.length - 1];
 	document.getElementById("valorBobina").innerHTML =
 	ultimoValorBobina.toFixed(2);
+	const alarmaBobina =
+	ultimoValorBobina > dataBobina.upperLimit ||
+	ultimoValorBobina < dataBobina.lowerLimit;
+	if(alarmaBobina){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "BOBINA (" +
+	        ultimoValorBobina.toFixed(2) +
+	        " bar)"
+	    );
+	};
+	if(alarmaBobina){
+	    document.getElementById("tarjetaBobina")
+	        .style.borderLeft = "6px solid red";
+	    document.getElementById("tarjetaBobina")
+	        .style.background = "#fff0f0";
+	};
 	const ctxBobina =
 	document.getElementById('graficaBobina');
 	new Chart(ctxBobina, {
@@ -5588,25 +5599,11 @@ const ultimoValorPresionAire =
 valuesPresionAire[valuesPresionAire.length - 1];
 document.getElementById("valorPresionAire").innerHTML =
 ultimoValorPresionAire.toFixed(2);
-console.log("Bobina 7:", valuesBobina7);
-console.log("Último Bobina:", ultimoValorBobina);
-
-const alarmaBobina =
-ultimoValorBobina > dataBobina.upperLimit ||
-ultimoValorBobina < dataBobina.lowerLimit;
+	
 const alarmaPresionAire =
 ultimoValorPresionAire > dataPresionAire.upperLimit ||
 ultimoValorPresionAire < dataPresionAire.lowerLimit;
 
-if(alarmaBobina){
-    hayAlarma = true;
-    totalAlarmas++;
-    listaAlarmas.push(
-        "BOBINA (" +
-        ultimoValorBobina.toFixed(2) +
-        " bar)"
-    );
-};
 if(alarmaPresionAire){
     hayAlarma = true;
     totalAlarmas++;
@@ -5616,12 +5613,7 @@ if(alarmaPresionAire){
         " bar)"
     );
 };
-if(alarmaBobina){
-    document.getElementById("tarjetaBobina")
-        .style.borderLeft = "6px solid red";
-    document.getElementById("tarjetaBobina")
-        .style.background = "#fff0f0";
-};
+
 if(alarmaPresionAire){
     document.getElementById("tarjetaPresionAire")
         .style.borderLeft = "6px solid red";
