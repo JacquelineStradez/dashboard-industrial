@@ -4447,12 +4447,6 @@ Promise.all([
 	document.getElementById("valorCoil4").innerHTML =
 	valuesCoil4[valuesCoil4.length - 1].toFixed(1);
 });
-/*const dataTermInv2 = {"labels":[{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"26"},{"Value":"22"},{"Value":"30"},{"Value":"27"},{"Value":"26"},{"Value":"32"},{"Value":"31"},{"Value":"29"},{"Value":"30"},{"Value":"27"},{"Value":"29"},{"Value":"30"},{"Value":"28"},{"Value":"28"},{"Value":"30"},{"Value":"28"},{"Value":"26"},{"Value":"26"},{"Value":"28"},{"Value":"30"},{"Value":"29"},{"Value":"30"},{"Value":"28"},{"Value":"30"},{"Value":"24"},{"Value":"20"},{"Value":"26"},{"Value":"25"},{"Value":"24"},{"Value":"25"},{"Value":"25"},{"Value":"25"},{"Value":"25"},{"Value":"27"},{"Value":"26"},{"Value":"27"},{"Value":"17"},{"Value":"25"},{"Value":"26"},{"Value":"29"},{"Value":"19"},{"Value":"26"},{"Value":"29"},{"Value":"29"},{"Value":"27"},{"Value":"26"},{"Value":"22"},{"Value":"30"},{"Value":"27"},{"Value":"26"},{"Value":"32"},{"Value":"31"},{"Value":"29"},{"Value":"30"},{"Value":"27"},{"Value":"29"},{"Value":"30"},{"Value":"28"},{"Value":"28"},{"Value":"30"},{"Value":"28"},{"Value":"26"},{"Value":"26"},{"Value":"28"},{"Value":"30"},{"Value":"29"},{"Value":"30"},{"Value":"28"},{"Value":"30"},{"Value":"24"},{"Value":"20"},{"Value":"26"},{"Value":"25"}],"Limit":40};
-const dataTermInv3 = {"labels":[{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"27"},{"Value":"25"},{"Value":"26"},{"Value":"27"},{"Value":"32"},{"Value":"27"},{"Value":"26"},{"Value":"25"},{"Value":"26"},{"Value":"30"},{"Value":"32"},{"Value":"28"},{"Value":"28"},{"Value":"26"},{"Value":"26"},{"Value":"23"},{"Value":"28"},{"Value":"27"},{"Value":"27"},{"Value":"30"},{"Value":"26"},{"Value":"29"},{"Value":"24"},{"Value":"19"},{"Value":"26"},{"Value":"23"},{"Value":"24"},{"Value":"25"},{"Value":"23"},{"Value":"23"},{"Value":"24"},{"Value":"26"},{"Value":"26"},{"Value":"27"},{"Value":"17"},{"Value":"24"},{"Value":"27"},{"Value":"27"},{"Value":"19"},{"Value":"25"},{"Value":"28"},{"Value":"24"},{"Value":"25"},{"Value":"6"},{"Value":"22"},{"Value":"27"},{"Value":"25"},{"Value":"26"},{"Value":"27"},{"Value":"32"},{"Value":"27"},{"Value":"26"},{"Value":"25"},{"Value":"26"},{"Value":"30"},{"Value":"32"},{"Value":"28"},{"Value":"28"},{"Value":"26"},{"Value":"26"},{"Value":"23"},{"Value":"28"},{"Value":"27"},{"Value":"27"},{"Value":"30"},{"Value":"26"},{"Value":"29"},{"Value":"24"},{"Value":"19"},{"Value":"26"},{"Value":"23"}],"Limit":40};
-const dataTermInv4 = {"labels":[{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"32"},{"Value":"31"},{"Value":"28"},{"Value":"29"},{"Value":"27"},{"Value":"29"},{"Value":"30"},{"Value":"30"},{"Value":"27"},{"Value":"27"},{"Value":"26"},{"Value":"27"},{"Value":"25"},{"Value":"28"},{"Value":"30"},{"Value":"29"},{"Value":"30"},{"Value":"30"},{"Value":"30"},{"Value":"24"},{"Value":"20"},{"Value":"28"},{"Value":"24"},{"Value":"34"},{"Value":"24"},{"Value":"25"},{"Value":"25"},{"Value":"24"},{"Value":"27"},{"Value":"26"},{"Value":"25"},{"Value":"17"},{"Value":"25"},{"Value":"27"},{"Value":"29"},{"Value":"19"},{"Value":"26"},{"Value":"29"},{"Value":"27"},{"Value":"27"},{"Value":"26"},{"Value":"23"},{"Value":"30"},{"Value":"27"},{"Value":"26"},{"Value":"32"},{"Value":"31"},{"Value":"28"},{"Value":"29"},{"Value":"27"},{"Value":"29"},{"Value":"30"},{"Value":"30"},{"Value":"27"},{"Value":"27"},{"Value":"26"},{"Value":"27"},{"Value":"25"},{"Value":"28"},{"Value":"30"},{"Value":"29"},{"Value":"30"},{"Value":"30"},{"Value":"30"},{"Value":"24"},{"Value":"20"},{"Value":"28"},{"Value":"24"}],"Limit":40};
-const dataTermCoil2 = {"labels":[{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"37"},{"Value":"36"},{"Value":"37"},{"Value":"36"},{"Value":"38"},{"Value":"27"},{"Value":"25"},{"Value":"35.5"},{"Value":"30"},{"Value":"24"},{"Value":"32"},{"Value":"32"},{"Value":"32"},{"Value":"32"},{"Value":"35"},{"Value":"34"},{"Value":"34"},{"Value":"24"},{"Value":"32"},{"Value":"36"},{"Value":"37"},{"Value":"22"},{"Value":"34"},{"Value":"36"},{"Value":"36"},{"Value":"34"},{"Value":"34"},{"Value":"32"},{"Value":"37"},{"Value":"3.5"},{"Value":"34"},{"Value":"38"},{"Value":"38"},{"Value":"35"},{"Value":"34"},{"Value":"34"},{"Value":"36"},{"Value":"37"},{"Value":"35"},{"Value":"35"},{"Value":"37"},{"Value":"35"},{"Value":"31"},{"Value":"34"},{"Value":"36"},{"Value":"37"},{"Value":"36"},{"Value":"37"},{"Value":"36"},{"Value":"38"},{"Value":"27"},{"Value":"25"},{"Value":"35.5"},{"Value":"30"}],"Limit":40};
-const dataTermCoil3 = {"labels":[{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"40"},{"Value":"40"},{"Value":"24"},{"Value":"20"},{"Value":"36"},{"Value":"27"},{"Value":"34"},{"Value":"33"},{"Value":"35"},{"Value":"35"},{"Value":"33"},{"Value":"36"},{"Value":"34"},{"Value":"35"},{"Value":"17"},{"Value":"34"},{"Value":"26"},{"Value":"36"},{"Value":"25"},{"Value":"36"},{"Value":"39"},{"Value":"38"},{"Value":"34"},{"Value":"36"},{"Value":"36"},{"Value":"40"},{"Value":"39"},{"Value":"34"},{"Value":"41"},{"Value":"42"},{"Value":"37"},{"Value":"40"},{"Value":"35"},{"Value":"37"},{"Value":"30"},{"Value":"34"},{"Value":"27"},{"Value":"37"},{"Value":"35"},{"Value":"26"},{"Value":"34"},{"Value":"34"},{"Value":"30"},{"Value":"37"},{"Value":"37"},{"Value":"40"},{"Value":"40"},{"Value":"24"},{"Value":"20"},{"Value":"36"},{"Value":"27"}],"Limit":40};
-const dataTermCoil4 = {"labels":[{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"}],"values":[{"Value":"25"},{"Value":"23"},{"Value":"25"},{"Value":"25"},{"Value":"24"},{"Value":"3"},{"Value":"25"},{"Value":"25"},{"Value":"26"},{"Value":"27"},{"Value":"25"},{"Value":"27"},{"Value":"17"},{"Value":"25"},{"Value":"26"},{"Value":"25"},{"Value":"20"},{"Value":"26"},{"Value":"29"},{"Value":"28"},{"Value":"25"},{"Value":"27"},{"Value":"23"},{"Value":"27"},{"Value":"27"},{"Value":"27"},{"Value":"30"},{"Value":"32"},{"Value":"30"},{"Value":"31"},{"Value":"28"},{"Value":"26"},{"Value":"32"},{"Value":"30"},{"Value":"25"},{"Value":"26"},{"Value":"25"},{"Value":"23"},{"Value":"24"},{"Value":"30"},{"Value":"25"},{"Value":"30"},{"Value":"25"},{"Value":"30"},{"Value":"26"},{"Value":"25"},{"Value":"23"},{"Value":"25"},{"Value":"25"}],"Limit":40};*/
 let labelsTermInv;
 let labelsTermInv7;
 let valuesTermInv2;
@@ -4700,6 +4694,42 @@ Promise.all([
 	valuesTermCoil3[valuesTermCoil3.length - 1].toFixed(1) + " °C";
 	document.getElementById("valorTermCoil4").innerHTML =
 	valuesTermCoil4[valuesTermCoil4.length - 1].toFixed(1) + " °C";
+	if(valuesTermInv2[valuesTermInv2.length - 1] > 30){
+	    document.getElementById("tarjetaTermInv2")
+	        .style.borderLeft = "6px solid red";
+	    document.getElementById("tarjetaTermInv2")
+	        .style.background = "#fff0f0";
+	}
+	if(valuesTermInv3[valuesTermInv3.length - 1] > 30){
+	    document.getElementById("tarjetaTermInv3")
+	        .style.borderLeft = "6px solid red";
+	    document.getElementById("tarjetaTermInv3")
+	        .style.background = "#fff0f0";
+	}
+	if(valuesTermInv4[valuesTermInv4.length - 1] > 30){
+	    document.getElementById("tarjetaTermInv4")
+	        .style.borderLeft = "6px solid red";
+	    document.getElementById("tarjetaTermInv4")
+	        .style.background = "#fff0f0";
+	}
+	if(valuesTermCoil2[valuesTermCoil2.length - 1] > 38){
+	    document.getElementById("tarjetaTermCoil2")
+	        .style.borderLeft = "6px solid red";
+	    document.getElementById("tarjetaTermCoil2")
+	        .style.background = "#fff0f0";
+	}
+	if(valuesTermCoil3[valuesTermCoil3.length - 1] > 38){
+	    document.getElementById("tarjetaTermCoil3")
+	        .style.borderLeft = "6px solid red";
+	    document.getElementById("tarjetaTermCoil3")
+	        .style.background = "#fff0f0";
+	}
+	if(valuesTermCoil4[valuesTermCoil4.length - 1] > 38){
+	    document.getElementById("tarjetaTermCoil4")
+	        .style.borderLeft = "6px solid red";
+	    document.getElementById("tarjetaTermCoil4")
+	        .style.background = "#fff0f0";
+	}
 });
 	
 const dataIntercambiador = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"}],"values":[{"Value":"6"},{"Value":"6.2"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"5.9"},{"Value":"6"},{"Value":"8"},{"Value":"6"},{"Value":"8.6"},{"Value":"9"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"6"},{"Value":"5.9"},{"Value":"8"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"5.2"},{"Value":"8"},{"Value":"7.5"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8.5"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"}],"lowerLimit":6,"upperLimit":8};
@@ -4980,60 +5010,6 @@ y: {
     }
 }
 });
-/*const labelsTermInv =
-dataTermInv2.labels.map(x => {
-    const fecha = new Date(x.Value);
-    return fecha.toLocaleDateString(
-        'es-MX',
-        {
-            day:'2-digit',
-            month:'2-digit'
-        }
-    );
-});
-const labelsTermInv7 =
-labelsTermInv.slice(-7);
-const valuesTermInv2 =
-dataTermInv2.values.map(x => Number(x.Value));
-const valuesTermInv3 =
-dataTermInv3.values.map(x => Number(x.Value));
-const valuesTermInv4 =
-dataTermInv4.values.map(x => Number(x.Value));
-const ultimoValorTermInv =
-valuesTermInv2[valuesTermInv2.length - 1];
-const valuesTermInv27 = valuesTermInv2.slice(-7);
-const valuesTermInv37 = valuesTermInv3.slice(-7);
-const valuesTermInv47 = valuesTermInv4.slice(-7);
-const labelsTermCoil =
-dataTermCoil2.labels.map(x => {
-    const fecha = new Date(x.Value);
-    return fecha.toLocaleDateString(
-        'es-MX',
-        {
-            day:'2-digit',
-            month:'2-digit'
-        }
-    );
-});
-const labelsTermCoil7 =
-labelsTermCoil.slice(-7);
-const valuesTermCoil2 =
-dataTermCoil2.values.map(x => Number(x.Value));
-const valuesTermCoil3 =
-dataTermCoil3.values.map(x => Number(x.Value));
-const valuesTermCoil4 =
-dataTermCoil4.values.map(x => Number(x.Value));
-const ultimoValorTermBobina =
-valuesTermCoil2[valuesTermCoil2.length - 1];
-const valuesTermCoil27 = valuesTermCoil2.slice(-7);
-const valuesTermCoil37 = valuesTermCoil3.slice(-7);
-const valuesTermCoil47 = valuesTermCoil4.slice(-7);
-const labelsPanelFrontal =
-labelsTermInv7;
-const valuesPanelInv =
-valuesTermInv27;
-const valuesPanelBobina =
-valuesTermCoil27;*/
 const labelsIntercambiador =
 dataIntercambiador.labels.map(x => {
     const fecha = new Date(x.Value);
@@ -5129,14 +5105,6 @@ document.getElementById("valorInterno").innerHTML =
 ultimoValorInterno.toFixed(2);
 document.getElementById("valorBobina").innerHTML =
 ultimoValorBobina.toFixed(2);
-/*document.getElementById("valorTermInv").innerHTML =
-ultimoValorTermInv.toFixed(1) + " °C";
-document.getElementById("valorTermBobina").innerHTML =
-ultimoValorTermBobina.toFixed(1) + " °C";
-const ultimoValorPanel =
-valuesPanelInv[valuesPanelInv.length - 1];
-document.getElementById("valorPanelFrontal").innerHTML =
-ultimoValorPanel.toFixed(1) + " °C";*/
 document.getElementById("valorConductividad").innerHTML =
 ultimoValorConductividad.toFixed(2);
 let hayAlarma = false;
@@ -5154,29 +5122,6 @@ ultimoValorBobina < dataBobina.lowerLimit;
 const alarmaPresionAire =
 ultimoValorPresionAire > dataPresionAire.upperLimit ||
 ultimoValorPresionAire < dataPresionAire.lowerLimit;
-/*const alarmaTermInv =
-ultimoValorTermInv > 30;
-const alarmaTermBobina =
-ultimoValorTermBobina > 30;
-if(alarmaIntercambiador){
-    document.getElementById("tarjetaIntercambiador")
-        .style.borderLeft = "6px solid red";
-
-    document.getElementById("tarjetaIntercambiador")
-        .style.background = "#fff0f0";
-};
-if(alarmaTermInv){
-document.getElementById("tarjetaTermInv")
-.style.borderLeft = "6px solid red";
-document.getElementById("tarjetaTermInv")
-.style.background = "#fff0f0";
-};
-if(alarmaTermBobina){
-document.getElementById("tarjetaTermBobina")
-.style.borderLeft = "6px solid red";
-document.getElementById("tarjetaTermBobina")
-.style.background = "#fff0f0";
-};*/
 if(alarmaInterno){
     hayAlarma = true;
     totalAlarmas++;
@@ -5205,24 +5150,6 @@ if(alarmaPresionAire){
         " bar)"
     );
 };
-/*if(alarmaTermInv){
-hayAlarma = true;
-totalAlarmas++;
-listaAlarmas.push(
-"TEMP PANEL INVERSOR (" +
-ultimoValorTermInv.toFixed(1) +
-" °C)"
-);
-};
-if(alarmaTermBobina){
-hayAlarma = true;
-totalAlarmas++;
-listaAlarmas.push(
-"TEMP PANEL BOBINA (" +
-ultimoValorTermBobina.toFixed(1) +
-" °C)"
-);
-};*/
 if(alarmaInterno){
     document.getElementById("tarjetaInterno")
         .style.borderLeft = "6px solid red";
@@ -5242,72 +5169,6 @@ if(alarmaPresionAire){
     document.getElementById("tarjetaPresionAire")
         .style.background = "#fff0f0";
 };
-/*if(valuesTermInv2.some(v => v > 30)){
-    hayAlarma = true;
-    totalAlarmas++;
-    const maxTermInv2 =
-    Math.max(...valuesTermInv2);
-    listaAlarmas.push(
-        "TERM INV 2 (" +
-        maxTermInv2.toFixed(0) +
-        "°C)"
-    );
-};
-if(valuesTermInv3.some(v => v > 30)){
-    hayAlarma = true;
-    totalAlarmas++;
-    const maxTermInv3 =
-    Math.max(...valuesTermInv3);
-    listaAlarmas.push(
-        "TERM INV 3 (" +
-        maxTermInv3.toFixed(0) +
-        "°C)"
-    );
-};
-if(valuesTermInv4.some(v => v > 30)){
-    hayAlarma = true;
-    totalAlarmas++;
-    const maxTermInv4 =
-    Math.max(...valuesTermInv4);
-    listaAlarmas.push(
-        "TERM INV 4 (" +
-        maxTermInv4.toFixed(0) +
-        "°C)"
-    );
-};
-if(valuesTermCoil2.some(v => v > 38)){
-    hayAlarma = true;
-    totalAlarmas++;
-    const maxTermCoil2 =
-    Math.max(...valuesTermCoil2);
-    listaAlarmas.push(
-        "TERM COIL 2 (" +
-        maxTermCoil2.toFixed(0) +
-        "°C)"
-    );
-};
-if(valuesTermCoil3.some(v => v > 38)){
-    hayAlarma = true;
-    totalAlarmas++;
-    const maxTermCoil3 =
-    Math.max(...valuesTermCoil3);
-    listaAlarmas.push(
-        "TERM COIL 3 (" +
-        maxTermCoil3.toFixed(0) +
-        "°C)"
-    );
-};
-if(valuesTermCoil4.some(v => v > 30)){
-    hayAlarma = true;
-    totalAlarmas++;
-    const maxTermCoil4 =
-    Math.max(...valuesTermCoil4);
-    listaAlarmas.push(
-        "TERM COIL 4 (" +
-        maxTermCoil4.toFixed(0) +
-        "°C)"
-    );
-};*/
 if(alarmaIntercambiador){
     hayAlarma = true;
     totalAlarmas++;
@@ -5382,105 +5243,6 @@ if(totalAlarmas > 0){
     document.getElementById("contadorAlarmas")
         .style.color = "green";
 };
-/*const ctxTermInv =
-document.getElementById('graficaTermInv');
-new Chart(ctxTermInv, {
-    type: 'line',
-    data: {
-        labels: labelsTermInv7,
-        datasets: [      
-{
-    label: 'INV T2',
-    data: valuesTermInv27,
-    borderColor: 'blue',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesTermInv27.map(v =>
-        v > 30 ? 8 : 2
-    ),
-    pointBackgroundColor: valuesTermInv27.map(v =>
-        v > 30 ? 'red' : 'blue'
-    )
-},            
-{
-    label: 'INV T3',
-    data: valuesTermInv37,
-    borderColor: 'green',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesTermInv37.map(v =>
-        v > 30 ? 8 : 2
-    ),
-    pointBackgroundColor: valuesTermInv37.map(v =>
-        v > 30 ? 'red' : 'green'
-    )
-},          
-{
-    label: 'INV T4',
-    data: valuesTermInv47,
-    borderColor: 'orange',
-    fill: false,
-    tension: 0.3,
-    pointRadius: valuesTermInv47.map(v =>
-        v > 30 ? 8 : 2
-    ),
-    pointBackgroundColor: valuesTermInv47.map(v =>
-        v > 30 ? 'red' : 'orange'
-    )
-},
-            {       
-		label: 'Límite Máximo',
-                    data: Array(7).fill(30),
-                    borderColor: '#d32f2f',
-                    borderWidth: 2,
-                    borderDash: [8,4],
-                    fill: false,
-                    pointRadius: 0
-            }
-        ]
-    },  
-options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            position: 'top',
-            labels: {
-                usePointStyle: true,
-                padding: 20
-            }
-        },
-        title: {
-            display: true,
-            text: 'T3000 - Agua Enfriamiento Termómetros Inverter'
-        }
-    },
-    elements: {
-        line: {
-            borderWidth: 2
-        },
-        point: {
-            radius: 2,
-            hoverRadius: 5
-        }
-    },
-    scales: {
-        x: {
-            grid: {
-                color: '#eeeeee'
-            }
-        },
-        y: {
-            min: 0,
-            max: 30,
-            grid: {
-                color: '#eeeeee'
-            }
-        }
-    }
-}
-});
-*/
 const ctxIntercambiador =
 document.getElementById('graficaIntercambiador');
 new Chart(ctxIntercambiador, {
@@ -5935,90 +5697,6 @@ new Chart(ctxPresionAire, {
         }
     }
 });
-/*const ctxPanelFrontal =
-document.getElementById('graficaPanelFrontal');
-new Chart(ctxPanelFrontal, {
-    type: 'line',
-    data: {
-        labels: labelsPanelFrontal,
-        datasets: [
-        {
-            label: 'Panel Frontal Inversor',
-            data: valuesPanelInv,
-            borderColor: 'blue',
-            fill: false,
-            tension: 0.3,
-            pointRadius: valuesPanelInv.map(v =>
-                v > 30 ? 8 : 2
-            ),
-            pointBackgroundColor: valuesPanelInv.map(v =>
-                v > 30 ? 'red' : 'blue'
-            ),
-            borderWidth: 2
-        },
-        {
-            label: 'Panel Frontal Bobina',
-            data: valuesPanelBobina,
-            borderColor: 'green',
-            fill: false,
-            tension: 0.3,
-            pointRadius: valuesPanelBobina.map(v =>
-                v > 30 ? 8 : 2
-            ),
-            pointBackgroundColor: valuesPanelBobina.map(v =>
-                v > 30 ? 'red' : 'green'
-            ),
-            pointBorderColor: valuesPanelBobina.map(v =>
-                v > 30 ? 'red' : 'green'
-            ),
-            borderWidth: 2
-        },
-        {
-            label: 'Límite Máximo',
-            data: Array(7).fill(30),
-            borderColor: 'red',
-            borderDash: [5,5],
-            fill: false,
-            pointRadius: 0
-        }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction:{
-            mode:'index',
-            intersect:false
-        },
-        plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                    usePointStyle: true,
-                    padding: 20
-                }
-            },
-            title: {
-                display: true,
-                text: 'T3000 - Temperatura Panel Frontal'
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color:'#eeeeee'
-                }
-            },
-            y: {
-                min: 0,
-                max: 40,
-                grid: {
-                    color:'#eeeeee'
-                }
-            }
-        }
-    }
-});*/
 </script>
 </div>
 </body>
