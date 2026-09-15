@@ -4491,10 +4491,10 @@ Promise.all([
 	console.log("VALORES CRUDOS", dataTermInv2.values);
 	valuesTermInv2 =
 	dataTermInv2.values.map(function(x){
-	    return Number(String(x.Value).trim());
+	    return Number(String(x["Value "]).trim());
 	});
-	console.log("PRIMER VALOR", dataTermInv2.values[0].Value);
-	console.log("TIPO", typeof dataTermInv2.values[0].Value);
+	console.log("PRIMER VALOR", dataTermInv2.values[0]["Value "]);
+	console.log("TIPO", typeof dataTermInv2.values[0]["Value "]);
 	console.log("CONVERTIDOS NUEVO", valuesTermInv2);
 	console.log("CONVERTIDOS NUEVO", valuesTermInv2);
 	console.log("ULTIMO", valuesTermInv2[valuesTermInv2.length - 1]);
@@ -4502,9 +4502,9 @@ Promise.all([
 	console.log("ULTIMO", valuesTermInv2[valuesTermInv2.length - 1]);
 	console.log("CONVERTIDOS", valuesTermInv2);
 	valuesTermInv3 =
-	dataTermInv3.values.map(x => Number(x["Value"]));
+	dataTermInv3.values.map(x => Number(x["Value "]));
 	valuesTermInv4 =
-	dataTermInv4.values.map(x => Number(x["Value"]));
+	dataTermInv4.values.map(x => Number(x["Value "]));
 	valuesTermInv27 =
 	valuesTermInv2.slice(-7);
 	valuesTermInv37 =
@@ -4516,11 +4516,11 @@ Promise.all([
 	labelsTermCoil7 =
 	labelsTermCoil.slice(-7);
 	valuesTermCoil2 =
-	dataTermCoil2.values.map(x => Number(x["Value"]));
+	dataTermCoil2.values.map(x => Number(x["Value "]));
 	valuesTermCoil3 =
-	dataTermCoil3.values.map(x => Number(x["Value"]));
+	dataTermCoil3.values.map(x => Number(x["Value "]));
 	valuesTermCoil4 =
-	dataTermCoil4.values.map(x => Number(x["Value"]));
+	dataTermCoil4.values.map(x => Number(x["Value "]));
 	valuesTermCoil27 =
 	valuesTermCoil2.slice(-7);
 	valuesTermCoil37 =
