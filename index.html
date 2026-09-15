@@ -5294,13 +5294,7 @@ fetch("Item23CalentadorT3000.json")
     dataInterno = data;
 	console.log(dataInterno.labels[0]);
 	const labelsInterno =
-	dataInterno.labels.map(x => {
-	    const fecha = new Date(x.Value);
-	    return fecha.toLocaleDateString('es-MX', {
-	        day:'2-digit',
-	        month:'2-digit'
-	    });
-	});
+	dataInterno.labels.map(x => x.Fecha);
 	const labelsInterno7 =
 	labelsInterno.slice(-7);
 	const valuesInterno =
