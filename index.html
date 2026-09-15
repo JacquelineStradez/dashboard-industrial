@@ -4471,7 +4471,10 @@ Promise.all([
 ]).then(([termInv2, termInv3, termInv4, termCoil2, termCoil3, termCoil4]) => {
     dataTermInv2 = termInv2;
 	console.log("TERM INV2 JSON", dataTermInv2);
-	console.log("TERM INV2 VALUES", dataTermInv2.values);
+	console.log(
+	    "PRIMER OBJETO",
+	    dataTermInv2.values[0]
+	);
 	console.log(
 	    "PRIMER OBJETO COMPLETO",
 	    JSON.stringify(dataTermInv2.values[0])
