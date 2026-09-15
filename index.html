@@ -823,15 +823,31 @@ canvas{
      style="display:none;">
     <h2>Agua Enfriamiento Termómetros</h2>
     <div class="tarjetasModulo">
-        <div class="tarjeta" id="tarjetaTermInv">
-            <h3>Temp. Panel Frontal Inversor</h3>
-            <h2 id="valorTermInv"></h2>
-        </div>
-        <div class="tarjeta" id="tarjetaTermBobina">
-            <h3>Temp. Panel Frontal Bobina</h3>
-            <h2 id="valorTermBobina"></h2>
-        </div>
-    </div>
+	    <div class="tarjeta" id="tarjetaTermInv2">
+		    <h3>INV T2</h3>
+		    <h2 id="valorTermInv2">--</h2>
+		</div>
+		<div class="tarjeta" id="tarjetaTermInv3">
+		    <h3>INV T3</h3>
+		    <h2 id="valorTermInv3">--</h2>
+		</div>
+		<div class="tarjeta" id="tarjetaTermInv4">
+		    <h3>INV T4</h3>
+		    <h2 id="valorTermInv4">--</h2>
+		</div>
+		<div class="tarjeta" id="tarjetaTermCoil2">
+		    <h3>COIL T2</h3>
+		    <h2 id="valorTermCoil2">--</h2>
+		</div>
+		<div class="tarjeta" id="tarjetaTermCoil3">
+		    <h3>COIL T3</h3>
+		    <h2 id="valorTermCoil3">--</h2>
+		</div>
+		<div class="tarjeta" id="tarjetaTermCoil4">
+		    <h3>COIL T4</h3>
+		    <h2 id="valorTermCoil4">--</h2>
+		</div>
+	</div>
     <div class="gridGraficas">
         <div class="bloqueGrafica">
             <div class="seccionTitulo">
@@ -4672,10 +4688,18 @@ Promise.all([
 	    }
 	}
 	});
-	document.getElementById("valorTermInv").innerHTML =
-	ultimoValorTermInv.toFixed(1) + " °C";
-	document.getElementById("valorTermBobina").innerHTML =
-	ultimoValorTermBobina.toFixed(1) + " °C";
+	document.getElementById("valorTermInv2").innerHTML =
+	valuesTermInv2[valuesTermInv2.length - 1].toFixed(1) + " °C";
+	document.getElementById("valorTermInv3").innerHTML =
+	valuesTermInv3[valuesTermInv3.length - 1].toFixed(1) + " °C";
+	document.getElementById("valorTermInv4").innerHTML =
+	valuesTermInv4[valuesTermInv4.length - 1].toFixed(1) + " °C";
+	document.getElementById("valorTermCoil2").innerHTML =
+	valuesTermCoil2[valuesTermCoil2.length - 1].toFixed(1) + " °C";
+	document.getElementById("valorTermCoil3").innerHTML =
+	valuesTermCoil3[valuesTermCoil3.length - 1].toFixed(1) + " °C";
+	document.getElementById("valorTermCoil4").innerHTML =
+	valuesTermCoil4[valuesTermCoil4.length - 1].toFixed(1) + " °C";
 });
 	
 const dataIntercambiador = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"}],"values":[{"Value":"6"},{"Value":"6.2"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"5.9"},{"Value":"6"},{"Value":"8"},{"Value":"6"},{"Value":"8.6"},{"Value":"9"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"6"},{"Value":"5.9"},{"Value":"8"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"5.2"},{"Value":"8"},{"Value":"7.5"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8.5"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"}],"lowerLimit":6,"upperLimit":8};
