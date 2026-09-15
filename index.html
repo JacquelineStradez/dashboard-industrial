@@ -4813,9 +4813,148 @@ Promise.all([
 	        .style.background = "#fff0f0";
 	}
 });
+let dataIntercambiador;
+fetch("Item17CalentadorT3000.json")
+.then(r => r.json())
+.then(data => {
+    dataIntercambiador = data;
+		const labelsIntercambiador =
+	dataIntercambiador.labels.map(x => {
+	    const fecha = new Date(x.Value);
+	    return fecha.toLocaleDateString('es-MX', {
+	        day:'2-digit',
+	        month:'2-digit'
+	    });
+	});
+	const labelsIntercambiador7 =
+	labelsIntercambiador.slice(-7);
+	const valuesIntercambiador =
+	dataIntercambiador.values.map(x => Number(x.Value));
+	console.log(valuesIntercambiador.slice(-10));
+	const valuesIntercambiador7 =
+	valuesIntercambiador.slice(-7);
+	console.log(valuesIntercambiador7);
+	console.log(dataIntercambiador.values);
+	const ultimoValorIntercambiador =
+	valuesIntercambiador[valuesIntercambiador.length - 1];
+	document.getElementById("valorIntercambiador").innerHTML =
+	ultimoValorIntercambiador.toFixed(2);
+	const alarmaIntercambiador =
+	ultimoValorIntercambiador > dataIntercambiador.upperLimit ||
+	ultimoValorIntercambiador < dataIntercambiador.lowerLimit;
+	if(alarmaIntercambiador){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "INTERCAMBIADOR (" +
+	        ultimoValorIntercambiador.toFixed(2) +
+	        " bar)"
+	    );
+	};
+	const ctxIntercambiador =
+	document.getElementById('graficaIntercambiador');
+	new Chart(ctxIntercambiador, {
+	    type: 'line',
+	data: {
+	    labels: labelsIntercambiador7, 
+	datasets: [
+	{
+	    label: 'Presión Agua Refrigerante',
+	    borderColor: 'blue',
+	    data: valuesIntercambiador7,
+	    backgroundColor: '#0078D4',
+	    tension: 0.3,
+	    fill: false,
+	    spanGaps: true,     
+	pointRadius: valuesIntercambiador7.map(v =>
+	    (v > dataIntercambiador.upperLimit ||
+	     v < dataIntercambiador.lowerLimit)
+	    ? 8
+	    : 2
+	),
+	    pointHoverRadius: 8,
+	pointBackgroundColor: valuesIntercambiador7.map(v =>
+	    (v > dataIntercambiador.upperLimit ||
+	     v < dataIntercambiador.lowerLimit)
+	    ? 'red'
+	    : 'blue'
+	),
+	    borderWidth: 2,
+	    pointHoverRadius: 8
+	},
+	{
+	    label: 'Límite Inferior',
+	    data: Array(7).fill(dataIntercambiador.lowerLimit),
+	    borderColor: 'green',
+	    borderDash: [5,5],
+	    fill: false,
+	    pointRadius: 0,
+	    tension: 0
+	},
+	{
+	    label: 'Límite Superior',
+	    data: Array(7).fill(dataIntercambiador.upperLimit),
+	    borderColor: 'red',
+	    borderDash: [5,5],
+	    fill: false,
+	    pointRadius: 0,
+	    tension: 0
+	}
+	],
+	    },
+	    options: {
+	        responsive: true,
+	        maintainAspectRatio: false,      
+	        interaction:{
+	            mode:'index',
+	            intersect:false
+	        },
+	plugins: {
+	    tooltip: {
+	        enabled: true
+	    },
+	    legend: {
+	        position: 'top',
+	        labels: {
+	            usePointStyle: true,
+	            padding: 20
+	        }
+    },
+	    title: {
+	        display: true,
+	        text:
+	        'T3000 - Presión Agua Refrigerante Intercambiador | Actual: ' +
+	        ultimoValorIntercambiador.toFixed(2)
+	    }
+	},
+	elements: {
+	    line: {
+	        borderWidth: 2
+	    },
+	    point: {
+	        radius: 2,
+	        hoverRadius: 5
+	    }
+	},
+	scales: {
+	    x: {
+	        grid: {
+	            color:'#eeeeee'
+	        }
+	    },
+	    y: {
+	        min: dataIntercambiador.lowerLimit - 1,
+	        max: dataIntercambiador.upperLimit + 1,
+	        grid: {
+	            color:'#eeeeee'
+	        }
+	    }
+	}
+	    }
+	});
+});
+/*const dataIntercambiador = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"}],"values":[{"Value":"6"},{"Value":"6.2"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"5.9"},{"Value":"6"},{"Value":"8"},{"Value":"6"},{"Value":"8.6"},{"Value":"9"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"6"},{"Value":"5.9"},{"Value":"8"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"5.2"},{"Value":"8"},{"Value":"7.5"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8.5"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"}],"lowerLimit":6,"upperLimit":8};*/
 	
-const dataIntercambiador = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"}],"values":[{"Value":"6"},{"Value":"6.2"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"5.9"},{"Value":"6"},{"Value":"8"},{"Value":"6"},{"Value":"8.6"},{"Value":"9"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"6"},{"Value":"5.9"},{"Value":"8"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"6"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"5.2"},{"Value":"8"},{"Value":"7.5"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8.5"},{"Value":"8"},{"Value":"8"},{"Value":"8"},{"Value":"8"}],"lowerLimit":6,"upperLimit":8};
-
 const dataConductividad = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"}],"values":[{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.06"},{"Value":"0.07"},{"Value":"0.06"},{"Value":"0.08"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.13"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.13"},{"Value":"0.06"},{"Value":"0.06"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.12"},{"Value":"0.12"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.14"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.06"},{"Value":"0.06"},{"Value":"0"},{"Value":"0.06"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.12"},{"Value":"0.07"},{"Value":"0.08"},{"Value":"0.13"},{"Value":"0.07"},{"Value":"0.08"}],"lowerLimit":0,"upperLimit":20};
 
 const dataInterno = {"labels":[{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"}],"values":[{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"3.2"},{"Value":"5.8"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.3"},{"Value":"4.4"},{"Value":"4.1"},{"Value":"4.1"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"}],"lowerLimit":4.0,"upperLimit":5.2};
@@ -5092,14 +5231,6 @@ y: {
     }
 }
 });
-const labelsIntercambiador =
-dataIntercambiador.labels.map(x => {
-    const fecha = new Date(x.Value);
-    return fecha.toLocaleDateString('es-MX', {
-        day:'2-digit',
-        month:'2-digit'
-    });
-});
 const labelsConductividad =
 dataConductividad.labels.map(x => {
     const fecha = new Date(x.Value);
@@ -5170,19 +5301,6 @@ const valuesConductividad7 =
 valuesConductividad.slice(-7);
 const ultimoValorConductividad =
 valuesConductividad[valuesConductividad.length - 1];
-const labelsIntercambiador7 =
-labelsIntercambiador.slice(-7);
-const valuesIntercambiador =
-dataIntercambiador.values.map(x => Number(x.Value));
-console.log(valuesIntercambiador.slice(-10));
-const valuesIntercambiador7 =
-valuesIntercambiador.slice(-7);
-console.log(valuesIntercambiador7);
-console.log(dataIntercambiador.values);
-const ultimoValorIntercambiador =
-valuesIntercambiador[valuesIntercambiador.length - 1];
-document.getElementById("valorIntercambiador").innerHTML =
-ultimoValorIntercambiador.toFixed(2);
 document.getElementById("valorInterno").innerHTML =
 ultimoValorInterno.toFixed(2);
 document.getElementById("valorBobina").innerHTML =
@@ -5192,9 +5310,6 @@ ultimoValorConductividad.toFixed(2);
 let hayAlarma = false;
 let totalAlarmas = 0;
 let listaAlarmas = [];
-const alarmaIntercambiador =
-ultimoValorIntercambiador > dataIntercambiador.upperLimit ||
-ultimoValorIntercambiador < dataIntercambiador.lowerLimit;
 const alarmaInterno =
 ultimoValorInterno > dataInterno.upperLimit ||
 ultimoValorInterno < dataInterno.lowerLimit;
@@ -5250,15 +5365,6 @@ if(alarmaPresionAire){
         .style.borderLeft = "6px solid red";
     document.getElementById("tarjetaPresionAire")
         .style.background = "#fff0f0";
-};
-if(alarmaIntercambiador){
-    hayAlarma = true;
-    totalAlarmas++;
-    listaAlarmas.push(
-        "INTERCAMBIADOR (" +
-        ultimoValorIntercambiador.toFixed(2) +
-        " bar)"
-    );
 };
 document.getElementById("contadorAlarmas")
     .innerHTML = totalAlarmas++;
@@ -5325,107 +5431,6 @@ if(totalAlarmas > 0){
     document.getElementById("contadorAlarmas")
         .style.color = "green";
 };
-const ctxIntercambiador =
-document.getElementById('graficaIntercambiador');
-new Chart(ctxIntercambiador, {
-    type: 'line',
-data: {
-    labels: labelsIntercambiador7, 
-datasets: [
-{
-    label: 'Presión Agua Refrigerante',
-    borderColor: 'blue',
-    data: valuesIntercambiador7,
-    backgroundColor: '#0078D4',
-    tension: 0.3,
-    fill: false,
-    spanGaps: true,     
-pointRadius: valuesIntercambiador7.map(v =>
-    (v > dataIntercambiador.upperLimit ||
-     v < dataIntercambiador.lowerLimit)
-    ? 8
-    : 2
-),
-    pointHoverRadius: 8,
-pointBackgroundColor: valuesIntercambiador7.map(v =>
-    (v > dataIntercambiador.upperLimit ||
-     v < dataIntercambiador.lowerLimit)
-    ? 'red'
-    : 'blue'
-),
-    borderWidth: 2,
-    pointHoverRadius: 8
-},
-{
-    label: 'Límite Inferior',
-    data: Array(7).fill(dataIntercambiador.lowerLimit),
-    borderColor: 'green',
-    borderDash: [5,5],
-    fill: false,
-    pointRadius: 0,
-    tension: 0
-},
-{
-    label: 'Límite Superior',
-    data: Array(7).fill(dataIntercambiador.upperLimit),
-    borderColor: 'red',
-    borderDash: [5,5],
-    fill: false,
-    pointRadius: 0,
-    tension: 0
-}
-],
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,      
-        interaction:{
-            mode:'index',
-            intersect:false
-        },
-plugins: {
-    tooltip: {
-        enabled: true
-    },
-    legend: {
-        position: 'top',
-        labels: {
-            usePointStyle: true,
-            padding: 20
-        }
-    },
-    title: {
-        display: true,
-        text:
-        'T3000 - Presión Agua Refrigerante Intercambiador | Actual: ' +
-        ultimoValorIntercambiador.toFixed(2)
-    }
-},
-elements: {
-    line: {
-        borderWidth: 2
-    },
-    point: {
-        radius: 2,
-        hoverRadius: 5
-    }
-},
-scales: {
-    x: {
-        grid: {
-            color:'#eeeeee'
-        }
-    },
-    y: {
-        min: dataIntercambiador.lowerLimit - 1,
-        max: dataIntercambiador.upperLimit + 1,
-        grid: {
-            color:'#eeeeee'
-        }
-    }
-}
-    }
-});
 const ctxConductividad =
 document.getElementById('graficaConductividad');
 new Chart(ctxConductividad, {
