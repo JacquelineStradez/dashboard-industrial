@@ -4475,6 +4475,14 @@ Promise.all([
     dataTermCoil2 = termCoil2;
     dataTermCoil3 = termCoil3;
     dataTermCoil4 = termCoil4;
+	console.log(
+	    "PRIMER LABEL INV",
+	    JSON.stringify(dataTermInv2.labels[0])
+	);
+	console.log(
+	    "PRIMER LABEL COIL",
+	    JSON.stringify(dataTermCoil2.labels[0])
+	);
 	labelsTermInv =
 	dataTermInv2.labels.map(x => x.Value);
 	labelsTermInv7 =
