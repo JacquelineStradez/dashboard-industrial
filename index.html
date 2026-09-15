@@ -4012,10 +4012,10 @@ Promise.all([
 	dataA.labels.map(x => x.Fecha);
 	const labels7 =
 	labels.slice(-7);
-	const valuesA = dataA.values.map(x => x.Value);
-	const valuesB = dataB.values.map(x => x.Value);
-	const valuesC = dataC.values.map(x => x.Value);
-	const valuesD = dataD.values.map(x => x.Value);
+	const valuesA = dataA.values.map(x => Number(x.Value));
+	const valuesB = dataB.values.map(x => Number(x.Value));
+	const valuesC = dataC.values.map(x => Number(x.Value));
+	const valuesD = dataD.values.map(x => Number(x.Value));
 	const valuesA7 =
 	valuesA.slice(-7);
 	const valuesB7 = valuesB.slice(-7);
