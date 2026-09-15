@@ -5525,7 +5525,139 @@ fetch("Item24CalentadorT3000.json")
 	});
 });
 
-const dataPresionAire = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"},{"Value":"2026-07-22"}],"values":[{"Value":"7"},{"Value":"5.6"},{"Value":"5.7"},{"Value":"5.7"},{"Value":"5.6"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"5.5"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"4.6"},{"Value":"5.4"},{"Value":"6.4"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"6.3"},{"Value":"5.4"},{"Value":"5.4"},{"Value":"4.8"},{"Value":"5.4"},{"Value":"4.3"},{"Value":"5.2"},{"Value":"5.8"},{"Value":"5.6"},{"Value":"4.4"},{"Value":"6.4"},{"Value":"6.4"},{"Value":"6"},{"Value":"5.8"},{"Value":"5.8"},{"Value":"6.5"},{"Value":"5.8"},{"Value":"6.6"},{"Value":"4.4"},{"Value":"6.4"},{"Value":"5.5"},{"Value":"6.4"},{"Value":"6.4"},{"Value":"6.2"},{"Value":"5.6"},{"Value":"5.6"},{"Value":"5.6"},{"Value":"5.7"},{"Value":"5.7"},{"Value":"5.6"}],"lowerLimit":5,"upperLimit":6.5};
+let dataPresionAire;
+fetch("Item25CalentadorT3000.json")
+.then(r => r.json())
+.then(data => {
+    dataPresionAire = data;
+    console.log(dataPresionAire.labels[0]);
+	const labelsPresionAire =
+	dataPresionAire.labels.map(x => {
+	    const fecha = new Date(x.Value);
+	    return fecha.toLocaleDateString('es-MX',{
+	        day:'2-digit',
+	        month:'2-digit'
+	    });
+	});
+	const valuesPresionAire =
+	dataPresionAire.values.map(x =>
+	    Number(x.Value)
+	);
+	const labelsPresionAire7 =
+	labelsPresionAire.slice(-7);
+	const valuesPresionAire7 =
+	valuesPresionAire.slice(-7);
+	const ultimoValorPresionAire =
+	valuesPresionAire[valuesPresionAire.length - 1];
+	document.getElementById("valorPresionAire").innerHTML =
+	ultimoValorPresionAire.toFixed(2);
+	const alarmaPresionAire =
+	ultimoValorPresionAire > dataPresionAire.upperLimit ||
+	ultimoValorPresionAire < dataPresionAire.lowerLimit;
+	if(alarmaPresionAire){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "PRESIÓN AIRE (" +
+	        ultimoValorPresionAire.toFixed(2) +
+	        " bar)"
+	    );
+	};
+	if(alarmaPresionAire){
+	    document.getElementById("tarjetaPresionAire")
+	        .style.borderLeft = "6px solid red";
+	    document.getElementById("tarjetaPresionAire")
+	        .style.background = "#fff0f0";
+	};
+	const ctxPresionAire =
+	document.getElementById('graficaPresionAire');
+	new Chart(ctxPresionAire, {
+	    type: 'line',
+	    data: {
+	        labels: labelsPresionAire7,
+	        datasets: [
+	        {
+	            label: 'Presión Aire',
+	            data: valuesPresionAire7,
+	            borderColor: 'blue',
+	            backgroundColor: '#0078D4',
+	            fill: false,
+	            tension: 0.3,
+	            pointRadius: valuesPresionAire7.map(v =>
+	                (v > dataPresionAire.upperLimit ||
+	                 v < dataPresionAire.lowerLimit)
+	                ? 8
+	                : 2
+	            ),
+	            pointBackgroundColor: valuesPresionAire7.map(v =>
+	                (v > dataPresionAire.upperLimit ||
+	                 v < dataPresionAire.lowerLimit)
+	                ? 'red'
+	                : 'blue'
+	            ),
+	            borderWidth: 2
+	        },
+	        {
+	            label: 'Límite Inferior',
+	            data: Array(7).fill(
+	                dataPresionAire.lowerLimit
+	            ),
+	            borderColor: 'green',
+	            borderDash: [5,5],
+	            fill: false,
+	            pointRadius: 0
+	        },
+	        {
+	            label: 'Límite Superior',
+	            data: Array(7).fill(
+	                dataPresionAire.upperLimit
+	            ),
+	            borderColor: 'red',
+	            borderDash: [5,5],
+	            fill: false,
+	            pointRadius: 0
+	        }
+	        ]
+	    },
+	    options: {
+	        responsive: true,
+	        maintainAspectRatio: false,
+	        interaction:{
+	            mode:'index',
+	            intersect:false
+	        },
+	        plugins: {
+	            legend: {
+	                position: 'top',
+	                labels: {
+	                    usePointStyle: true,
+	                    padding: 20
+	                }
+	            },
+	            title: {
+	                display: true,
+	                text:
+	                'T3000 - Presión Aire | Actual: ' +
+	                ultimoValorPresionAire.toFixed(2)
+	            }
+	        },
+	        scales: {
+	            x: {
+	                grid: {
+	                    color:'#eeeeee'
+	                }
+	            },
+	            y: {
+	                min: 4,
+	                max: 7,
+	                grid: {
+	                    color:'#eeeeee'
+	                }
+	            }
+	        }
+	    }
+	});
+});
 
 const dataTermometroinversor = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"},{"Value":"2026-07-22"}],"values":[{"Value":"30"},{"Value":"30"},{"Value":"31"},{"Value":"31"},{"Value":"31"},{"Value":"34"},{"Value":"33"},{"Value":"44"},{"Value":"22"},{"Value":"30"},{"Value":"33"},{"Value":"36"},{"Value":"24"},{"Value":"32"},{"Value":"36"},{"Value":"34"},{"Value":"34"},{"Value":"33"},{"Value":"31"},{"Value":"37"},{"Value":"34"},{"Value":"32"},{"Value":"37"},{"Value":"38"},{"Value":"34"},{"Value":"35"},{"Value":"32"},{"Value":"34"},{"Value":"35"},{"Value":"34"},{"Value":"32"},{"Value":"35"},{"Value":"34"},{"Value":"30"},{"Value":"31"},{"Value":"32"},{"Value":"35"},{"Value":"35"},{"Value":"35"},{"Value":"34"},{"Value":"36"},{"Value":"31"},{"Value":"25"},{"Value":"41"},{"Value":"39"},{"Value":"26"},{"Value":"30"},{"Value":"3"}],"Limit":30};
 
@@ -5579,47 +5711,7 @@ let totalAlarmasPrensa = 0;
 let listaAlarmasPrensa = [];
 document.getElementById("contadorAlarmasPrensa")
     .innerHTML = totalAlarmasPrensa;
-const labelsPresionAire =
-dataPresionAire.labels.map(x => {
-    const fecha = new Date(x.Value);
-    return fecha.toLocaleDateString('es-MX',{
-        day:'2-digit',
-        month:'2-digit'
-    });
-});
-const valuesPresionAire =
-dataPresionAire.values.map(x =>
-    Number(x.Value)
-);
-const labelsPresionAire7 =
-labelsPresionAire.slice(-7);
-const valuesPresionAire7 =
-valuesPresionAire.slice(-7);
-const ultimoValorPresionAire =
-valuesPresionAire[valuesPresionAire.length - 1];
-document.getElementById("valorPresionAire").innerHTML =
-ultimoValorPresionAire.toFixed(2);
-	
-const alarmaPresionAire =
-ultimoValorPresionAire > dataPresionAire.upperLimit ||
-ultimoValorPresionAire < dataPresionAire.lowerLimit;
 
-if(alarmaPresionAire){
-    hayAlarma = true;
-    totalAlarmas++;
-    listaAlarmas.push(
-        "PRESIÓN AIRE (" +
-        ultimoValorPresionAire.toFixed(2) +
-        " bar)"
-    );
-};
-
-if(alarmaPresionAire){
-    document.getElementById("tarjetaPresionAire")
-        .style.borderLeft = "6px solid red";
-    document.getElementById("tarjetaPresionAire")
-        .style.background = "#fff0f0";
-};
 document.getElementById("contadorAlarmas")
     .innerHTML = totalAlarmas++;
 document.getElementById("detalleAlarmas")
@@ -5686,94 +5778,7 @@ if(totalAlarmas > 0){
         .style.color = "green";
 };
 
-const ctxPresionAire =
-document.getElementById('graficaPresionAire');
-new Chart(ctxPresionAire, {
-    type: 'line',
-    data: {
-        labels: labelsPresionAire7,
-        datasets: [
-        {
-            label: 'Presión Aire',
-            data: valuesPresionAire7,
-            borderColor: 'blue',
-            backgroundColor: '#0078D4',
-            fill: false,
-            tension: 0.3,
-            pointRadius: valuesPresionAire7.map(v =>
-                (v > dataPresionAire.upperLimit ||
-                 v < dataPresionAire.lowerLimit)
-                ? 8
-                : 2
-            ),
-            pointBackgroundColor: valuesPresionAire7.map(v =>
-                (v > dataPresionAire.upperLimit ||
-                 v < dataPresionAire.lowerLimit)
-                ? 'red'
-                : 'blue'
-            ),
-            borderWidth: 2
-        },
-        {
-            label: 'Límite Inferior',
-            data: Array(7).fill(
-                dataPresionAire.lowerLimit
-            ),
-            borderColor: 'green',
-            borderDash: [5,5],
-            fill: false,
-            pointRadius: 0
-        },
-        {
-            label: 'Límite Superior',
-            data: Array(7).fill(
-                dataPresionAire.upperLimit
-            ),
-            borderColor: 'red',
-            borderDash: [5,5],
-            fill: false,
-            pointRadius: 0
-        }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction:{
-            mode:'index',
-            intersect:false
-        },
-        plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                    usePointStyle: true,
-                    padding: 20
-                }
-            },
-            title: {
-                display: true,
-                text:
-                'T3000 - Presión Aire | Actual: ' +
-                ultimoValorPresionAire.toFixed(2)
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color:'#eeeeee'
-                }
-            },
-            y: {
-                min: 4,
-                max: 7,
-                grid: {
-                    color:'#eeeeee'
-                }
-            }
-        }
-    }
-});
+
 </script>
 </div>
 </body>
