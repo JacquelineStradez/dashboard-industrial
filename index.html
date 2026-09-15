@@ -4475,16 +4475,8 @@ Promise.all([
     dataTermCoil2 = termCoil2;
     dataTermCoil3 = termCoil3;
     dataTermCoil4 = termCoil4;
-	console.log(
-	    "PRIMER LABEL INV",
-	    JSON.stringify(dataTermInv2.labels[0])
-	);
-	console.log(
-	    "PRIMER LABEL COIL",
-	    JSON.stringify(dataTermCoil2.labels[0])
-	);
 	labelsTermInv =
-	dataTermInv2.labels.map(x => x.Value);
+	dataTermInv2.labels.map(x => x.Fecha);
 	labelsTermInv7 =
 	labelsTermInv.slice(-7);
 	valuesTermInv2 =
@@ -4506,7 +4498,7 @@ Promise.all([
 	valuesTermInv47 =
 	valuesTermInv4.slice(-7);
 	labelsTermCoil =
-	dataTermCoil2.labels.map(x => x.Value);
+	dataTermCoil2.labels.map(x => x.Fecha);
 	labelsTermCoil7 =
 	labelsTermCoil.slice(-7);
 	valuesTermCoil2 =
@@ -4533,16 +4525,6 @@ Promise.all([
 	valuesTermCoil2[valuesTermCoil2.length - 1];
 	const ctxTermInv =
 	document.getElementById('graficaTermInv');
-	console.log("valuesTermInv27", valuesTermInv27);
-	console.log("valuesTermInv37", valuesTermInv37);
-	console.log("valuesTermInv47", valuesTermInv47);
-	
-	console.log("valuesTermCoil27", valuesTermCoil27);
-	console.log("valuesTermCoil37", valuesTermCoil37);
-	console.log("valuesTermCoil47", valuesTermCoil47);
-	
-	console.log("labelsTermInv7", labelsTermInv7);
-	console.log("labelsTermCoil7", labelsTermCoil7);
 	new Chart(ctxTermInv, {
 	    type: 'line',
 	    data: {
