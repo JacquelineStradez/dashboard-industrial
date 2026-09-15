@@ -5532,13 +5532,7 @@ fetch("Item25CalentadorT3000.json")
     dataPresionAire = data;
     console.log(dataPresionAire.labels[0]);
 	const labelsPresionAire =
-	dataPresionAire.labels.map(x => {
-	    const fecha = new Date(x.Value);
-	    return fecha.toLocaleDateString('es-MX',{
-	        day:'2-digit',
-	        month:'2-digit'
-	    });
-	});
+	dataPresionAire.labels.map(x => x.Fecha);
 	const valuesPresionAire =
 	dataPresionAire.values.map(x =>
 	    Number(x.Value)
