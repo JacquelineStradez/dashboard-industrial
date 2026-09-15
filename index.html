@@ -4609,9 +4609,45 @@ Promise.all([
 	        ]
 	    },
 	    options: {
-	        responsive: true,
-	        maintainAspectRatio: false
-	    }
+		    responsive: true,
+		    maintainAspectRatio: false,
+		    plugins: {
+		        legend: {
+		            position: 'top',
+		            labels: {
+		                usePointStyle: true,
+		                padding: 20
+		            }
+		        },
+		        title: {
+		            display: true,
+		            text: 'T3000 - Agua Enfriamiento Termómetros Inverter'
+		        }
+		    },
+		    elements: {
+		        line: {
+		            borderWidth: 2
+		        },
+		        point: {
+		            radius: 2,
+		            hoverRadius: 5
+		        }
+		    },
+		    scales: {
+		        x: {
+		            grid: {
+		                color: '#eeeeee'
+		            }
+		        },
+		        y: {
+		            min: 0,
+		            max: 30,
+		            grid: {
+		                color: '#eeeeee'
+		            }
+		        }
+		    }
+		}
 	});
 	const ctxTermCoil =
 	document.getElementById('graficaTermCoil');
