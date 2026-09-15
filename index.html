@@ -4330,6 +4330,7 @@ fetch("Item2CalentadorT3000.json")
 	}
 	});
 });	
+	
 let dataInv2;
 let dataInv3;
 let dataInv4;
@@ -5033,6 +5034,7 @@ Promise.all([
 	        .style.background = "#fff0f0";
 	}
 });
+	
 let dataIntercambiador;
 fetch("Item17CalentadorT3000.json")
 .then(r => r.json())
@@ -5177,8 +5179,119 @@ fetch("Item17CalentadorT3000.json")
 	ahora.toLocaleString('es-MX');
 });
 
-const dataConductividad = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"}],"values":[{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.06"},{"Value":"0.07"},{"Value":"0.06"},{"Value":"0.08"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.13"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.13"},{"Value":"0.06"},{"Value":"0.06"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.12"},{"Value":"0.12"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.14"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.06"},{"Value":"0.06"},{"Value":"0"},{"Value":"0.06"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.07"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.13"},{"Value":"0.12"},{"Value":"0.07"},{"Value":"0.08"},{"Value":"0.13"},{"Value":"0.07"},{"Value":"0.08"}],"lowerLimit":0,"upperLimit":20};	
-
+let dataConductividad;
+fetch("Item22CalentadorT3000.json")
+.then(r => r.json())
+.then(data => {
+    dataConductividad = data;
+	const labelsConductividad =
+	dataConductividad.labels.map(x => x.Fecha);
+	const labelsConductividad7 =
+	labelsConductividad.slice(-7);
+	const valuesConductividad =
+	dataConductividad.values.map(x => Number(x.Value));
+	const valuesConductividad7 =
+	valuesConductividad.slice(-7);
+	const ultimoValorConductividad =
+	valuesConductividad[valuesConductividad.length - 1];
+	document.getElementById("valorConductividad").innerHTML =
+	ultimoValorConductividad.toFixed(2);
+	const ctxConductividad =
+	document.getElementById('graficaConductividad');
+	new Chart(ctxConductividad, {
+	    type: 'line',
+	    data: {
+	        labels: labelsConductividad7,
+	        datasets: [
+	        {
+	            label: 'Conductividad',
+	            borderColor: 'blue',
+	            data: valuesConductividad7,
+	            backgroundColor: '#0078D4',
+	            tension: 0.3,
+	            fill: false,
+	            pointRadius: valuesConductividad7.map(v =>
+	                (v > dataConductividad.upperLimit ||
+	                 v < dataConductividad.lowerLimit)
+	                ? 8
+	                : 2
+	            ),
+	            pointBackgroundColor: valuesConductividad7.map(v =>
+	                (v > dataConductividad.upperLimit ||
+	                 v < dataConductividad.lowerLimit)
+	                ? 'red'
+	                : 'blue'
+	            ),
+	            borderWidth: 2
+	        },
+	        {
+	            label: 'Límite Inferior',
+	            data: Array(7).fill(dataConductividad.lowerLimit),
+	            borderColor: 'green',
+	            borderDash: [5,5],
+	            fill: false,
+	            pointRadius: 0
+	        },
+	        {
+	            label: 'Límite Superior',
+	            data: Array(7).fill(dataConductividad.upperLimit),
+	            borderColor: 'red',
+	            borderDash: [5,5],
+	            fill: false,
+	            pointRadius: 0
+	        }
+	        ]
+	    },
+	    options: {
+	        responsive: true,
+	        maintainAspectRatio: false,
+	        interaction:{
+	            mode:'index',
+	            intersect:false
+	        },
+	        plugins: {
+	            tooltip: {
+	                enabled: true
+	            },
+	            legend: {
+	                position: 'top',
+	                labels: {
+	                    usePointStyle: true,
+	                    padding: 20
+	                }
+	            },
+	            title: {
+	                display: true,
+	                text:
+	                'T3000 - Conductividad | Actual: ' +
+	                ultimoValorConductividad.toFixed(2)
+	            }
+	        },
+	        elements: {
+	            line: {
+	                borderWidth: 2
+	            },
+	            point: {
+	                radius: 2,
+	                hoverRadius: 5
+	            }
+	        },
+	        scales: {
+	            x: {
+	                grid: {
+	                    color:'#eeeeee'
+	                }
+	            },
+	            y: {
+	                grid: {
+	                    color:'#eeeeee'
+	                }
+	            }
+	        }
+	    }
+	});
+	});
+	
 const dataInterno = {"labels":[{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"}],"values":[{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"3.2"},{"Value":"5.8"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.3"},{"Value":"4.4"},{"Value":"4.1"},{"Value":"4.1"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"}],"lowerLimit":4.0,"upperLimit":5.2};
 
 const dataBobina = {"labels":[{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"}],"values":[{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.3"},{"Value":"4"},{"Value":"22"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"3.4"},{"Value":"4"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"3.7"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.2"},{"Value":"4"},{"Value":"4"},{"Value":"4"},{"Value":"4"},{"Value":"4.2"},{"Value":"4"},{"Value":"4.1"},{"Value":"4.2"},{"Value":"3.6"},{"Value":"3.8"},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.3"},{"Value":"4"},{"Value":"22"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"3.4"},{"Value":"4"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"3.7"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.2"},{"Value":"4"},{"Value":"4"},{"Value":"4"},{"Value":"4"},{"Value":"4.2"},{"Value":"4"},{"Value":"4.1"},{"Value":"4.2"},{"Value":"3.6"},{"Value":"3.8"}],"lowerLimit":3.3,"upperLimit":5.2};
@@ -5237,14 +5350,6 @@ let totalAlarmasPrensa = 0;
 let listaAlarmasPrensa = [];
 document.getElementById("contadorAlarmasPrensa")
     .innerHTML = totalAlarmasPrensa;
-const labelsConductividad =
-dataConductividad.labels.map(x => {
-    const fecha = new Date(x.Value);
-    return fecha.toLocaleDateString('es-MX', {
-        day:'2-digit',
-        month:'2-digit'
-    });
-});
 const labelsInterno =
 dataInterno.labels.map(x => {
     const fecha = new Date(x.Value);
@@ -5299,20 +5404,10 @@ const valuesInterno7 =
 valuesInterno.slice(-7);
 const ultimoValorInterno =
 valuesInterno[valuesInterno.length - 1];
-const labelsConductividad7 =
-labelsConductividad.slice(-7);
-const valuesConductividad =
-dataConductividad.values.map(x => Number(x.Value));
-const valuesConductividad7 =
-valuesConductividad.slice(-7);
-const ultimoValorConductividad =
-valuesConductividad[valuesConductividad.length - 1];
 document.getElementById("valorInterno").innerHTML =
 ultimoValorInterno.toFixed(2);
 document.getElementById("valorBobina").innerHTML =
 ultimoValorBobina.toFixed(2);
-document.getElementById("valorConductividad").innerHTML =
-ultimoValorConductividad.toFixed(2);
 const alarmaInterno =
 ultimoValorInterno > dataInterno.upperLimit ||
 ultimoValorInterno < dataInterno.lowerLimit;
@@ -5433,100 +5528,7 @@ if(totalAlarmas > 0){
     document.getElementById("contadorAlarmas")
         .style.color = "green";
 };
-const ctxConductividad =
-document.getElementById('graficaConductividad');
-new Chart(ctxConductividad, {
-    type: 'line',
-    data: {
-        labels: labelsConductividad7,
-        datasets: [
-        {
-            label: 'Conductividad',
-            borderColor: 'blue',
-            data: valuesConductividad7,
-            backgroundColor: '#0078D4',
-            tension: 0.3,
-            fill: false,
-            pointRadius: valuesConductividad7.map(v =>
-                (v > dataConductividad.upperLimit ||
-                 v < dataConductividad.lowerLimit)
-                ? 8
-                : 2
-            ),
-            pointBackgroundColor: valuesConductividad7.map(v =>
-                (v > dataConductividad.upperLimit ||
-                 v < dataConductividad.lowerLimit)
-                ? 'red'
-                : 'blue'
-            ),
-            borderWidth: 2
-        },
-        {
-            label: 'Límite Inferior',
-            data: Array(7).fill(dataConductividad.lowerLimit),
-            borderColor: 'green',
-            borderDash: [5,5],
-            fill: false,
-            pointRadius: 0
-        },
-        {
-            label: 'Límite Superior',
-            data: Array(7).fill(dataConductividad.upperLimit),
-            borderColor: 'red',
-            borderDash: [5,5],
-            fill: false,
-            pointRadius: 0
-        }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction:{
-            mode:'index',
-            intersect:false
-        },
-        plugins: {
-            tooltip: {
-                enabled: true
-            },
-            legend: {
-                position: 'top',
-                labels: {
-                    usePointStyle: true,
-                    padding: 20
-                }
-            },
-            title: {
-                display: true,
-                text:
-                'T3000 - Conductividad | Actual: ' +
-                ultimoValorConductividad.toFixed(2)
-            }
-        },
-        elements: {
-            line: {
-                borderWidth: 2
-            },
-            point: {
-                radius: 2,
-                hoverRadius: 5
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color:'#eeeeee'
-                }
-            },
-            y: {
-                grid: {
-                    color:'#eeeeee'
-                }
-            }
-        }
-    }
-});
+
 const ctxInterno =
 document.getElementById('graficaInterno');
 new Chart(ctxInterno, {
