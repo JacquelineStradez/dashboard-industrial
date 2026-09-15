@@ -3987,6 +3987,9 @@ document.getElementById("btnTemperaturas")
     document.getElementById("vistaTemperaturas")
         .style.display = "block";
 });
+let hayAlarma = false;
+let totalAlarmas = 0;
+let listaAlarmas = [];
 
 let dataA;
 let dataB;
@@ -5310,9 +5313,6 @@ document.getElementById("valorBobina").innerHTML =
 ultimoValorBobina.toFixed(2);
 document.getElementById("valorConductividad").innerHTML =
 ultimoValorConductividad.toFixed(2);
-let hayAlarma = false;
-let totalAlarmas = 0;
-let listaAlarmas = [];
 const alarmaInterno =
 ultimoValorInterno > dataInterno.upperLimit ||
 ultimoValorInterno < dataInterno.lowerLimit;
@@ -5325,7 +5325,6 @@ ultimoValorPresionAire < dataPresionAire.lowerLimit;
 if(alarmaInterno){
     hayAlarma = true;
     totalAlarmas++;
-
     listaAlarmas.push(
         "INTERNO (" +
         ultimoValorInterno.toFixed(2) +
