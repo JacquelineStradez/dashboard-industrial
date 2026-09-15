@@ -4006,11 +4006,6 @@ Promise.all([
     dataB = gldB;
     dataC = gldC;
     dataD = gldD;
-	console.log("GLD A", dataA);
-	console.log("GLD B", dataB);
-	console.log("GLD C", dataC);
-	console.log("GLD D", dataD);
-	console.log(dataA.labels[0]);
 	const labels =
 	dataA.labels.map(x => x.Fecha);
 	const labels7 =
@@ -5291,8 +5286,135 @@ fetch("Item22CalentadorT3000.json")
 	    }
 	});
 	});
+
+let dataInterno;
+fetch("Item23CalentadorT3000.json")
+.then(r => r.json())
+.then(data => {
+    dataInterno = data;
+	console.log(dataInterno.labels[0]);
+	const labelsInterno =
+	dataInterno.labels.map(x => {
+	    const fecha = new Date(x.Value);
+	    return fecha.toLocaleDateString('es-MX', {
+	        day:'2-digit',
+	        month:'2-digit'
+	    });
+	});
+	const labelsInterno7 =
+	labelsInterno.slice(-7);
+	const valuesInterno =
+	dataInterno.values.map(x => Number(x.Value));
+	const valuesInterno7 =
+	valuesInterno.slice(-7);
+	const ultimoValorInterno =
+	valuesInterno[valuesInterno.length - 1];
+	document.getElementById("valorInterno").innerHTML =
+	ultimoValorInterno.toFixed(2);
+	document.getElementById("valorBobina").innerHTML =
+	ultimoValorBobina.toFixed(2);
+	const alarmaInterno =
+	ultimoValorInterno > dataInterno.upperLimit ||
+	ultimoValorInterno < dataInterno.lowerLimit;
+	if(alarmaInterno){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "INTERNO (" +
+	        ultimoValorInterno.toFixed(2) +
+	        " bar)"
+	    );
+	};
+	if(alarmaInterno){
+	    document.getElementById("tarjetaInterno")
+	        .style.borderLeft = "6px solid red";
+	    document.getElementById("tarjetaInterno")
+	        .style.background = "#fff0f0";
+	};
+	const ctxInterno =
+	document.getElementById('graficaInterno');
+	new Chart(ctxInterno, {
+	    type: 'line',
+	    data: {
+	        labels: labelsInterno7,
+	        datasets: [
+	        {
+	            label: 'Presión Agua Refrigerante Interno',
+	            borderColor: 'blue',
+	            data: valuesInterno7,
+	            backgroundColor: '#0078D4',
+	            tension: 0.3,
+	            fill: false,
+	            pointRadius: valuesInterno7.map(v =>
+	                (v > dataInterno.upperLimit ||
+	                 v < dataInterno.lowerLimit)
+	                ? 8
+	                : 2
+	            ),
+	            pointBackgroundColor: valuesInterno7.map(v =>
+	                (v > dataInterno.upperLimit ||
+	                 v < dataInterno.lowerLimit)
+	                ? 'red'
+	                : 'blue'
+	            ),
 	
-const dataInterno = {"labels":[{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"}],"values":[{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"3.2"},{"Value":"5.8"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.3"},{"Value":"4.4"},{"Value":"4.1"},{"Value":"4.1"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"}],"lowerLimit":4.0,"upperLimit":5.2};
+	            borderWidth: 2
+	        },
+	        {
+	            label: 'Límite Inferior',
+	            data: Array(7).fill(dataInterno.lowerLimit),
+	            borderColor: 'green',
+	            borderDash: [5,5],
+	            fill: false,
+	            pointRadius: 0
+	        },
+	        {
+	            label: 'Límite Superior',
+	            data: Array(7).fill(dataInterno.upperLimit),
+	            borderColor: 'red',
+	            borderDash: [5,5],
+	            fill: false,
+	            pointRadius: 0
+	        }
+	        ]
+	    },
+	    options: {
+	        responsive: true,
+	        maintainAspectRatio: false,
+	        plugins: {
+	            legend: {
+	                position: 'top',
+	                labels: {
+	                    usePointStyle: true,
+	                    padding: 20
+	                }
+	            },
+	            title: {
+	                display: true,
+	                text:
+	                'T3000 - Presión Agua Refrigerante Interno | Actual: ' +
+	                ultimoValorInterno.toFixed(2)
+	            }
+	        },
+	        scales: {
+	            x: {
+	                grid: {
+	                    color:'#eeeeee'
+	                }
+	            },
+	            y: {
+	                min: dataInterno.lowerLimit - 1,
+	                max: dataInterno.upperLimit + 1,
+	                grid: {
+	                    color:'#eeeeee'
+	                }
+	            }
+	        }
+	    }
+	});
+});
+	
+/*const dataInterno = {"labels":[{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"}],"values":[{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":null},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"3.2"},{"Value":"5.8"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.3"},{"Value":"4.4"},{"Value":"4.1"},{"Value":"4.1"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.4"}],"lowerLimit":4.0,"upperLimit":5.2};*/
 
 const dataBobina = {"labels":[{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"},{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"}],"values":[{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.3"},{"Value":"4"},{"Value":"22"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"3.4"},{"Value":"4"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"3.7"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.2"},{"Value":"4"},{"Value":"4"},{"Value":"4"},{"Value":"4"},{"Value":"4.2"},{"Value":"4"},{"Value":"4.1"},{"Value":"4.2"},{"Value":"3.6"},{"Value":"3.8"},{"Value":"4.3"},{"Value":"4.3"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.3"},{"Value":"4.2"},{"Value":"4.3"},{"Value":"4"},{"Value":"22"},{"Value":"4.4"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"3.4"},{"Value":"4"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"3.7"},{"Value":"4.2"},{"Value":"4.2"},{"Value":"4.4"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.4"},{"Value":"4.5"},{"Value":"4.5"},{"Value":"4.6"},{"Value":"4.6"},{"Value":"4.2"},{"Value":"4"},{"Value":"4"},{"Value":"4"},{"Value":"4"},{"Value":"4.2"},{"Value":"4"},{"Value":"4.1"},{"Value":"4.2"},{"Value":"3.6"},{"Value":"3.8"}],"lowerLimit":3.3,"upperLimit":5.2};
 
@@ -5350,14 +5472,6 @@ let totalAlarmasPrensa = 0;
 let listaAlarmasPrensa = [];
 document.getElementById("contadorAlarmasPrensa")
     .innerHTML = totalAlarmasPrensa;
-const labelsInterno =
-dataInterno.labels.map(x => {
-    const fecha = new Date(x.Value);
-    return fecha.toLocaleDateString('es-MX', {
-        day:'2-digit',
-        month:'2-digit'
-    });
-});
 const labelsBobina =
 dataBobina.labels.map(x => {
     const fecha = new Date(x.Value);
@@ -5396,36 +5510,14 @@ const ultimoValorBobina =
 valuesBobina[valuesBobina.length - 1];
 console.log("Bobina 7:", valuesBobina7);
 console.log("Último Bobina:", ultimoValorBobina);
-const labelsInterno7 =
-labelsInterno.slice(-7);
-const valuesInterno =
-dataInterno.values.map(x => Number(x.Value));
-const valuesInterno7 =
-valuesInterno.slice(-7);
-const ultimoValorInterno =
-valuesInterno[valuesInterno.length - 1];
-document.getElementById("valorInterno").innerHTML =
-ultimoValorInterno.toFixed(2);
-document.getElementById("valorBobina").innerHTML =
-ultimoValorBobina.toFixed(2);
-const alarmaInterno =
-ultimoValorInterno > dataInterno.upperLimit ||
-ultimoValorInterno < dataInterno.lowerLimit;
+
 const alarmaBobina =
 ultimoValorBobina > dataBobina.upperLimit ||
 ultimoValorBobina < dataBobina.lowerLimit;
 const alarmaPresionAire =
 ultimoValorPresionAire > dataPresionAire.upperLimit ||
 ultimoValorPresionAire < dataPresionAire.lowerLimit;
-if(alarmaInterno){
-    hayAlarma = true;
-    totalAlarmas++;
-    listaAlarmas.push(
-        "INTERNO (" +
-        ultimoValorInterno.toFixed(2) +
-        " bar)"
-    );
-};
+
 if(alarmaBobina){
     hayAlarma = true;
     totalAlarmas++;
@@ -5443,13 +5535,6 @@ if(alarmaPresionAire){
         ultimoValorPresionAire.toFixed(2) +
         " bar)"
     );
-};
-if(alarmaInterno){
-    document.getElementById("tarjetaInterno")
-        .style.borderLeft = "6px solid red";
-
-    document.getElementById("tarjetaInterno")
-        .style.background = "#fff0f0";
 };
 if(alarmaBobina){
     document.getElementById("tarjetaBobina")
@@ -5529,87 +5614,7 @@ if(totalAlarmas > 0){
         .style.color = "green";
 };
 
-const ctxInterno =
-document.getElementById('graficaInterno');
-new Chart(ctxInterno, {
-    type: 'line',
-    data: {
-        labels: labelsInterno7,
-        datasets: [
-        {
-            label: 'Presión Agua Refrigerante Interno',
-            borderColor: 'blue',
-            data: valuesInterno7,
-            backgroundColor: '#0078D4',
-            tension: 0.3,
-            fill: false,
-            pointRadius: valuesInterno7.map(v =>
-                (v > dataInterno.upperLimit ||
-                 v < dataInterno.lowerLimit)
-                ? 8
-                : 2
-            ),
-            pointBackgroundColor: valuesInterno7.map(v =>
-                (v > dataInterno.upperLimit ||
-                 v < dataInterno.lowerLimit)
-                ? 'red'
-                : 'blue'
-            ),
 
-            borderWidth: 2
-        },
-        {
-            label: 'Límite Inferior',
-            data: Array(7).fill(dataInterno.lowerLimit),
-            borderColor: 'green',
-            borderDash: [5,5],
-            fill: false,
-            pointRadius: 0
-        },
-        {
-            label: 'Límite Superior',
-            data: Array(7).fill(dataInterno.upperLimit),
-            borderColor: 'red',
-            borderDash: [5,5],
-            fill: false,
-            pointRadius: 0
-        }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                    usePointStyle: true,
-                    padding: 20
-                }
-            },
-            title: {
-                display: true,
-                text:
-                'T3000 - Presión Agua Refrigerante Interno | Actual: ' +
-                ultimoValorInterno.toFixed(2)
-            }
-        },
-        scales: {
-            x: {
-                grid: {
-                    color:'#eeeeee'
-                }
-            },
-            y: {
-                min: dataInterno.lowerLimit - 1,
-                max: dataInterno.upperLimit + 1,
-                grid: {
-                    color:'#eeeeee'
-                }
-            }
-        }
-    }
-});
 const ctxBobina =
 document.getElementById('graficaBobina');
 new Chart(ctxBobina, {
