@@ -4482,6 +4482,10 @@ Promise.all([
     dataTermInv3 = termInv3;
     dataTermInv4 = termInv4;
     dataTermCoil2 = termCoil2;
+	console.log(
+	    "PRIMER OBJETO COIL2",
+	    JSON.stringify(dataTermCoil2.values[0])
+	);
     dataTermCoil3 = termCoil3;
     dataTermCoil4 = termCoil4;
 	labelsTermInv =
@@ -4516,11 +4520,12 @@ Promise.all([
 	labelsTermCoil7 =
 	labelsTermCoil.slice(-7);
 	valuesTermCoil2 =
-	dataTermCoil2.values.map(x => Number(x["Value"]));
+	dataTermCoil2.values.map(x => Number(x["Value "]));
+	console.log("COIL2 CONVERTIDO", valuesTermCoil2);
 	valuesTermCoil3 =
-	dataTermCoil3.values.map(x => Number(x["Value"]));
+	dataTermCoil3.values.map(x => Number(x["Value "]));
 	valuesTermCoil4 =
-	dataTermCoil4.values.map(x => Number(x["Value"]));
+	dataTermCoil4.values.map(x => Number(x["Value "]));
 	valuesTermCoil27 =
 	valuesTermCoil2.slice(-7);
 	valuesTermCoil37 =
