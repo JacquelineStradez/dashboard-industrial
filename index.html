@@ -4024,91 +4024,91 @@ fetch("Item2CalentadorT3000.json")
     document.getElementById("valorRodillo").innerHTML =
     ultimoValorRodillo.toFixed(2);
 	const ctxRodillo =
-document.getElementById('graficaPresionRodillo');
-new Chart(ctxRodillo, {
-    type: 'line',
-    data: {
-        labels: labelsRodillo7,
-        datasets: [
-{
-    label: 'Presión Rodillo',
-    data: valuesRodillo7,
-    borderColor: 'blue',
-    fill: false,
-    pointRadius: valuesRodillo7.map(v =>
-        (v > dataRodillo.upperLimit ||
-         v < dataRodillo.lowerLimit)
-        ? 8
-        : 2
-    ),
-    pointBackgroundColor: valuesRodillo7.map(v =>
-        (v > dataRodillo.upperLimit ||
-         v < dataRodillo.lowerLimit)
-        ? 'red'
-        : 'blue'
-    )
-},
-            {
-                label: 'Límite Inferior',
-                data: Array(7)
-                    .fill(dataRodillo.lowerLimit),
-                borderColor: 'green',
-                borderDash: [5,5],
-                fill: false,
-                pointRadius: 0
-            },
-            {
-                label: 'Límite Superior',
-                data: Array(7)
-                    .fill(dataRodillo.upperLimit),
-                borderColor: 'red',
-                borderDash: [5,5],
-                fill: false,
-                pointRadius: 0
-            }
-        ]	
-    },
-options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            position: 'top',
-            labels: {
-                usePointStyle: true,
-                padding: 20
-            }
-        },
-        title: {
-            display: true,
-            text:
-            'T3000 - Presión Rodillo | Actual: ' +
-            ultimoValorRodillo.toFixed(2)
-        }
-    },
-    elements: {
-        line: {
-            borderWidth: 2
-        },
-        point: {
-            radius: 2,
-            hoverRadius: 5
-        }
-    },
-    scales: {
-        x: {
-            grid: {
-                color: '#eeeeee'
-            }
-        },
-        y: {
-            grid: {
-                color: '#eeeeee'
-            }
-        }
-    }
-}
-});
+	document.getElementById('graficaPresionRodillo');
+	new Chart(ctxRodillo, {
+	    type: 'line',
+	    data: {
+	        labels: labelsRodillo7,
+	        datasets: [
+	{
+	    label: 'Presión Rodillo',
+	    data: valuesRodillo7,
+	    borderColor: 'blue',
+	    fill: false,
+	    pointRadius: valuesRodillo7.map(v =>
+	        (v > dataRodillo.upperLimit ||
+	         v < dataRodillo.lowerLimit)
+	        ? 8
+	        : 2
+	    ),
+	    pointBackgroundColor: valuesRodillo7.map(v =>
+	        (v > dataRodillo.upperLimit ||
+	         v < dataRodillo.lowerLimit)
+	        ? 'red'
+	        : 'blue'
+	    )
+	},
+	            {
+	                label: 'Límite Inferior',
+	                data: Array(7)
+	                    .fill(dataRodillo.lowerLimit),
+	                borderColor: 'green',
+	                borderDash: [5,5],
+	                fill: false,
+	                pointRadius: 0
+	            },
+	            {
+	                label: 'Límite Superior',
+	                data: Array(7)
+	                    .fill(dataRodillo.upperLimit),
+	                borderColor: 'red',
+	                borderDash: [5,5],
+	                fill: false,
+	                pointRadius: 0
+	            }
+	        ]	
+	    },
+	options: {
+	    responsive: true,
+	    maintainAspectRatio: false,
+	    plugins: {
+	        legend: {
+	            position: 'top',
+	            labels: {
+	                usePointStyle: true,
+	                padding: 20
+	            }
+	        },
+	        title: {
+	            display: true,
+	            text:
+	            'T3000 - Presión Rodillo | Actual: ' +
+	            ultimoValorRodillo.toFixed(2)
+	        }
+	    },
+	    elements: {
+	        line: {
+	            borderWidth: 2
+	        },
+	        point: {
+	            radius: 2,
+	            hoverRadius: 5
+	        }
+	    },
+	    scales: {
+	        x: {
+	            grid: {
+	                color: '#eeeeee'
+	            }
+	        },
+	        y: {
+	            grid: {
+	                color: '#eeeeee'
+	            }
+	        }
+	    }
+	}
+	});
 });	
 let dataInv2;
 let dataInv3;
@@ -4292,10 +4292,45 @@ Promise.all([
 	]
 	    },
 	    options: {
-	        responsive: true,
-	        maintainAspectRatio: false
+	    responsive: true,
+	    maintainAspectRatio: false,
+	    plugins: {
+	        legend: {
+	            position: 'top',
+	            labels: {
+	                usePointStyle: true,
+	                padding: 20
+	            }
+	        },
+	        title: {
+	            display: true,
+	            text: 'T3000 - Agua Enfriamiento Manómetros Inverter'
+	        }
+	    },
+	    elements: {
+	        line: {
+	            borderWidth: 2
+	        },
+	        point: {
+	            radius: 2,
+	            hoverRadius: 5
+	        }
+	    },
+	    scales: {
+	        x: {
+	            grid: {
+	                color: '#eeeeee'
+	            }
+	        },
+	        y: {
+	            min: 3,
+	            max: 8,
+	            grid: {
+	                color: '#eeeeee'
+	            }
+	        }
 	    }
-	});
+	}
 	const ctxCoil =
 	document.getElementById('graficaCoil');
 	new Chart(ctxCoil, {
@@ -4447,6 +4482,7 @@ Promise.all([
 	document.getElementById("valorCoil4").innerHTML =
 	valuesCoil4[valuesCoil4.length - 1].toFixed(1);
 });
+	
 let labelsTermInv;
 let labelsTermInv7;
 let valuesTermInv2;
