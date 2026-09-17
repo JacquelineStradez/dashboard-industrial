@@ -5826,6 +5826,7 @@ document.getElementById("tituloAlarmas")
     totalAlarmas +
     ")";
 function actualizarModalAlarmas(){
+	console.log("Cantidad en modal:", listaAlarmas.length);
     document.getElementById("contenidoModalAlarmas")
     .innerHTML = listaAlarmas.map(a => {
         let color = "red";
@@ -5860,6 +5861,9 @@ function actualizarModalAlarmas(){
             </div>
         `;
     }).join("");
+	console.log(
+	    document.getElementById("contenidoModalAlarmas").innerHTML
+	);
 }
 document.getElementById("contadorAlarmas")
 .addEventListener("click", function(){
