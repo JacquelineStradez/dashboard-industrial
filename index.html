@@ -5682,10 +5682,12 @@ Promise.all([
     valuesPanelInv[valuesPanelInv.length - 1];
     const ultimoValorPanelBob =
     valuesPanelBob[valuesPanelBob.length - 1];
+	console.log("INV:", ultimoValorPanelInv);
+	console.log("BOB:", ultimoValorPanelBob);
     document.getElementById("valor1200PanelInversor").innerHTML =
-    ultimoValorPanelInv.toFixed(1) + " °C";
-    document.getElementById("valor1200PanelBobina").innerHTML =
-    ultimoValorPanelBob.toFixed(1) + " °C";
+	ultimoValorPanelInv.toFixed(1) + " °C";
+	document.getElementById("valor1200PanelBobina").innerHTML =
+	ultimoValorPanelBob.toFixed(1) + " °C";
 });
 
 console.log("INICIO CISSTERNA");
