@@ -5662,30 +5662,32 @@ Promise.all([
 .then(([panelInv, panelBob]) => {
     dataTermometroinversor = panelInv;
     dataTermometrobobina = panelBob;
-	const labelsPanel =
-	dataTermometroinversor.labels.map(x => x.Fecha);
-	const labelsPanel7 =
-	labelsPanel.slice(-7);
-	const valuesPanelInv =
-	dataTermometroinversor.values.map(x =>
-	    Number(x.Value)
-	);
-	const valuesPanelBob =
-	dataTermometrobobina.values.map(x =>
-	    Number(x.Value)
-	);
-	const valuesPanelInv7 =
-	valuesPanelInv.slice(-7);
-	const valuesPanelBob7 =
-	valuesPanelBob.slice(-7);
-	const ultimoValorPanelInv =
-	valuesPanelInv[valuesPanelInv.length - 1];
-	const ultimoValorPanelBob =
-	valuesPanelBob[valuesPanelBob.length - 1];
-	document.getElementById("valor1200PanelInversor").innerHTML =
-	ultimoValorPanelInv.toFixed(1) + " °C";
-	document.getElementById("valor1200PanelBobina").innerHTML =
-	ultimoValorPanelBob.toFixed(1) + " °C";
+    const labelsPanel =
+    dataTermometroinversor.labels.map(x => x.Fecha);
+    const labelsPanel7 =
+    labelsPanel.slice(-7);
+    const valuesPanelInv =
+    dataTermometroinversor.values.map(x =>
+        Number(x.Value)
+    );
+    const valuesPanelBob =
+    dataTermometrobobina.values.map(x =>
+        Number(x.Value)
+    );
+    const valuesPanelInv7 =
+    valuesPanelInv.slice(-7);
+    const valuesPanelBob7 =
+    valuesPanelBob.slice(-7);
+    const ultimoValorPanelInv =
+    valuesPanelInv[valuesPanelInv.length - 1];
+    const ultimoValorPanelBob =
+    valuesPanelBob[valuesPanelBob.length - 1];
+    document.getElementById("valor1200PanelInversor").innerHTML =
+    ultimoValorPanelInv.toFixed(1) + " °C";
+    document.getElementById("valor1200PanelBobina").innerHTML =
+    ultimoValorPanelBob.toFixed(1) + " °C";
+
+});
 });
 
 console.log("INICIO CISSTERNA");
