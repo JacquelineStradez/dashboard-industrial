@@ -5708,6 +5708,15 @@ Promise.all([
 	        " °C)"
 	    );
 	}
+	document.getElementById("contadorAlarmas")
+	    .innerHTML = totalAlarmas;
+	document.getElementById("detalleAlarmas")
+	    .innerHTML = listaAlarmas.join("<br>");
+	document.getElementById("tituloAlarmas")
+	    .innerHTML =
+	    "⚠ Alarmas Activas (" +
+	    totalAlarmas +
+	    ")";
     const ctxPanel =
     document.getElementById("graficaPanel");
     new Chart(ctxPanel, {
