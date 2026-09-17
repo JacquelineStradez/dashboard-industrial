@@ -5709,6 +5709,7 @@ Promise.all([
 	        " °C)"
 	    );
 	}
+	actualizarModalAlarmas();
 	document.getElementById("contadorAlarmas")
 	    .innerHTML = totalAlarmas;
 	document.getElementById("detalleAlarmas")
@@ -5784,8 +5785,8 @@ fetch("Item1CalentadorT3000.json")
 	porcentajeCisterna < 25
 	? "🔴 Nivel Bajo"
 	: "✅ Normal";
-        document.getElementById("nivelLitros").innerHTML =
-        nivelCisterna + " L<br>" + estadoCisterna;
+    document.getElementById("nivelLitros").innerHTML =
+    nivelCisterna + " L<br>" + estadoCisterna;
 	document.getElementById("textoTanque").innerHTML =
 	porcentajeCisterna.toFixed(0) + "%";
 	document.getElementById("nivelTanque").style.height =
@@ -5813,7 +5814,6 @@ let totalAlarmasPrensa = 0;
 let listaAlarmasPrensa = [];
 document.getElementById("contadorAlarmasPrensa")
     .innerHTML = totalAlarmasPrensa;
-
 document.getElementById("contadorAlarmas")
     .innerHTML = totalAlarmas++;
 document.getElementById("detalleAlarmas")
@@ -5823,37 +5823,42 @@ document.getElementById("tituloAlarmas")
     "⚠ Alarmas Activas (" +
     totalAlarmas +
     ")";
-document.getElementById("contenidoModalAlarmas")
-.innerHTML = listaAlarmas.map(a => {
-    let color = "red";
-    if(a.includes("INV")){
-        color = "#0078D4";
-    }
-    if(a.includes("COIL")){
-        color = "#7B1FA2";
-    }
-    if(a.includes("TERM")){
-        color = "#D32F2F";
-    }
-    if(a.includes("RODILLO")){
-        color = "#F57C00";
-    }
-    if(a.includes("INTERCAMBIADOR")){
-        color = "#0097A7";
-    }
-    return `
-        <div style="
-            padding:10px;
-            margin:8px 0;
-            background:#fafafa;
-            border-left:6px solid ${color};
-            border-radius:6px;
-            font-weight:bold;
-        ">
-            ⚠ ${a}
-        </div>
-    `;
-}).join("");
+function actualizarModalAlarmas(){
+    document.getElementById("contenidoModalAlarmas")
+    .innerHTML = listaAlarmas.map(a => {
+        let color = "red";
+        if(a.includes("INV")){
+            color = "#0078D4";
+        }
+        if(a.includes("COIL")){
+            color = "#7B1FA2";
+        }
+        if(a.includes("TERM")){
+            color = "#D32F2F";
+        }
+        if(a.includes("RODILLO")){
+            color = "#F57C00";
+        }
+        if(a.includes("INTERCAMBIADOR")){
+            color = "#0097A7";
+        }
+        if(a.includes("PANEL")){
+            color = "#795548";
+        }
+        return `
+            <div style="
+                padding:10px;
+                margin:8px 0;
+                background:#fafafa;
+                border-left:6px solid ${color};
+                border-radius:6px;
+                font-weight:bold;
+            ">
+                ⚠ ${a}
+            </div>
+        `;
+    }).join("");
+}
 document.getElementById("contadorAlarmas")
 .addEventListener("click", function(){
     document.getElementById("modalAlarmas")
@@ -5879,8 +5884,6 @@ if(totalAlarmas > 0){
     document.getElementById("contadorAlarmas")
         .style.color = "green";
 };
-
-
 </script>
 </div>
 </body>
