@@ -5690,18 +5690,24 @@ Promise.all([
     ultimoValorPanelInv.toFixed(1) + " °C";
     document.getElementById("valorPanelBobina").innerHTML =
     ultimoValorPanelBob.toFixed(1) + " °C";
-    if(ultimoValorPanelInv > 30){
-        document.getElementById("tarjetaPanelInversor")
-            .style.borderLeft = "6px solid red";
-        document.getElementById("tarjetaPanelInversor")
-            .style.background = "#fff0f0";
-    }
-    if(ultimoValorPanelBob > 30){
-        document.getElementById("tarjetaPanelBobina")
-            .style.borderLeft = "6px solid red";
-        document.getElementById("tarjetaPanelBobina")
-            .style.background = "#fff0f0";
-    }
+	if(ultimoValorPanelInv > 30){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "PANEL INVERSOR (" +
+	        ultimoValorPanelInv.toFixed(1) +
+	        " °C)"
+	    );
+	}
+	if(ultimoValorPanelBob > 30){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "PANEL BOBINA (" +
+	        ultimoValorPanelBob.toFixed(1) +
+	        " °C)"
+	    );
+	}
     const ctxPanel =
     document.getElementById("graficaPanel");
     new Chart(ctxPanel, {
