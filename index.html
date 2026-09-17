@@ -948,17 +948,21 @@ canvas{
      style="display:none;">
     <h2>Termómetro del Panel</h2>
     <div class="tarjetasModulo">
-        <div class="tarjeta" id="tarjetaPanel">
-            <h3>Temperatura Panel Frontal</h3>
-            <h2 id="valorPanelFrontal">--</h2>
+        <div class="tarjeta" id="tarjetaPanelInversor">
+            <h3>Lado Inversor</h3>
+            <h2 id="valorPanelInversor">--</h2>
+        </div>
+        <div class="tarjeta" id="tarjetaPanelBobina">
+            <h3>Lado Bobina</h3>
+            <h2 id="valorPanelBobina">--</h2>
         </div>
     </div>
     <div class="bloqueGrafica">
         <div class="seccionTitulo">
-            <h2>Temperatura Panel Frontal</h2>
+            <h2>Temperaturas Panel</h2>
         </div>
         <div class="grafica-contenedor">
-            <canvas id="graficaPanelFrontal"></canvas>
+            <canvas id="graficaPanel"></canvas>
         </div>
     </div>
 </div>
@@ -3918,7 +3922,7 @@ document.getElementById("btnTermometros")
 document.getElementById("btnPanel")
 .addEventListener("click", function(){
     ocultarVistasCalentador();
-    document.getElementById("vista1200Panel")
+    document.getElementById("vistaPanel")
         .style.display = "block";
 });
 document.getElementById("btnPresionBobina")
@@ -5659,7 +5663,7 @@ Promise.all([
     fetch("Item26CalentadorT3000.json").then(r => r.json()),
     fetch("Item27CalentadorT3000.json").then(r => r.json())
 ])
-.then(([panelInv, panelBob]) => {
+.then(([panelInv,panelBob]) => {
     dataTermometroinversor = panelInv;
     dataTermometrobobina = panelBob;
     const labelsPanel =
@@ -5682,14 +5686,67 @@ Promise.all([
     valuesPanelInv[valuesPanelInv.length - 1];
     const ultimoValorPanelBob =
     valuesPanelBob[valuesPanelBob.length - 1];
-	console.log("INV:", ultimoValorPanelInv);
-	console.log("BOB:", ultimoValorPanelBob);
-	console.log(document.getElementById("valor1200PanelInversor"));
-	console.log(document.getElementById("valor1200PanelBobina"));
-    document.getElementById("valor1200PanelInversor").innerHTML =
-	ultimoValorPanelInv.toFixed(1) + " °C";
-	document.getElementById("valor1200PanelBobina").innerHTML =
-	ultimoValorPanelBob.toFixed(1) + " °C";
+    document.getElementById("valorPanelInversor").innerHTML =
+    ultimoValorPanelInv.toFixed(1) + " °C";
+    document.getElementById("valorPanelBobina").innerHTML =
+    ultimoValorPanelBob.toFixed(1) + " °C";
+    if(ultimoValorPanelInv > 30){
+        document.getElementById("tarjetaPanelInversor")
+            .style.borderLeft = "6px solid red";
+        document.getElementById("tarjetaPanelInversor")
+            .style.background = "#fff0f0";
+    }
+    if(ultimoValorPanelBob > 30){
+        document.getElementById("tarjetaPanelBobina")
+            .style.borderLeft = "6px solid red";
+        document.getElementById("tarjetaPanelBobina")
+            .style.background = "#fff0f0";
+    }
+    const ctxPanel =
+    document.getElementById("graficaPanel");
+    new Chart(ctxPanel, {
+        type: "line",
+        data: {
+            labels: labelsPanel7,
+            datasets: [
+            {
+                label: "Panel Inversor",
+                data: valuesPanelInv7,
+                borderColor: "blue",
+                fill: false,
+                tension: 0.3
+            },
+            {
+                label: "Panel Bobina",
+                data: valuesPanelBob7,
+                borderColor: "green",
+                fill: false,
+                tension: 0.3
+            },
+            {
+                label: "Límite Máximo",
+                data: Array(7).fill(30),
+                borderColor: "red",
+                borderDash: [5,5],
+                fill: false,
+                pointRadius: 0
+            }
+            ]
+        },
+        options: {
+            responsive:true,
+            maintainAspectRatio:false,
+            plugins: {
+                legend:{
+                    position:"top"
+                },
+                title:{
+                    display:true,
+                    text:"T3000 - Termómetros Panel"
+                }
+            }
+        }
+    });
 });
 
 console.log("INICIO CISSTERNA");
