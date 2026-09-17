@@ -5672,7 +5672,71 @@ fetch("Item26CalentadorT3000.json")
     valuesPanel[valuesPanel.length - 1];
     document.getElementById("valorPanelFrontal").innerHTML =
     ultimoValorPanel.toFixed(1) + " °C";
-
+	const ctxPanel =
+	document.getElementById('graficaPanelFrontal');
+	new Chart(ctxPanel, {
+	    type: 'line',
+	    data: {
+	        labels: labelsPanel7,
+	        datasets: [
+	        {
+	            label: 'Panel Frontal',
+	            data: valuesPanel7,
+	            borderColor: 'blue',
+	            fill: false,
+	            tension: 0.3
+	        },
+	        {
+	            label: 'Límite Máximo',
+	            data: Array(7).fill(30),
+	            borderColor: 'red',
+	            borderDash: [5,5],
+	            fill: false,
+	            pointRadius: 0
+	        }
+	        ]
+	    },
+	    options: {
+	        responsive: true,
+	        maintainAspectRatio: false,
+	        plugins: {
+	            legend: {
+	                position: 'top',
+	                labels: {
+	                    usePointStyle: true,
+	                    padding: 20
+	                }
+	            },
+	            title: {
+	                display: true,
+	                text: 'T3000 - Termómetro Panel Frontal'
+	            }
+	        },
+	        elements: {
+	            line: {
+	                borderWidth: 2
+	            },
+	            point: {
+	                radius: 2,
+	                hoverRadius: 5
+	            }
+	        },
+	        scales: {
+	            x: {
+	                grid: {
+	                    color: '#eeeeee'
+	                }
+	            },
+	            y: {
+	                min: 0,
+	                max: 50,
+	                grid: {
+	                    color: '#eeeeee'
+	                }
+	            }
+	        }
+	    }
+	});
 });
 
 const dataTermometrobobina = {"labels":[{"Value":"2026-04-24"},{"Value":"2026-04-25"},{"Value":"2026-04-26"},{"Value":"2026-04-27"},{"Value":"2026-04-28"},{"Value":"2026-04-29"},{"Value":"2026-04-30"},{"Value":"2026-05-06"},{"Value":"2026-05-07"},{"Value":"2026-05-11"},{"Value":"2026-05-12"},{"Value":"2026-05-13"},{"Value":"2026-05-15"},{"Value":"2026-05-16"},{"Value":"2026-05-19"},{"Value":"2026-05-20"},{"Value":"2026-05-21"},{"Value":"2026-05-25"},{"Value":"2026-05-26"},{"Value":"2026-05-27"},{"Value":"2026-05-28"},{"Value":"2026-05-29"},{"Value":"2026-06-02"},{"Value":"2026-06-03"},{"Value":"2026-06-04"},{"Value":"2026-06-06"},{"Value":"2026-06-09"},{"Value":"2026-06-11"},{"Value":"2026-06-15"},{"Value":"2026-06-16"},{"Value":"2026-06-18"},{"Value":"2026-06-23"},{"Value":"2026-06-24"},{"Value":"2026-06-25"},{"Value":"2026-06-26"},{"Value":"2026-06-30"},{"Value":"2026-07-02"},{"Value":"2026-07-02"},{"Value":"2026-07-03"},{"Value":"2026-07-07"},{"Value":"2026-07-08"},{"Value":"2026-07-09"},{"Value":"2026-07-13"},{"Value":"2026-07-14"},{"Value":"2026-07-15"},{"Value":"2026-07-20"},{"Value":"2026-07-21"},{"Value":"2026-07-22"}],"values":[{"Value":"36"},{"Value":"36"},{"Value":"38"},{"Value":"38"},{"Value":"37"},{"Value":"42"},{"Value":"40"},{"Value":"54"},{"Value":"22"},{"Value":"37"},{"Value":"37"},{"Value":"44"},{"Value":"38"},{"Value":"39"},{"Value":"44"},{"Value":"39"},{"Value":"40"},{"Value":"39"},{"Value":"39"},{"Value":"45"},{"Value":"41"},{"Value":"39"},{"Value":"45"},{"Value":"46"},{"Value":"40"},{"Value":"43"},{"Value":"39"},{"Value":"40"},{"Value":"37"},{"Value":"40"},{"Value":"40"},{"Value":"44"},{"Value":"41"},{"Value":"31"},{"Value":"38"},{"Value":"40"},{"Value":"43"},{"Value":"43"},{"Value":"43"},{"Value":"42"},{"Value":"45"},{"Value":"31"},{"Value":"25"},{"Value":"36"},{"Value":"30"},{"Value":"32"},{"Value":"28"},{"Value":"39"}],"Limit":30};
