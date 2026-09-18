@@ -5802,6 +5802,13 @@ document.getElementById("tituloAlarmas")
     totalAlarmas +
     ")";
 function actualizarModalAlarmas(){
+	document.getElementById("contadorAlarmas")
+    	.innerHTML = totalAlarmas;
+	document.getElementById("tituloAlarmas")
+	    .innerHTML =
+	    "⚠ Alarmas Activas (" +
+	    totalAlarmas +
+	    ")";
     document.getElementById("contenidoModalAlarmas")
     .innerHTML = listaAlarmas.map(a => {
         let color = "red";
