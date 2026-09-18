@@ -2712,6 +2712,7 @@ canvas{
 	        </div>
 	    </div>
 	</div>
+	</div>
 	<div id="vistaDistribucion"
 	     class="panelModulo"
 	     style="display:none;">
@@ -2747,23 +2748,31 @@ canvas{
 	        </div>
 	    </div>
 	    <div class="gridGraficas">
-	        <div class="bloqueGrafica">
-	            <div class="seccionTitulo">
-	                <h2>Tiempos de Lubricación</h2>
-	            </div> 
-	            <div class="grafica-contenedor">
-	                <canvas id="graficaDistribucionTiempos"></canvas>
-	            </div>
-	        </div>
-	        <div class="bloqueGrafica">
-	            <div class="seccionTitulo">
-	                <h2>Movimiento y Distribución</h2>
-	            </div>
-	            <div class="grafica-contenedor">
-	                <canvas id="graficaDistribucionMovimiento"></canvas>
-	            </div>
-	       </div>
-	    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Movimientos</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaDistribucionMovimiento"></canvas>
+		        </div>
+		    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Tiempo Encendido</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaDistribucionOn"></canvas>
+		        </div>
+		    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Tiempo Apagado</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaDistribucionOff"></canvas>
+		        </div>
+		    </div>
+		</div>
 	</div>
 	<div id="vistaMotor"
 	     class="panelModulo"
@@ -7404,6 +7413,169 @@ Promise.all([
         }
     );
 });
+
+Promise.all([
+    fetch("Item33PrensaT3000.json").then(r => r.json()),
+    fetch("Item34PrensaT3000.json").then(r => r.json()),
+    fetch("Item35PrensaT3000.json").then(r => r.json()),
+    fetch("Item36PrensaT3000.json").then(r => r.json()),
+    fetch("Item37PrensaT3000.json").then(r => r.json()),
+    fetch("Item38PrensaT3000.json").then(r => r.json()),
+    fetch("Item39PrensaT3000.json").then(r => r.json())
+])
+.then(([i33,i34,i35,i36,i37,i38,i39]) => {
+    const labels =
+    i33.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values33 =
+    i33.values.map(x => Number(x.Value));
+    const values34 =
+    i34.values.map(x => Number(x.Value));
+    const values35 =
+    i35.values.map(x => Number(x.Value));
+    const values36 =
+    i36.values.map(x => Number(x.Value));
+    const values37 =
+    i37.values.map(x => Number(x.Value));
+    const values38 =
+    i38.values.map(x => Number(x.Value));
+    const values39 =
+    i39.values.map(x => Number(x.Value));
+    // TARJETAS
+    document.getElementById("valorDistPrinMov")
+        .innerHTML =
+        values33[values33.length - 1].toFixed(2);
+    document.getElementById("valorDistGibMov")
+        .innerHTML =
+        values34[values34.length - 1].toFixed(2);
+    document.getElementById("valorDistPrinOn")
+        .innerHTML =
+        values35[values35.length - 1].toFixed(2);
+    document.getElementById("valorDistGibOn")
+        .innerHTML =
+        values36[values36.length - 1].toFixed(2);
+    document.getElementById("valorDistPrinOff")
+        .innerHTML =
+        values37[values37.length - 1].toFixed(2);
+    document.getElementById("valorDistGibOff")
+        .innerHTML =
+        values38[values38.length - 1].toFixed(2);
+    document.getElementById("valorDistGrasaMov")
+        .innerHTML =
+        values39[values39.length - 1].toFixed(2);
+    // ==========================
+    // MOVIMIENTOS
+    // 33 - 36 - 39
+    // ==========================
+    new Chart(
+        document.getElementById(
+            "graficaDistribucionMovimiento"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Principal Movimiento",
+                    data:values33.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"GIB Encendido",
+                    data:values36.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Grasa Movimiento",
+                    data:values39.slice(-7),
+                    borderColor:"orange",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // 34 y 35
+    // ==========================
+    new Chart(
+        document.getElementById(
+            "graficaDistribucionOn"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"GIB Movimiento",
+                    data:values34.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Principal Encendido",
+                    data:values35.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // 37 y 38
+    // ==========================
+    new Chart(
+        document.getElementById(
+            "graficaDistribucionOff"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Principal Apagado",
+                    data:values37.slice(-7),
+                    borderColor:"purple",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"GIB Apagado",
+                    data:values38.slice(-7),
+                    borderColor:"red",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
 .then(r => r.json())
