@@ -7584,11 +7584,9 @@ Promise.all([
     );
 });
 
-Promise.all([
-    fetch("Item40PrensaT3000.json").then(r => r.json()),
-    fetch("Item41PrensaT3000.json").then(r => r.json()),
-    fetch("Item42PrensaT3000.json").then(r => r.json())
-])
+fetch("Item40PrensaT3000.json")
+.then(r => r.text())
+.then(console.log);
 .then(([pms,carga,sinCarga]) => {
     const labels =
     pms.labels.map(x => x.Fecha);
