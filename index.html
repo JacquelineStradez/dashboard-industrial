@@ -5902,103 +5902,41 @@ Promise.all([
 	
 // =====================================
 // PRENSA T3000
-// Lubricación Unidad Hidráulica Deslizante
-// Item 1 - Presión Bomba
+// LUBRICACION UNIDAD HIDRAULICA DESLIZANTE
+// ITEMS 1,2,3
 // =====================================
+
 let dataLubPresion;
-fetch("Item1PrensaT3000.json")
-.then(r => r.json())
-.then(data => {
-    dataLubPresion = data;
-    const labels =
-    dataLubPresion.labels.map(x => x.Fecha);
-    const labels7 =
-    labels.slice(-7);
-    const values =
-    dataLubPresion.values.map(x =>
-        Number(x.Value)
-    );
-    const values7 =
-    values.slice(-7);
-    const ultimoValor =
-    values[values.length - 1];
+let dataLubTemperatura;
+let dataLubAceite;
+Promise.all([
+    fetch("Item1PrensaT3000.json").then(r => r.json()),
+    fetch("Item2PrensaT3000.json").then(r => r.json()),
+    fetch("Item3PrensaT3000.json").then(r => r.json())
+])
+.then(([presion, temperatura, aceite]) => {
+    dataLubPresion = presion;
+    dataLubTemperatura = temperatura;
+    dataLubAceite = aceite;
+    // TARJETAS
+    const valorPresion =
+    dataLubPresion.values.map(x => Number(x.Value));
+    const valorTemperatura =
+    dataLubTemperatura.values.map(x => Number(x.Value));
+    const valorAceite =
+    dataLubAceite.values.map(x => Number(x.Value));
     document.getElementById("valorLubPresion")
         .innerHTML =
-        ultimoValor.toFixed(2) + " MPa";
-    const alarmaLubPresion =
-        ultimoValor > dataLubPresion.upperLimit ||
-        ultimoValor < dataLubPresion.lowerLimit;
-    if(alarmaLubPresion){
-        totalAlarmasPrensa++;
-        listaAlarmasPrensa.push(
-            "LUB. DESLIZANTE PRESIÓN (" +
-            ultimoValor.toFixed(2) +
-            " MPa)"
-        );
-    }
-    const ctx =
-    document.getElementById("graficaLubPresion");
-    new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: labels7,
-            datasets: [
-            {
-                label: "Presión bomba",
-                data: values7,
-                borderColor: "blue",
-                fill: false,
-                tension: 0.3,
-                pointRadius: values7.map(v =>
-                    (v > dataLubPresion.upperLimit ||
-                     v < dataLubPresion.lowerLimit)
-                    ? 8
-                    : 2
-                ),
-                pointBackgroundColor: values7.map(v =>
-                    (v > dataLubPresion.upperLimit ||
-                     v < dataLubPresion.lowerLimit)
-                    ? "red"
-                    : "blue"
-                )
-            },
-            {
-                label: "Límite Inferior",
-                data: Array(7)
-                    .fill(dataLubPresion.lowerLimit),
-                borderColor: "green",
-                borderDash: [5,5],
-                fill: false,
-                pointRadius: 0
-            },
-            {
-                label: "Límite Superior",
-                data: Array(7)
-                    .fill(dataLubPresion.upperLimit),
-                borderColor: "red",
-                borderDash: [5,5],
-                fill: false,
-                pointRadius: 0
-            }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: "top"
-                },
-                title: {
-                    display: true,
-                    text:
-                    "Prensa T3000 - Presión Bomba | Actual: " +
-                    ultimoValor.toFixed(2) +
-                    " MPa"
-                }
-            }
-        }
-    });
+        valorPresion[valorPresion.length - 1].toFixed(2) +
+        " MPa";
+    document.getElementById("valorLubTemperatura")
+        .innerHTML =
+        valorTemperatura[valorTemperatura.length - 1].toFixed(1) +
+        " °C";
+    document.getElementById("valorLubAceite")
+        .innerHTML =
+        valorAceite[valorAceite.length - 1].toFixed(0) +
+        " mm";
 });
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
