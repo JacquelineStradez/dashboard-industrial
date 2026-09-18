@@ -2663,195 +2663,226 @@ canvas{
         </div>
     </div>
     <div class="gridGraficas">
-        <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Presiones BKO</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaBKOPresiones"></canvas>
-            </div>
-        </div> 
-        <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Aceite y Temperatura</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaBKOAceite"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="vistaDistribucion"
-     class="panelModulo"
-     style="display:none;">
-    <h2>Válvulas de Distribución</h2>
-    <div class="tarjetasModulo">
-        <div class="tarjeta">
-            <h3>Lubricación Principal Movimiento</h3>
-            <h2 id="valorDistPrinMov">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>GIB Movimiento</h3>
-            <h2 id="valorDistGibMov">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Lubricación Principal Tiempo Encendido</h3>
-            <h2 id="valorDistPrinOn">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>GIB Tiempo Encendido</h3>
-            <h2 id="valorDistGibOn">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Lubricación Principal Tiempo Apagado</h3>
-            <h2 id="valorDistPrinOff">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>GIB Tiempo Apagado</h3>
-            <h2 id="valorDistGibOff">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Distribuidora de Grasa Movimiento</h3>
-            <h2 id="valorDistGrasaMov">--</h2>
-        </div>
-    </div>
-    <div class="gridGraficas">
-        <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Tiempos de Lubricación</h2>
-            </div> 
-            <div class="grafica-contenedor">
-                <canvas id="graficaDistribucionTiempos"></canvas>
-            </div>
-        </div>
-        <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Movimiento y Distribución</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaDistribucionMovimiento"></canvas>
-            </div>
-       </div>
-    </div>
-</div>
-<div id="vistaMotor"
-     class="panelModulo"
-     style="display:none;">
-    <h2>Motor Principal</h2>
-    <div class="tarjetasModulo">
-        <div class="tarjeta">
-            <h3>Ángulo Punto Muerto Superior</h3>
-            <h2 id="valorMotorPMS">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Corriente Con Carga</h3>
-            <h2 id="valorMotorCarga">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Corriente Sin Carga</h3>
-            <h2 id="valorMotorSinCarga">--</h2>
-        </div>
-    </div>
-    <div class="gridGraficas">
-        <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Corrientes Motor</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaMotorCorrientes"></canvas>
-            </div>
-        </div>
-        <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Ángulo PMS</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaMotorPMS"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="vistaTemperaturas"
-     class="panelModulo"
-     style="display:none;">
-    <h2>Temperaturas</h2>
-    <div class="tarjetasModulo">
-        <div class="tarjeta">
-            <h3>Eje Derecho</h3>
-            <h2 id="valorTempEjeDer">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Eje Izquierdo</h3>
-            <h2 id="valorTempEjeIzq">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Connecting Rod Grande Derecho</h3>
-            <h2 id="valorTempGrandeDer">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Connecting Rod Grande Izquierdo</h3>
-            <h2 id="valorTempGrandeIzq">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Connecting Rod Pequeño Derecho</h3>
-            <h2 id="valorTempPeqDer">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Connecting Rod Pequeño Izquierdo</h3>
-            <h2 id="valorTempPeqIzq">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Temperatura del Freno</h3>
-            <h2 id="valorTempFreno">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Flujo del Freno</h3>
-            <h2 id="valorTempFlujoFreno">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Bandas Motor Principal</h3>
-            <h2 id="valorTempBandas">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Guía del Freno</h3>
-            <h2 id="valorTempGuiaFreno">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Clutch</h3>
-            <h2 id="valorTempClutch">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Cubierta del Clutch</h3>
-            <h2 id="valorTempCubiertaClutch">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Aire Salida Clutch</h3>
-            <h2 id="valorTempAireClutch">--</h2>
-        </div>
-        <div class="tarjeta">
-            <h3>Servomotor</h3>
-            <h2 id="valorTempServomotor">--</h2>
-        </div>
-    </div>
-    <div class="gridGraficas">
-        <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Ejes y Connecting Rod</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaTemperaturasEjes"></canvas>
-            </div>
-        </div>
-        <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Freno, Clutch y Servomotor</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaTemperaturasFreno"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Presiones 6 MPa</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaBKOPresiones6"></canvas>
+	        </div>
+	    </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Presiones 13 MPa</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaBKOPresiones13"></canvas>
+	        </div>
+	    </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Cantidad de Aceite</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaBKOAceite"></canvas>
+	        </div>
+	    </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Agua Refrigerante</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaBKOAgua"></canvas>
+	        </div>
+	    </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Temperatura Aceite</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaBKOTemperatura"></canvas>
+	        </div>
+	    </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Sensor de Software</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaBKOSensor"></canvas>
+	        </div>
+	    </div>
+	</div>
+	<div id="vistaDistribucion"
+	     class="panelModulo"
+	     style="display:none;">
+	    <h2>Válvulas de Distribución</h2>
+	    <div class="tarjetasModulo">
+	        <div class="tarjeta">
+	            <h3>Lubricación Principal Movimiento</h3>
+	            <h2 id="valorDistPrinMov">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>GIB Movimiento</h3>
+	            <h2 id="valorDistGibMov">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Lubricación Principal Tiempo Encendido</h3>
+	            <h2 id="valorDistPrinOn">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>GIB Tiempo Encendido</h3>
+	            <h2 id="valorDistGibOn">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Lubricación Principal Tiempo Apagado</h3>
+	            <h2 id="valorDistPrinOff">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>GIB Tiempo Apagado</h3>
+	            <h2 id="valorDistGibOff">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Distribuidora de Grasa Movimiento</h3>
+	            <h2 id="valorDistGrasaMov">--</h2>
+	        </div>
+	    </div>
+	    <div class="gridGraficas">
+	        <div class="bloqueGrafica">
+	            <div class="seccionTitulo">
+	                <h2>Tiempos de Lubricación</h2>
+	            </div> 
+	            <div class="grafica-contenedor">
+	                <canvas id="graficaDistribucionTiempos"></canvas>
+	            </div>
+	        </div>
+	        <div class="bloqueGrafica">
+	            <div class="seccionTitulo">
+	                <h2>Movimiento y Distribución</h2>
+	            </div>
+	            <div class="grafica-contenedor">
+	                <canvas id="graficaDistribucionMovimiento"></canvas>
+	            </div>
+	       </div>
+	    </div>
+	</div>
+	<div id="vistaMotor"
+	     class="panelModulo"
+	     style="display:none;">
+	    <h2>Motor Principal</h2>
+	    <div class="tarjetasModulo">
+	        <div class="tarjeta">
+	            <h3>Ángulo Punto Muerto Superior</h3>
+	            <h2 id="valorMotorPMS">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Corriente Con Carga</h3>
+	            <h2 id="valorMotorCarga">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Corriente Sin Carga</h3>
+	            <h2 id="valorMotorSinCarga">--</h2>
+	        </div>
+	    </div>
+	    <div class="gridGraficas">
+	        <div class="bloqueGrafica">
+	            <div class="seccionTitulo">
+	                <h2>Corrientes Motor</h2>
+	            </div>
+	            <div class="grafica-contenedor">
+	                <canvas id="graficaMotorCorrientes"></canvas>
+	            </div>
+	        </div>
+	        <div class="bloqueGrafica">
+	            <div class="seccionTitulo">
+	                <h2>Ángulo PMS</h2>
+	            </div>
+	            <div class="grafica-contenedor">
+	                <canvas id="graficaMotorPMS"></canvas>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div id="vistaTemperaturas"
+	     class="panelModulo"
+	     style="display:none;">
+	    <h2>Temperaturas</h2>
+	    <div class="tarjetasModulo">
+	        <div class="tarjeta">
+	            <h3>Eje Derecho</h3>
+	            <h2 id="valorTempEjeDer">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Eje Izquierdo</h3>
+	            <h2 id="valorTempEjeIzq">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Connecting Rod Grande Derecho</h3>
+	            <h2 id="valorTempGrandeDer">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Connecting Rod Grande Izquierdo</h3>
+	            <h2 id="valorTempGrandeIzq">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Connecting Rod Pequeño Derecho</h3>
+	            <h2 id="valorTempPeqDer">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Connecting Rod Pequeño Izquierdo</h3>
+	            <h2 id="valorTempPeqIzq">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Temperatura del Freno</h3>
+	            <h2 id="valorTempFreno">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Flujo del Freno</h3>
+	            <h2 id="valorTempFlujoFreno">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Bandas Motor Principal</h3>
+	            <h2 id="valorTempBandas">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Guía del Freno</h3>
+	            <h2 id="valorTempGuiaFreno">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Clutch</h3>
+	            <h2 id="valorTempClutch">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Cubierta del Clutch</h3>
+	            <h2 id="valorTempCubiertaClutch">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Aire Salida Clutch</h3>
+	            <h2 id="valorTempAireClutch">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Servomotor</h3>
+	            <h2 id="valorTempServomotor">--</h2>
+	        </div>
+	    </div>
+	    <div class="gridGraficas">
+	        <div class="bloqueGrafica">
+	            <div class="seccionTitulo">
+	                <h2>Ejes y Connecting Rod</h2>
+	            </div>
+	            <div class="grafica-contenedor">
+	                <canvas id="graficaTemperaturasEjes"></canvas>
+	            </div>
+	        </div>
+	        <div class="bloqueGrafica">
+	            <div class="seccionTitulo">
+	                <h2>Freno, Clutch y Servomotor</h2>
+	            </div>
+	            <div class="grafica-contenedor">
+	                <canvas id="graficaTemperaturasFreno"></canvas>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </div>
 <div id="vistaGrafito"
      class="panelModulo"
@@ -7075,6 +7106,295 @@ Promise.all([
                     pointRadius:0
                 }
 
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+Promise.all([
+    fetch("Item25PrensaT3000.json").then(r => r.json()),
+    fetch("Item26PrensaT3000.json").then(r => r.json()),
+    fetch("Item27PrensaT3000.json").then(r => r.json()),
+    fetch("Item28PrensaT3000.json").then(r => r.json()),
+    fetch("Item29PrensaT3000.json").then(r => r.json()),
+    fetch("Item30PrensaT3000.json").then(r => r.json()),
+    fetch("Item31PrensaT3000.json").then(r => r.json()),
+    fetch("Item32PrensaT3000.json").then(r => r.json())
+])
+.then(([p2,p3,p4,p5,aceite,agua,temp,sensor]) => {
+    const labels =
+    p2.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesP2 =
+    p2.values.map(x => Number(x.Value));
+    const valuesP3 =
+    p3.values.map(x => Number(x.Value));
+    const valuesP4 =
+    p4.values.map(x => Number(x.Value));
+    const valuesP5 =
+    p5.values.map(x => Number(x.Value));
+    const valuesAceite =
+    aceite.values.map(x => Number(x.Value));
+    const valuesAgua =
+    agua.values.map(x => Number(x.Value));
+    const valuesTemp =
+    temp.values.map(x => Number(x.Value));
+    const valuesSensor =
+    sensor.values.map(x => Number(x.Value));
+    const ultimoP2 =
+    valuesP2[valuesP2.length - 1];
+    const ultimoP3 =
+    valuesP3[valuesP3.length - 1];
+    const ultimoP4 =
+    valuesP4[valuesP4.length - 1];
+    const ultimoP5 =
+    valuesP5[valuesP5.length - 1];
+    const ultimoAceite =
+    valuesAceite[valuesAceite.length - 1];
+    const ultimoAgua =
+    valuesAgua[valuesAgua.length - 1];
+    const ultimoTemp =
+    valuesTemp[valuesTemp.length - 1];
+    const ultimoSensor =
+    valuesSensor[valuesSensor.length - 1];
+    // ==========================
+    // TARJETAS
+    // ==========================
+    document.getElementById("valorBKOPaso2")
+        .innerHTML = ultimoP2.toFixed(2);
+    document.getElementById("valorBKOPaso3")
+        .innerHTML = ultimoP3.toFixed(2);
+    document.getElementById("valorBKOPaso4")
+        .innerHTML = ultimoP4.toFixed(2);
+    document.getElementById("valorBKOPaso5")
+        .innerHTML = ultimoP5.toFixed(2);
+    document.getElementById("valorBKOAceite")
+        .innerHTML = ultimoAceite.toFixed(0) + " mm";
+    document.getElementById("valorBKOAgua")
+        .innerHTML = ultimoAgua.toFixed(2);
+    document.getElementById("valorBKOTemperatura")
+        .innerHTML = ultimoTemp.toFixed(1) + " °C";
+    document.getElementById("valorBKOSoftware")
+        .innerHTML = ultimoSensor;
+    // ==========================
+    // ALARMAS
+    // ==========================
+    if(ultimoAceite > 340){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "BKO ACEITE (" +
+            ultimoAceite.toFixed(0) +
+            " mm)"
+        );
+    }
+    if(ultimoTemp > 50){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "BKO TEMPERATURA (" +
+            ultimoTemp.toFixed(1) +
+            " °C)"
+        );
+    }
+    // ==========================
+    // ITEM 25 Y 28
+    // PRESIONES 6 MPa
+    // ==========================
+    new Chart(
+        document.getElementById("graficaBKOPresiones6"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Paso 2",
+                    data:valuesP2.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Paso 5",
+                    data:valuesP5.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(6),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // ITEM 26 Y 27
+    // PRESIONES 13 MPa
+    // ==========================
+    new Chart(
+        document.getElementById("graficaBKOPresiones13"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Paso 3",
+                    data:valuesP3.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Paso 4",
+                    data:valuesP4.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(13),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // ITEM 29
+    // ACEITE
+    // ==========================
+    new Chart(
+        document.getElementById("graficaBKOAceite"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Cantidad Aceite",
+                    data:valuesAceite.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(340),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // ITEM 30
+    // AGUA
+    // ==========================
+    new Chart(
+        document.getElementById("graficaBKOAgua"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Agua Refrigerante",
+                    data:valuesAgua.slice(-7),
+                    borderColor:"orange",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // ITEM 31
+    // TEMPERATURA
+    // ==========================
+    new Chart(
+        document.getElementById("graficaBKOTemperatura"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Temperatura Aceite",
+                    data:valuesTemp.slice(-7),
+                    borderColor:"purple",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(50),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // ITEM 32
+    // SENSOR SOFTWARE
+    // ==========================
+    new Chart(
+        document.getElementById("graficaBKOSensor"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Sensor Software",
+                    data:valuesSensor.slice(-7),
+                    borderColor:"teal",
+                    fill:false,
+                    tension:0.3
+                }
                 ]
             },
             options:{
