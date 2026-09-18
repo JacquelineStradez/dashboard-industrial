@@ -6912,6 +6912,178 @@ Promise.all([
         }
     );
 });
+
+Promise.all([
+    fetch("Item21PrensaT3000.json").then(r => r.json()),
+    fetch("Item22PrensaT3000.json").then(r => r.json()),
+    fetch("Item23PrensaT3000.json").then(r => r.json()),
+    fetch("Item24PrensaT3000.json").then(r => r.json())
+])
+.then(([presionIzq, aceiteIzq, presionDer, aceiteDer]) => {
+    const labels =
+    presionIzq.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesPresionIzq =
+    presionIzq.values.map(x => Number(x.Value));
+    const valuesAceiteIzq =
+    aceiteIzq.values.map(x => Number(x.Value));
+    const valuesPresionDer =
+    presionDer.values.map(x => Number(x.Value));
+    const valuesAceiteDer =
+    aceiteDer.values.map(x => Number(x.Value));
+    const ultimoPresionIzq =
+    valuesPresionIzq[valuesPresionIzq.length - 1];
+    const ultimoAceiteIzq =
+    valuesAceiteIzq[valuesAceiteIzq.length - 1];
+    const ultimoPresionDer =
+    valuesPresionDer[valuesPresionDer.length - 1];
+    const ultimoAceiteDer =
+    valuesAceiteDer[valuesAceiteDer.length - 1];
+    // TARJETAS
+    document.getElementById("valorTransIzqPresion")
+        .innerHTML =
+        ultimoPresionIzq.toFixed(2) + " MPa";
+    document.getElementById("valorTransIzqAceite")
+        .innerHTML =
+        ultimoAceiteIzq.toFixed(0) + " mm";
+    document.getElementById("valorTransDerPresion")
+        .innerHTML =
+        ultimoPresionDer.toFixed(2) + " MPa";
+    document.getElementById("valorTransDerAceite")
+        .innerHTML =
+        ultimoAceiteDer.toFixed(0) + " mm";
+    // ALARMAS
+    if(
+        ultimoPresionIzq > 0.5 ||
+        ultimoPresionIzq < 0.4
+    ){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "TRANSPORTADOR IZQ PRESIÓN (" +
+            ultimoPresionIzq.toFixed(2) +
+            " MPa)"
+        );
+    }
+    if(
+        ultimoPresionDer > 0.5 ||
+        ultimoPresionDer < 0.4
+    ){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "TRANSPORTADOR DER PRESIÓN (" +
+            ultimoPresionDer.toFixed(2) +
+            " MPa)"
+        );
+    }
+    if(ultimoAceiteIzq > 40){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "TRANSPORTADOR IZQ ACEITE (" +
+            ultimoAceiteIzq.toFixed(0) +
+            " mm)"
+        );
+    }
+    if(ultimoAceiteDer > 40){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "TRANSPORTADOR DER ACEITE (" +
+            ultimoAceiteDer.toFixed(0) +
+            " mm)"
+        );
+    }
+    // =================================
+    // GRAFICA PRESIONES
+    // ITEM 21 Y 23
+    // =================================
+    new Chart(
+        document.getElementById("graficaTransportadorIzq"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Presión Izquierda",
+                    data:valuesPresionIzq.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Presión Derecha",
+                    data:valuesPresionDer.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7).fill(0.4),
+                    borderColor:"orange",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7).fill(0.5),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // =================================
+    // GRAFICA ACEITES
+    // ITEM 22 Y 24
+    // =================================
+    new Chart(
+        document.getElementById("graficaTransportadorDer"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Aceite Izquierdo",
+                    data:valuesAceiteIzq.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Aceite Derecho",
+                    data:valuesAceiteDer.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(40),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
 .then(r => r.json())
