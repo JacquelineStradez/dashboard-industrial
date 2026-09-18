@@ -2416,23 +2416,39 @@ canvas{
         </div>
     </div>
     <div class="gridGraficas">
-        <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Presión Bombas</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaHiLockPresion"></canvas>
-            </div>
-        </div>
-        <div class="bloqueGrafica"> 
-            <div class="seccionTitulo">
-                <h2>Presión Aire RV</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaHiLockRV"></canvas>
-            </div>
-        </div>
-     </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Presión Bombas</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaHiLockPresion"></canvas>
+	        </div>
+	    </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Cantidad de Aceite</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaHiLockAceite"></canvas>
+	        </div>
+	    </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Presión Aire RV1</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaHiLockRV1"></canvas>
+	        </div>
+	    </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Presión Aire RV2</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaHiLockRV2"></canvas>
+	        </div>
+	    </div>
+	</div>
 </div>
 <div id="vistaGIB"
      class="panelModulo"
@@ -6117,7 +6133,7 @@ Promise.all([
     fetch("Item7PrensaT3000.json").then(r => r.json()),
     fetch("Item8PrensaT3000.json").then(r => r.json())
 ])
-.then(([p1,p2,aceite,rv1,rv2]) => {
+.then(([p1, p2, aceite, rv1, rv2]) => {
     dataHiLockP1 = p1;
     dataHiLockP2 = p2;
     dataHiLockAceite = aceite;
@@ -6128,15 +6144,25 @@ Promise.all([
     const labels7 =
     labels.slice(-7);
     const valuesP1 =
-    dataHiLockP1.values.map(x => Number(x.Value));
+    dataHiLockP1.values.map(x =>
+        Number(x.Value)
+    );
     const valuesP2 =
-    dataHiLockP2.values.map(x => Number(x.Value));
+    dataHiLockP2.values.map(x =>
+        Number(x.Value)
+    );
     const valuesAceite =
-    dataHiLockAceite.values.map(x => Number(x.Value));
+    dataHiLockAceite.values.map(x =>
+        Number(x.Value)
+    );
     const valuesRV1 =
-    dataHiLockRV1.values.map(x => Number(x.Value));
+    dataHiLockRV1.values.map(x =>
+        Number(x.Value)
+    );
     const valuesRV2 =
-    dataHiLockRV2.values.map(x => Number(x.Value));
+    dataHiLockRV2.values.map(x =>
+        Number(x.Value)
+    );
     const ultimoValorP1 =
     valuesP1[valuesP1.length - 1];
     const ultimoValorP2 =
@@ -6147,7 +6173,9 @@ Promise.all([
     valuesRV1[valuesRV1.length - 1];
     const ultimoValorRV2 =
     valuesRV2[valuesRV2.length - 1];
+    // ==========================
     // TARJETAS
+    // ==========================
     document.getElementById("valorHiLockP1")
         .innerHTML =
         ultimoValorP1.toFixed(2);
@@ -6156,18 +6184,17 @@ Promise.all([
         ultimoValorP2.toFixed(2);
     document.getElementById("valorHiLockAceite")
         .innerHTML =
-        ultimoValorAceite.toFixed(0) +
-        " mm";
+        ultimoValorAceite.toFixed(0) + " mm";
     document.getElementById("valorHiLockRV1")
         .innerHTML =
-        ultimoValorRV1.toFixed(2) +
-        " MPa";
+        ultimoValorRV1.toFixed(2) + " MPa";
     document.getElementById("valorHiLockRV2")
         .innerHTML =
-        ultimoValorRV2.toFixed(2) +
-        " MPa";
+        ultimoValorRV2.toFixed(2) + " MPa";
+    // ==========================
     // ALARMAS
-    if(ultimoValorAceite > 103){
+    // ==========================
+    if (ultimoValorAceite > 103) {
         totalAlarmasPrensa++;
         listaAlarmasPrensa.push(
             "HI-LOCK ACEITE (" +
@@ -6175,7 +6202,7 @@ Promise.all([
             " mm)"
         );
     }
-    if(ultimoValorRV1 > 0.32){
+    if (ultimoValorRV1 > 0.32) {
         totalAlarmasPrensa++;
         listaAlarmasPrensa.push(
             "HI-LOCK RV1 (" +
@@ -6183,7 +6210,7 @@ Promise.all([
             " MPa)"
         );
     }
-    if(ultimoValorRV2 > 0.34){
+    if (ultimoValorRV2 > 0.34) {
         totalAlarmasPrensa++;
         listaAlarmasPrensa.push(
             "HI-LOCK RV2 (" +
@@ -6192,128 +6219,178 @@ Promise.all([
         );
     }
     // ==========================
-    // GRAFICA PRESION BOMBAS
+    // ITEM 4 Y 5
+    // PRESION BOMBAS
     // ==========================
-    const ctxPresion =
-    document.getElementById(
-        "graficaHiLockPresion"
-    );
-    new Chart(ctxPresion, {
-        type: "line",
-        data: {
-            labels: labels7,
-            datasets: [
-            {
-                label: "Bomba 1",
-                data: valuesP1.slice(-7),
-                borderColor: "blue",
-                fill: false,
-                tension: 0.3
-            },
-            {
-                label: "Bomba 2",
-                data: valuesP2.slice(-7),
-                borderColor: "green",
-                fill: false,
-                tension: 0.3
-            }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: "top"
+    new Chart(
+        document.getElementById(
+            "graficaHiLockPresion"
+        ),
+        {
+            type: "line",
+            data: {
+                labels: labels7,
+                datasets: [
+                {
+                    label: "Bomba 1",
+                    data: valuesP1.slice(-7),
+                    borderColor: "blue",
+                    fill: false,
+                    tension: 0.3
                 },
-                title: {
-                    display: true,
-                    text:
-                    "Prensa T3000 - Presión Bombas Hi-Lock"
+                {
+                    label: "Bomba 2",
+                    data: valuesP2.slice(-7),
+                    borderColor: "green",
+                    fill: false,
+                    tension: 0.3
                 }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
             }
         }
-    });
-    // ==========================
-    // GRAFICA PRESION AIRE RV
-    // ==========================
-    const ctxRV =
-    document.getElementById(
-        "graficaHiLockRV"
     );
-    new Chart(ctxRV, {
-        type: "line",
-        data: {
-            labels: labels7,
-            datasets: [
-            {
-                label: "RV1",
-                data: valuesRV1.slice(-7),
-                borderColor: "orange",
-                fill: false,
-                tension: 0.3,
-                pointRadius:
-                valuesRV1.slice(-7).map(v =>
-                    v > 0.32 ? 8 : 2
-                ),
-                pointBackgroundColor:
-                valuesRV1.slice(-7).map(v =>
-                    v > 0.32
-                    ? "red"
-                    : "orange"
-                )
-            },
-            {
-                label: "RV2",
-                data: valuesRV2.slice(-7),
-                borderColor: "purple",
-                fill: false,
-                tension: 0.3,
-                pointRadius:
-                valuesRV2.slice(-7).map(v =>
-                    v > 0.34 ? 8 : 2
-                ),
-                pointBackgroundColor:
-                valuesRV2.slice(-7).map(v =>
-                    v > 0.34
-                    ? "red"
-                    : "purple"
-                )
-            },
-            {
-                label: "Límite RV1",
-                data: Array(7).fill(0.32),
-                borderColor: "orange",
-                borderDash: [5,5],
-                fill: false,
-                pointRadius: 0
-            },
-            {
-                label: "Límite RV2",
-                data: Array(7).fill(0.34),
-                borderColor: "red",
-                borderDash: [5,5],
-                fill: false,
-                pointRadius: 0
-            }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: "top"
+    // ==========================
+    // ITEM 6
+    // ACEITE
+    // ==========================
+    new Chart(
+        document.getElementById(
+            "graficaHiLockAceite"
+        ),
+        {
+            type: "line",
+            data: {
+                labels: labels7,
+                datasets: [
+                {
+                    label: "Cantidad Aceite",
+                    data: valuesAceite.slice(-7),
+                    borderColor: "blue",
+                    fill: false,
+                    tension: 0.3,
+                    pointRadius:
+                    valuesAceite.slice(-7).map(v =>
+                        v > 103 ? 8 : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesAceite.slice(-7).map(v =>
+                        v > 103 ? "red" : "blue"
+                    )
                 },
-                title: {
-                    display: true,
-                    text:
-                    "Prensa T3000 - Presión Aire RV"
+                {
+                    label: "Limite Maximo",
+                    data: Array(7).fill(103),
+                    borderColor: "red",
+                    borderDash: [5,5],
+                    fill: false,
+                    pointRadius: 0
                 }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
             }
         }
-    });
+    );
+    // ==========================
+    // ITEM 7
+    // RV1
+    // ==========================
+    new Chart(
+        document.getElementById(
+            "graficaHiLockRV1"
+        ),
+        {
+            type: "line",
+            data: {
+                labels: labels7,
+                datasets: [
+                {
+                    label: "RV1",
+                    data: valuesRV1.slice(-7),
+                    borderColor: "orange",
+                    fill: false,
+                    tension: 0.3,
+                    pointRadius:
+                    valuesRV1.slice(-7).map(v =>
+                        v > 0.32 ? 8 : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesRV1.slice(-7).map(v =>
+                        v > 0.32
+                        ? "red"
+                        : "orange"
+                    )
+                },
+                {
+                    label: "Limite Maximo",
+                    data: Array(7).fill(0.32),
+                    borderColor: "red",
+                    borderDash: [5,5],
+                    fill: false,
+                    pointRadius: 0
+                }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        }
+    );
+    // ==========================
+    // ITEM 8
+    // RV2
+    // ==========================
+    new Chart(
+        document.getElementById(
+            "graficaHiLockRV2"
+        ),
+        {
+            type: "line",
+            data: {
+                labels: labels7,
+                datasets: [
+                {
+                    label: "RV2",
+                    data: valuesRV2.slice(-7),
+                    borderColor: "purple",
+                    fill: false,
+                    tension: 0.3,
+                    pointRadius:
+                    valuesRV2.slice(-7).map(v =>
+                        v > 0.34 ? 8 : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesRV2.slice(-7).map(v =>
+                        v > 0.34
+                        ? "red"
+                        : "purple"
+                    )
+                },
+                {
+                    label: "Limite Maximo",
+                    data: Array(7).fill(0.34),
+                    borderColor: "red",
+                    borderDash: [5,5],
+                    fill: false,
+                    pointRadius: 0
+                }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        }
+    );
 });
+	
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
 .then(r => r.json())
