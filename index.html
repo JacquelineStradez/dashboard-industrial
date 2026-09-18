@@ -2882,23 +2882,47 @@ canvas{
 	        </div>
 	    </div>
 	    <div class="gridGraficas">
-	        <div class="bloqueGrafica">
-	            <div class="seccionTitulo">
-	                <h2>Ejes y Connecting Rod</h2>
-	            </div>
-	            <div class="grafica-contenedor">
-	                <canvas id="graficaTemperaturasEjes"></canvas>
-	            </div>
-	        </div>
-	        <div class="bloqueGrafica">
-	            <div class="seccionTitulo">
-	                <h2>Freno, Clutch y Servomotor</h2>
-	            </div>
-	            <div class="grafica-contenedor">
-	                <canvas id="graficaTemperaturasFreno"></canvas>
-	            </div>
-	        </div>
-	    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Ejes y Connecting Rod</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaTempEjes"></canvas>
+		        </div>
+		    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Temperatura del Freno</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaTempFreno"></canvas>
+		        </div>
+		    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Flujo del Freno</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaTempFlujo"></canvas>
+		        </div>
+		    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Bandas Motor Principal</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaTempBandas"></canvas>
+		        </div>
+		    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Guía, Clutch y Servomotor</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaTempClutch"></canvas>
+		        </div>
+		    </div>
+		</div>
 	</div>
 </div>
 <div id="vistaGrafito"
@@ -7762,6 +7786,300 @@ Promise.all([
     );
 });
 
+Promise.all([
+    fetch("Item43PrensaT3000.json").then(r => r.json()),
+    fetch("Item44PrensaT3000.json").then(r => r.json()),
+    fetch("Item45PrensaT3000.json").then(r => r.json()),
+    fetch("Item46PrensaT3000.json").then(r => r.json()),
+    fetch("Item47PrensaT3000.json").then(r => r.json()),
+    fetch("Item48PrensaT3000.json").then(r => r.json()),
+    fetch("Item49PrensaT3000.json").then(r => r.json()),
+    fetch("Item50PrensaT3000.json").then(r => r.json()),
+    fetch("Item51PrensaT3000.json").then(r => r.json()),
+    fetch("Item52PrensaT3000.json").then(r => r.json()),
+    fetch("Item53PrensaT3000.json").then(r => r.json()),
+    fetch("Item54PrensaT3000.json").then(r => r.json()),
+    fetch("Item55PrensaT3000.json").then(r => r.json()),
+    fetch("Item56PrensaT3000.json").then(r => r.json())
+])
+.then(([
+    i43,i44,i45,i46,i47,i48,
+    i49,i50,i51,
+    i52,i53,i54,i55,i56
+]) => {
+    const labels =
+    i43.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const v43 = i43.values.map(x => Number(x.Value));
+    const v44 = i44.values.map(x => Number(x.Value));
+    const v45 = i45.values.map(x => Number(x.Value));
+    const v46 = i46.values.map(x => Number(x.Value));
+    const v47 = i47.values.map(x => Number(x.Value));
+    const v48 = i48.values.map(x => Number(x.Value));
+    const v49 = i49.values.map(x => Number(x.Value));
+    const v50 = i50.values.map(x => Number(x.Value));
+    const v51 = i51.values.map(x => Number(x.Value));
+    const v52 = i52.values.map(x => Number(x.Value));
+    const v53 = i53.values.map(x => Number(x.Value));
+    const v54 = i54.values.map(x => Number(x.Value));
+    const v55 = i55.values.map(x => Number(x.Value));
+    const v56 = i56.values.map(x => Number(x.Value));
+    // TARJETAS
+    document.getElementById("valorTempEjeDer")
+        .innerHTML = v43.at(-1).toFixed(1) + " °C";
+    document.getElementById("valorTempEjeIzq")
+        .innerHTML = v44.at(-1).toFixed(1) + " °C";
+    document.getElementById("valorTempGrandeDer")
+        .innerHTML = v45.at(-1).toFixed(1) + " °C";
+    document.getElementById("valorTempGrandeIzq")
+        .innerHTML = v46.at(-1).toFixed(1) + " °C";
+    document.getElementById("valorTempPeqDer")
+        .innerHTML = v47.at(-1).toFixed(1) + " °C";
+    document.getElementById("valorTempPeqIzq")
+        .innerHTML = v48.at(-1).toFixed(1) + " °C";
+    document.getElementById("valorTempFreno")
+        .innerHTML = v49.at(-1).toFixed(1) + " °C";
+    document.getElementById("valorTempFlujoFreno")
+        .innerHTML = v50.at(-1).toFixed(1);
+    document.getElementById("valorTempBandas")
+        .innerHTML = v51.at(-1).toFixed(1) + " °C";
+    document.getElementById("valorTempGuiaFreno")
+        .innerHTML = v52.at(-1).toFixed(1);
+    document.getElementById("valorTempClutch")
+        .innerHTML = v53.at(-1).toFixed(1);
+    document.getElementById("valorTempCubiertaClutch")
+        .innerHTML = v54.at(-1).toFixed(1);
+    document.getElementById("valorTempAireClutch")
+        .innerHTML = v55.at(-1).toFixed(1);
+    document.getElementById("valorTempServomotor")
+        .innerHTML = v56.at(-1).toFixed(1);
+    // ALARMAS
+    [v43.at(-1),v44.at(-1),v45.at(-1),
+     v46.at(-1),v47.at(-1),v48.at(-1)]
+    .forEach(v => {
+        if(v > 60){
+            totalAlarmasPrensa++;
+        }
+    });
+    if(v49.at(-1) > 60 || v49.at(-1) < 40){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "FRENO (" + v49.at(-1).toFixed(1) + " °C)"
+        );
+    }
+    if(v50.at(-1) > 25 || v50.at(-1) < 20){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "FLUJO FRENO (" + v50.at(-1).toFixed(1) + ")"
+        );
+    }
+    if(v51.at(-1) > 65 || v51.at(-1) < 50){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "BANDAS MOTOR (" + v51.at(-1).toFixed(1) + " °C)"
+        );
+    }
+    // ==========================
+    // GRAFICA 1
+    // ITEMS 43-48
+    // ==========================
+    new Chart(
+        document.getElementById("graficaTempEjes"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {label:"Eje Der",data:v43.slice(-7),borderColor:"blue",fill:false},
+                {label:"Eje Izq",data:v44.slice(-7),borderColor:"green",fill:false},
+                {label:"CR Grande Der",data:v45.slice(-7),borderColor:"orange",fill:false},
+                {label:"CR Grande Izq",data:v46.slice(-7),borderColor:"purple",fill:false},
+                {label:"CR Peq Der",data:v47.slice(-7),borderColor:"brown",fill:false},
+                {label:"CR Peq Izq",data:v48.slice(-7),borderColor:"black",fill:false},
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(60),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // GRAFICA 2
+    // ITEM 49
+    // ==========================
+    new Chart(
+        document.getElementById("graficaTempFreno"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Temperatura Freno",
+                    data:v49.slice(-7),
+                    borderColor:"red",
+                    fill:false
+                },
+                {
+                    label:"Min",
+                    data:Array(7).fill(40),
+                    borderColor:"orange",
+                    borderDash:[5,5],
+                    pointRadius:0
+                },
+                {
+                    label:"Max",
+                    data:Array(7).fill(60),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // GRAFICA 3
+    // ITEM 50
+    // ==========================
+    new Chart(
+        document.getElementById("graficaTempFlujo"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Flujo Freno",
+                    data:v50.slice(-7),
+                    borderColor:"blue",
+                    fill:false
+                },
+                {
+                    label:"Min",
+                    data:Array(7).fill(20),
+                    borderColor:"orange",
+                    borderDash:[5,5],
+                    pointRadius:0
+                },
+                {
+                    label:"Max",
+                    data:Array(7).fill(25),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // GRAFICA 4
+    // ITEM 51
+    // ==========================
+    new Chart(
+        document.getElementById("graficaTempBandas"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Bandas Motor",
+                    data:v51.slice(-7),
+                    borderColor:"green",
+                    fill:false
+                },
+                {
+                    label:"Min",
+                    data:Array(7).fill(50),
+                    borderColor:"orange",
+                    borderDash:[5,5],
+                    pointRadius:0
+                },
+                {
+                    label:"Max",
+                    data:Array(7).fill(65),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // GRAFICA 5
+    // ITEMS 52-56
+    // ==========================
+    new Chart(
+        document.getElementById("graficaTempClutch"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Guía Freno",
+                    data:v52.slice(-7),
+                    borderColor:"blue",
+                    fill:false
+                },
+                {
+                    label:"Clutch",
+                    data:v53.slice(-7),
+                    borderColor:"green",
+                    fill:false
+                },
+                {
+                    label:"Cubierta",
+                    data:v54.slice(-7),
+                    borderColor:"orange",
+                    fill:false
+                },
+                {
+                    label:"Aire Clutch",
+                    data:v55.slice(-7),
+                    borderColor:"purple",
+                    fill:false
+                },
+                {
+                    label:"Servomotor",
+                    data:v56.slice(-7),
+                    borderColor:"brown",
+                    fill:false
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
 .then(r => r.json())
