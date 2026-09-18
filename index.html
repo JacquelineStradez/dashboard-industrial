@@ -6437,9 +6437,11 @@ Promise.all([
     const valuesTotalLub =
     totalLub.values.map(x => Number(x.Value));
     const valuesAceiteBomba =
-    aceiteBomba.values.map(x => Number(x.Value ));
+    aceiteBomba.values.map(x => Number(x.Value));
     const valuesPresionBomba =
-    presionBomba.values.map(x => Number(x.Value));
+    presionBomba.values.map(x =>
+	    Number(x["Value "] ?? x["Value"])
+	);
     const valuesAceite =
     aceite.values.map(x => Number(x.Value));
     const valuesDesfogue =
