@@ -6684,6 +6684,234 @@ Promise.all([
     );
 });
 
+Promise.all([
+    fetch("Item15PrensaT3000.json").then(r => r.json()),
+    fetch("Item16PrensaT3000.json").then(r => r.json()),
+    fetch("Item17PrensaT3000.json").then(r => r.json()),
+    fetch("Item18PrensaT3000.json").then(r => r.json()),
+    fetch("Item19PrensaT3000.json").then(r => r.json()),
+    fetch("Item20PrensaT3000.json").then(r => r.json())
+])
+.then(([pAceite,pDescarga,aceite,retorno,envio,temp]) => {
+    const labels =
+    pAceite.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesPAceite =
+    pAceite.values.map(x => Number(x.Value));
+    const valuesPDescarga =
+    pDescarga.values.map(x => Number(x.Value));
+    const valuesAceite =
+    aceite.values.map(x => Number(x.Value));
+    const valuesRetorno =
+    retorno.values.map(x => Number(x.Value));
+    const valuesEnvio =
+    envio.values.map(x => Number(x.Value));
+    const valuesTemp =
+    temp.values.map(x => Number(x.Value));
+    const ultimoPAceite =
+    valuesPAceite[valuesPAceite.length - 1];
+    const ultimoPDescarga =
+    valuesPDescarga[valuesPDescarga.length - 1];
+    const ultimoAceite =
+    valuesAceite[valuesAceite.length - 1];
+    const ultimoRetorno =
+    valuesRetorno[valuesRetorno.length - 1];
+    const ultimoEnvio =
+    valuesEnvio[valuesEnvio.length - 1];
+    const ultimoTemp =
+    valuesTemp[valuesTemp.length - 1];
+    // TARJETAS
+    document.getElementById("valorPrincipalPresionAceite")
+        .innerHTML =
+        ultimoPAceite.toFixed(2);
+    document.getElementById("valorPrincipalPresionDescarga")
+        .innerHTML =
+        ultimoPDescarga.toFixed(2);
+    document.getElementById("valorPrincipalAceite")
+        .innerHTML =
+        ultimoAceite.toFixed(0) + " mm";
+    document.getElementById("valorPrincipalRetorno")
+        .innerHTML =
+        ultimoRetorno.toFixed(2);
+    document.getElementById("valorPrincipalEnvio")
+        .innerHTML =
+        ultimoEnvio.toFixed(2);
+    document.getElementById("valorPrincipalTemperatura")
+        .innerHTML =
+        ultimoTemp.toFixed(1) + " °C";
+    // ALARMAS
+    if(ultimoAceite > 580){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "PRINCIPAL ACEITE (" +
+            ultimoAceite.toFixed(0) +
+            " mm)"
+        );
+    }
+    if(ultimoTemp > 50){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "PRINCIPAL TEMPERATURA (" +
+            ultimoTemp.toFixed(1) +
+            " °C)"
+        );
+    }
+    // ==========================
+    // ITEM 15 Y 16
+    // PRESIONES
+    // ==========================
+    new Chart(
+        document.getElementById("graficaPrincipalPresiones"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Presión Aceite",
+                    data:valuesPAceite.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Presión Descarga",
+                    data:valuesPDescarga.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // ITEM 17
+    // ACEITE
+    // ==========================
+    new Chart(
+        document.getElementById("graficaPrincipalAceite"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Cantidad Aceite",
+                    data:valuesAceite.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+
+                    pointRadius:
+                    valuesAceite.slice(-7).map(v =>
+                        v > 580 ? 8 : 2
+                    ),
+
+                    pointBackgroundColor:
+                    valuesAceite.slice(-7).map(v =>
+                        v > 580 ? "red" : "blue"
+                    )
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(580),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // ITEM 18 Y 19
+    // DESFOGUES
+    // ==========================
+    new Chart(
+        document.getElementById("graficaPrincipalDesfogue"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Retorno",
+                    data:valuesRetorno.slice(-7),
+                    borderColor:"orange",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Envío",
+                    data:valuesEnvio.slice(-7),
+                    borderColor:"purple",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // ITEM 20
+    // TEMPERATURA
+    // ==========================
+    new Chart(
+        document.getElementById("graficaPrincipalTemperatura"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Temperatura Aceite",
+                    data:valuesTemp.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+
+                    pointRadius:
+                    valuesTemp.slice(-7).map(v =>
+                        v > 50 ? 8 : 2
+                    ),
+
+                    pointBackgroundColor:
+                    valuesTemp.slice(-7).map(v =>
+                        v > 50 ? "red" : "blue"
+                    )
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(50),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
 .then(r => r.json())
