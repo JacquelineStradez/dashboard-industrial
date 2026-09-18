@@ -7595,7 +7595,14 @@ Promise.all([
     const labels7 =
     labels.slice(-7);
     const valuesPMS =
-    pms.values.map(x => Number(x.Value));
+	pms.values.map(x => {
+	    let valor =
+	    Number(x.Value);
+	    if(valor <= 30){
+	        valor += 360;
+	    }
+	    return valor;
+	});
     const valuesCarga =
     carga.values.map(x => Number(x.Value));
     const valuesSinCarga =
@@ -7658,9 +7665,15 @@ Promise.all([
                 ]
             },
             options:{
-                responsive:true,
-                maintainAspectRatio:false
-            }
+			    responsive:true,
+			    maintainAspectRatio:false,
+			    scales:{
+			        y:{
+			            min:350,
+			            max:390
+			        }
+			    }
+			}
         }
     );
     // ==========================
