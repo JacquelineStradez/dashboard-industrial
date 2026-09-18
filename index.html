@@ -5902,8 +5902,8 @@ Promise.all([
 	
 // =====================================
 // PRENSA T3000
-// LUBRICACION UNIDAD HIDRAULICA DESLIZANTE
-// ITEMS 1,2,3
+// LUBRICACIÓN UNIDAD HIDRÁULICA DESLIZANTE
+// ITEMS 1, 2 y 3
 // =====================================
 
 let dataLubPresion;
@@ -5918,26 +5918,193 @@ Promise.all([
     dataLubPresion = presion;
     dataLubTemperatura = temperatura;
     dataLubAceite = aceite;
-    // TARJETAS
-    const valorPresion =
+    const labelsPresion =
+    dataLubPresion.labels.map(x => x.Fecha);
+    const labelsTemp =
+    dataLubTemperatura.labels.map(x => x.Fecha);
+    const labelsAceite =
+    dataLubAceite.labels.map(x => x.Fecha);
+    const valuesPresion =
     dataLubPresion.values.map(x => Number(x.Value));
-    const valorTemperatura =
+    const valuesTemp =
     dataLubTemperatura.values.map(x => Number(x.Value));
-    const valorAceite =
+    const valuesAceite =
     dataLubAceite.values.map(x => Number(x.Value));
+    const labelsPresion7 = labelsPresion.slice(-7);
+    const labelsTemp7 = labelsTemp.slice(-7);
+    const labelsAceite7 = labelsAceite.slice(-7);
+    const valuesPresion7 = valuesPresion.slice(-7);
+    const valuesTemp7 = valuesTemp.slice(-7);
+    const valuesAceite7 = valuesAceite.slice(-7);
+    const ultimoValorPresion =
+    valuesPresion[valuesPresion.length - 1];
+    const ultimoValorTemp =
+    valuesTemp[valuesTemp.length - 1];
+    const ultimoValorAceite =
+    valuesAceite[valuesAceite.length - 1];
+    // TARJETAS
     document.getElementById("valorLubPresion")
         .innerHTML =
-        valorPresion[valorPresion.length - 1].toFixed(2) +
-        " MPa";
+        ultimoValorPresion.toFixed(2) + " MPa";
     document.getElementById("valorLubTemperatura")
         .innerHTML =
-        valorTemperatura[valorTemperatura.length - 1].toFixed(1) +
-        " °C";
+        ultimoValorTemp.toFixed(1) + " °C";
     document.getElementById("valorLubAceite")
         .innerHTML =
-        valorAceite[valorAceite.length - 1].toFixed(0) +
-        " mm";
+        ultimoValorAceite.toFixed(0) + " mm";
+    // ALARMAS
+    if(
+        ultimoValorPresion > 7 ||
+        ultimoValorPresion < 5
+    ){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "LUB. DESLIZANTE PRESIÓN (" +
+            ultimoValorPresion.toFixed(2) +
+            " MPa)"
+        );
+    }
+    if(ultimoValorTemp > 50){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "LUB. DESLIZANTE TEMP (" +
+            ultimoValorTemp.toFixed(1) +
+            " °C)"
+        );
+    }
+    if(ultimoValorAceite > 330){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "LUB. DESLIZANTE ACEITE (" +
+            ultimoValorAceite.toFixed(0) +
+            " mm)"
+        );
+    }
+    // GRAFICA PRESION
+    const ctxPresion =
+    document.getElementById("graficaLubPresion");
+    new Chart(ctxPresion, {
+        type: "line",
+        data: {
+            labels: labelsPresion7,
+            datasets: [
+            {
+                label: "Presión bomba",
+                data: valuesPresion7,
+                borderColor: "blue",
+                fill: false,
+                tension: 0.3,
+                pointRadius: valuesPresion7.map(v =>
+                    (v > 7 || v < 5)
+                    ? 8
+                    : 2
+                ),
+                pointBackgroundColor:
+                valuesPresion7.map(v =>
+                    (v > 7 || v < 5)
+                    ? "red"
+                    : "blue"
+                )
+            },
+            {
+                label: "Límite Inferior",
+                data: Array(7).fill(5),
+                borderColor: "green",
+                borderDash: [5,5],
+                fill: false,
+                pointRadius: 0
+            },
+            {
+                label: "Límite Superior",
+                data: Array(7).fill(7),
+                borderColor: "red",
+                borderDash: [5,5],
+                fill: false,
+                pointRadius: 0
+            }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+    // GRAFICA TEMPERATURA
+    const ctxTemp =
+    document.getElementById("graficaLubTemperatura");
+    new Chart(ctxTemp, {
+        type: "line",
+        data: {
+            labels: labelsTemp7,
+            datasets: [
+            {
+                label: "Temperatura aceite",
+                data: valuesTemp7,
+                borderColor: "blue",
+                fill: false,
+                tension: 0.3,
+                pointRadius: valuesTemp7.map(v =>
+                    v > 50 ? 8 : 2
+                ),
+                pointBackgroundColor:
+                valuesTemp7.map(v =>
+                    v > 50 ? "red" : "blue"
+                )
+            },
+            {
+                label: "Límite Máximo",
+                data: Array(7).fill(50),
+                borderColor: "red",
+                borderDash: [5,5],
+                fill: false,
+                pointRadius: 0
+            }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+    // GRAFICA ACEITE
+    const ctxAceite =
+    document.getElementById("graficaLubAceite");
+    new Chart(ctxAceite, {
+        type: "line",
+        data: {
+            labels: labelsAceite7,
+            datasets: [
+            {
+                label: "Cantidad aceite",
+                data: valuesAceite7,
+                borderColor: "blue",
+                fill: false,
+                tension: 0.3,
+                pointRadius: valuesAceite7.map(v =>
+                    v > 330 ? 8 : 2
+                ),
+                pointBackgroundColor:
+                valuesAceite7.map(v =>
+                    v > 330 ? "red" : "blue"
+                )
+            },
+            {
+                label: "Límite Máximo",
+                data: Array(7).fill(330),
+                borderColor: "red",
+                borderDash: [5,5],
+                fill: false,
+                pointRadius: 0
+            }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
 });
+
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
 .then(r => r.json())
