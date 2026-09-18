@@ -2476,23 +2476,47 @@ canvas{
          </div>
      </div>
      <div class="gridGraficas">
-        <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Presiones y Aceite</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaGIBPresion"></canvas>
-            </div>
-        </div>
-        <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Temperatura y Desfogue</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaGIBTemperatura"></canvas>
-            </div>
-        </div>
-     </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Total Lub</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaGIBTotalLub"></canvas>
+	        </div>
+	    </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Medidores Bomba</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaGIBBombas"></canvas>
+	        </div>
+	    </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Cantidad de Aceite</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaGIBAceite"></canvas>
+	        </div>
+	    </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Desfogue Tanque Retorno</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaGIBDesfogue"></canvas>
+	        </div>
+	    </div>
+	    <div class="bloqueGrafica">
+	        <div class="seccionTitulo">
+	            <h2>Temperatura Aceite</h2>
+	        </div>
+	        <div class="grafica-contenedor">
+	            <canvas id="graficaGIBTemperatura"></canvas>
+	        </div>
+	    </div>
+	</div>
 </div>
 <div id="vistaPrincipal"
      class="panelModulo"
@@ -6390,7 +6414,258 @@ Promise.all([
         }
     );
 });
-	
+
+let dataGIBTotalLub;
+let dataGIBAceiteBomba;
+let dataGIBPresionBomba;
+let dataGIBAceite;
+let dataGIBDesfogue;
+let dataGIBTemperatura;
+Promise.all([
+    fetch("Item9PrensaT3000.json").then(r => r.json()),
+    fetch("Item10PrensaT3000.json").then(r => r.json()),
+    fetch("Item11PrensaT3000.json").then(r => r.json()),
+    fetch("Item12PrensaT3000.json").then(r => r.json()),
+    fetch("Item13PrensaT3000.json").then(r => r.json()),
+    fetch("Item14PrensaT3000.json").then(r => r.json())
+])
+.then(([totalLub, aceiteBomba, presionBomba, aceite, desfogue, temperatura]) => {
+    const labels =
+    totalLub.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesTotalLub =
+    totalLub.values.map(x => Number(x.Value));
+    const valuesAceiteBomba =
+    aceiteBomba.values.map(x => Number(x.Value));
+    const valuesPresionBomba =
+    presionBomba.values.map(x => Number(x.Value));
+    const valuesAceite =
+    aceite.values.map(x => Number(x.Value));
+    const valuesDesfogue =
+    desfogue.values.map(x => Number(x.Value));
+    const valuesTemperatura =
+    temperatura.values.map(x => Number(x.Value));
+    const ultimoAceiteBomba =
+    valuesAceiteBomba[valuesAceiteBomba.length - 1];
+    const ultimoPresionBomba =
+    valuesPresionBomba[valuesPresionBomba.length - 1];
+    const ultimoAceite =
+    valuesAceite[valuesAceite.length - 1];
+    const ultimoDesfogue =
+    valuesDesfogue[valuesDesfogue.length - 1];
+    const ultimoTemperatura =
+    valuesTemperatura[valuesTemperatura.length - 1];
+    const ultimoTotalLub =
+    valuesTotalLub[valuesTotalLub.length - 1];
+    // ==========================
+    // TARJETAS
+    // ==========================
+    document.getElementById("valorGIBAceiteBomba")
+        .innerHTML =
+        ultimoAceiteBomba.toFixed(2);
+    document.getElementById("valorGIBPresionBomba")
+        .innerHTML =
+        ultimoPresionBomba.toFixed(2);
+    document.getElementById("valorGIBAceite")
+        .innerHTML =
+        ultimoAceite.toFixed(0) + " mm";
+    document.getElementById("valorGIBDesfogue")
+        .innerHTML =
+        ultimoDesfogue.toFixed(2);
+    document.getElementById("valorGIBTemperatura")
+        .innerHTML =
+        ultimoTemperatura.toFixed(1) + " °C";
+    // ==========================
+    // ALARMAS
+    // ==========================
+    if(ultimoTotalLub > 210){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "GIB TOTAL LUB (" +
+            ultimoTotalLub.toFixed(0) +
+            " mm)"
+        );
+    }
+    if(ultimoAceite > 790){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "GIB ACEITE (" +
+            ultimoAceite.toFixed(0) +
+            " mm)"
+        );
+    }
+    if(ultimoTemperatura > 50){
+        totalAlarmasPrensa++;
+        listaAlarmasPrensa.push(
+            "GIB TEMPERATURA (" +
+            ultimoTemperatura.toFixed(1) +
+            " °C)"
+        );
+    }
+    // ==========================
+    // ITEM 9
+    // TOTAL LUB
+    // ==========================
+    new Chart(
+        document.getElementById("graficaGIBTotalLub"),
+        {
+            type: "line",
+            data: {
+                labels: labels7,
+                datasets: [
+                {
+                    label: "Total Lub",
+                    data: valuesTotalLub.slice(-7),
+                    borderColor: "blue",
+                    fill: false,
+                    tension: 0.3
+                },
+                {
+                    label: "Límite Máximo",
+                    data: Array(7).fill(210),
+                    borderColor: "red",
+                    borderDash: [5,5],
+                    fill: false,
+                    pointRadius: 0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // ITEM 10 Y 11
+    // BOMBAS
+    // ==========================
+    new Chart(
+        document.getElementById("graficaGIBBombas"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Aceite Bomba",
+                    data:valuesAceiteBomba.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Presión Bomba",
+                    data:valuesPresionBomba.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // ITEM 12
+    // ACEITE
+    // ==========================
+    new Chart(
+        document.getElementById("graficaGIBAceite"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Cantidad Aceite",
+                    data:valuesAceite.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(790),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // ITEM 13
+    // DESFOGUE
+    // ==========================
+    new Chart(
+        document.getElementById("graficaGIBDesfogue"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Desfogue",
+                    data:valuesDesfogue.slice(-7),
+                    borderColor:"orange",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    // ==========================
+    // ITEM 14
+    // TEMPERATURA
+    // ==========================
+    new Chart(
+        document.getElementById("graficaGIBTemperatura"),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Temperatura Aceite",
+                    data:valuesTemperatura.slice(-7),
+                    borderColor:"purple",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(50),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
 .then(r => r.json())
