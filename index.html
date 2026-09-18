@@ -4241,6 +4241,19 @@ fetch("Item2CalentadorT3000.json")
     valuesRodillo[valuesRodillo.length - 1];
     document.getElementById("valorRodillo").innerHTML =
     ultimoValorRodillo.toFixed(2);
+	const alarmaRodillo =
+	    ultimoValorRodillo > dataRodillo.upperLimit ||
+	    ultimoValorRodillo < dataRodillo.lowerLimit;
+	if(alarmaRodillo){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "RODILLO (" +
+	        ultimoValorRodillo.toFixed(2) +
+	        " bar)"
+	    );
+	}
+	actualizarModalAlarmas();
 	const ctxRodillo =
 	document.getElementById('graficaPresionRodillo');
 	new Chart(ctxRodillo, {
@@ -4690,6 +4703,89 @@ Promise.all([
 	valuesInv3[valuesInv3.length - 1].toFixed(1);
 	document.getElementById("valorInv4").innerHTML =
 	valuesInv4[valuesInv4.length - 1].toFixed(1);
+	if(valuesInv1[valuesInv1.length - 1] > 7 ||
+	   valuesInv1[valuesInv1.length - 1] < 4){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "INV 1 (" +
+	        valuesInv1[valuesInv1.length - 1].toFixed(1) +
+	        " bar)"
+	    );
+	}
+	if(valuesInv2[valuesInv2.length - 1] > 7 ||
+	   valuesInv2[valuesInv2.length - 1] < 4){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	
+	    listaAlarmas.push(
+	        "INV 2 (" +
+	        valuesInv2[valuesInv2.length - 1].toFixed(1) +
+	        " bar)"
+	    );
+	}
+	if(valuesInv3[valuesInv3.length - 1] > 7 ||
+	   valuesInv3[valuesInv3.length - 1] < 4){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "INV 3 (" +
+	        valuesInv3[valuesInv3.length - 1].toFixed(1) +
+	        " bar)"
+	    );
+	}
+	if(valuesInv4[valuesInv4.length - 1] > 7 ||
+	   valuesInv4[valuesInv4.length - 1] < 4){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "INV 4 (" +
+	        valuesInv4[valuesInv4.length - 1].toFixed(1) +
+	        " bar)"
+	    );
+	}
+	actualizarModalAlarmas();
+	if(valuesCoil1[valuesCoil1.length - 1] > 7 ||
+	   valuesCoil1[valuesCoil1.length - 1] < 4){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "COIL 1 (" +
+	        valuesCoil1[valuesCoil1.length - 1].toFixed(1) +
+	        " bar)"
+	    );
+	}
+	if(valuesCoil2[valuesCoil2.length - 1] > 7 ||
+	   valuesCoil2[valuesCoil2.length - 1] < 4){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "COIL 2 (" +
+	        valuesCoil2[valuesCoil2.length - 1].toFixed(1) +
+	        " bar)"
+	    );
+	}
+	if(valuesCoil3[valuesCoil3.length - 1] > 7 ||
+	   valuesCoil3[valuesCoil3.length - 1] < 4){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "COIL 3 (" +
+	        valuesCoil3[valuesCoil3.length - 1].toFixed(1) +
+	        " bar)"
+	    );
+	}
+	if(valuesCoil4[valuesCoil4.length - 1] > 7 ||
+	   valuesCoil4[valuesCoil4.length - 1] < 4){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "COIL 4 (" +
+	        valuesCoil4[valuesCoil4.length - 1].toFixed(1) +
+	        " bar)"
+	    );
+	}
+	actualizarModalAlarmas();
 	document.getElementById("valorCoil1").innerHTML =
 	valuesCoil1[valuesCoil1.length - 1].toFixed(1);
 	document.getElementById("valorCoil2").innerHTML =
@@ -4997,37 +5093,80 @@ Promise.all([
 	        .style.borderLeft = "6px solid red";
 	    document.getElementById("tarjetaTermInv2")
 	        .style.background = "#fff0f0";
+		hayAlarma = true;
+		totalAlarmas++;
+		listaAlarmas.push(
+		    "TERM INV 2 (" +
+		    valuesTermInv2[valuesTermInv2.length - 1].toFixed(1) +
+		    " °C)"
+		);
 	}
 	if(valuesTermInv3[valuesTermInv3.length - 1] > 30){
 	    document.getElementById("tarjetaTermInv3")
 	        .style.borderLeft = "6px solid red";
 	    document.getElementById("tarjetaTermInv3")
 	        .style.background = "#fff0f0";
+		hayAlarma = true;
+		totalAlarmas++;
+		listaAlarmas.push(
+		    "TERM INV 3 (" +
+		    valuesTermInv3[valuesTermInv3.length - 1].toFixed(1) +
+		    " °C)"
+		);
 	}
 	if(valuesTermInv4[valuesTermInv4.length - 1] > 30){
 	    document.getElementById("tarjetaTermInv4")
 	        .style.borderLeft = "6px solid red";
 	    document.getElementById("tarjetaTermInv4")
 	        .style.background = "#fff0f0";
+		hayAlarma = true;
+		totalAlarmas++;
+		listaAlarmas.push(
+		    "TERM INV 4 (" +
+		    valuesTermInv4[valuesTermInv4.length - 1].toFixed(1) +
+		    " °C)"
+		);
 	}
 	if(valuesTermCoil2[valuesTermCoil2.length - 1] > 38){
 	    document.getElementById("tarjetaTermCoil2")
 	        .style.borderLeft = "6px solid red";
 	    document.getElementById("tarjetaTermCoil2")
 	        .style.background = "#fff0f0";
+		hayAlarma = true;
+		totalAlarmas++;
+		listaAlarmas.push(
+		    "TERM COIL 2 (" +
+		    valuesTermCoil2[valuesTermCoil2.length - 1].toFixed(1) +
+		    " °C)"
+		);
 	}
 	if(valuesTermCoil3[valuesTermCoil3.length - 1] > 38){
 	    document.getElementById("tarjetaTermCoil3")
 	        .style.borderLeft = "6px solid red";
 	    document.getElementById("tarjetaTermCoil3")
 	        .style.background = "#fff0f0";
+		hayAlarma = true;
+		totalAlarmas++;
+		listaAlarmas.push(
+		    "TERM COIL 3 (" +
+		    valuesTermCoil3[valuesTermCoil3.length - 1].toFixed(1) +
+		    " °C)"
+		);
 	}
 	if(valuesTermCoil4[valuesTermCoil4.length - 1] > 38){
 	    document.getElementById("tarjetaTermCoil4")
 	        .style.borderLeft = "6px solid red";
 	    document.getElementById("tarjetaTermCoil4")
 	        .style.background = "#fff0f0";
+		hayAlarma = true;
+		totalAlarmas++;
+		listaAlarmas.push(
+		    "TERM COIL 4 (" +
+		    valuesTermCoil4[valuesTermCoil4.length - 1].toFixed(1) +
+		    " °C)"
+		);
 	}
+	actualizarModalAlarmas();
 });
 	
 let dataIntercambiador;
@@ -5180,6 +5319,19 @@ fetch("Item22CalentadorT3000.json")
 	valuesConductividad[valuesConductividad.length - 1];
 	document.getElementById("valorConductividad").innerHTML =
 	ultimoValorConductividad.toFixed(2);
+	const alarmaConductividad =
+	    ultimoValorConductividad > dataConductividad.upperLimit ||
+	    ultimoValorConductividad < dataConductividad.lowerLimit;
+	if(alarmaConductividad){
+	    hayAlarma = true;
+	    totalAlarmas++;
+	    listaAlarmas.push(
+	        "CONDUCTIVIDAD (" +
+	        ultimoValorConductividad.toFixed(2) +
+	        ")"
+	    );
+	}
+	actualizarModalAlarmas();
 	const ctxConductividad =
 	document.getElementById('graficaConductividad');
 	new Chart(ctxConductividad, {
@@ -5305,6 +5457,7 @@ fetch("Item23CalentadorT3000.json")
 	        " bar)"
 	    );
 	};
+	actualizarModalAlarmas();
 	if(alarmaInterno){
 	    document.getElementById("tarjetaInterno")
 	        .style.borderLeft = "6px solid red";
@@ -5423,6 +5576,7 @@ fetch("Item24CalentadorT3000.json")
 	        " bar)"
 	    );
 	};
+	actualizarModalAlarmas();
 	if(alarmaBobina){
 	    document.getElementById("tarjetaBobina")
 	        .style.borderLeft = "6px solid red";
@@ -5552,6 +5706,7 @@ fetch("Item25CalentadorT3000.json")
 	        " bar)"
 	    );
 	};
+	actualizarModalAlarmas();
 	if(alarmaPresionAire){
 	    document.getElementById("tarjetaPresionAire")
 	        .style.borderLeft = "6px solid red";
