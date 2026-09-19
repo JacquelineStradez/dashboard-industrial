@@ -3360,8 +3360,6 @@ document.getElementById("btnConductividad")
 });
 document.getElementById("btnCalentador")
 .addEventListener("click", function(){
-	document.getElementById("panelAlarmas")
-		.style.display = "none";
     document.getElementById("vistaPrensa")
         .style.display = "none";
     document.getElementById("vistaGrafito")
@@ -3374,7 +3372,15 @@ document.getElementById("btnCalentador")
     document.getElementById("vistaCalentador")
         .style.display = "block";
     document.getElementById("tarjetaAlarmas")
-        .style.display = "block";
+	    .style.display = "block";
+	document.getElementById("tarjetaAlarmasPrensa")
+	    .style.display = "none";
+	document.getElementById("tarjetaAlarmasGrafito")
+	    .style.display = "none";
+	document.getElementById("tarjetaAlarmasColector")
+	    .style.display = "none";
+	document.getElementById("panelAlarmas")
+	    .style.display = "grid";
 });
 document.getElementById("btnCalentador1200")
 .addEventListener("click", function(){
@@ -3446,8 +3452,6 @@ document.getElementById("btnColector1200")
 });
 document.getElementById("btnPrensa")
 .addEventListener("click", function(){
-	document.getElementById("panelAlarmas")
-    	.style.display = "none";
     document.getElementById("vistaCalentador")
         .style.display = "none";
     document.getElementById("vistaGrafito")
@@ -3464,17 +3468,23 @@ document.getElementById("btnPrensa")
         .style.display = "block";
     document.getElementById("vistaLubDeslizante")
         .style.display = "block";
-    document.getElementById("tarjetaAlarmasPrensa")
-        .style.display = "block";
     document.getElementById("contadorAlarmasPrensa")
         .style.color = "#000000";
     document.getElementById("tarjetaAlarmasPrensa")
         .style.borderLeft = "6px solid #0078D4";
+	document.getElementById("tarjetaAlarmas")
+	    .style.display = "none";
+	document.getElementById("tarjetaAlarmasPrensa")
+	    .style.display = "block";
+	document.getElementById("tarjetaAlarmasGrafito")
+	    .style.display = "none";
+	document.getElementById("tarjetaAlarmasColector")
+	    .style.display = "none";
+	document.getElementById("panelAlarmas")
+	    .style.display = "grid";
 });
 document.getElementById("btnGrafito")
 .addEventListener("click", function(){
-	document.getElementById("panelAlarmas")
-    	.style.display = "none";
     document.getElementById("vistaCalentador")
         .style.display = "none";
     document.getElementById("vistaPrensa")
@@ -3486,13 +3496,19 @@ document.getElementById("btnGrafito")
     ocultarVistasColector();
     document.getElementById("vistaGrafito")
         .style.display = "block";
+	document.getElementById("tarjetaAlarmas")
+	    .style.display = "none";
 	document.getElementById("tarjetaAlarmasPrensa")
-    .style.display = "block";
+	    .style.display = "none";
+	document.getElementById("tarjetaAlarmasGrafito")
+	    .style.display = "block";
+	document.getElementById("tarjetaAlarmasColector")
+	    .style.display = "none";
+	document.getElementById("panelAlarmas")
+	    .style.display = "grid";
 });
 document.getElementById("btnColector")
 .addEventListener("click", function(){
-	document.getElementById("panelAlarmas")
-    	.style.display = "none";
     document.getElementById("vistaCalentador")
         .style.display = "none";
     document.getElementById("vistaPrensa")
@@ -3505,6 +3521,16 @@ document.getElementById("btnColector")
     document.getElementById("vistaColector")
         .style.display = "block";
     ocultarVistasGrafito();
+	document.getElementById("tarjetaAlarmas")
+	    .style.display = "none";
+	document.getElementById("tarjetaAlarmasPrensa")
+	    .style.display = "none";
+	document.getElementById("tarjetaAlarmasGrafito")
+	    .style.display = "none";
+	document.getElementById("tarjetaAlarmasColector")
+	    .style.display = "block";
+	document.getElementById("panelAlarmas")
+	    .style.display = "grid";
 });
 document.getElementById("btnPreFiltro")
 .addEventListener("click", function(){
@@ -8064,9 +8090,7 @@ function actualizarAlarmasPrensa(){
         `;
     }).join("");
 }
-document.getElementById(
-    "contadorAlarmasPrensa"
-)
+document.getElementById("contadorAlarmasPrensa")
 .addEventListener("click", function(){
     actualizarAlarmasPrensa();
     document.getElementById(
