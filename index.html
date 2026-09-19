@@ -3374,8 +3374,6 @@ document.getElementById("btnCalentador")
         .style.display = "block";
     document.getElementById("tarjetaAlarmas")
         .style.display = "block";
-	document.getElementById("tarjetaAlarmasPrensa")
-    .style.display = "none";
 });
 document.getElementById("btnCalentador1200")
 .addEventListener("click", function(){
@@ -8066,6 +8064,9 @@ document.getElementById(
     "contadorAlarmasPrensa"
 )
 .addEventListener("click", function(){
+    if(moduloActivo !== "prensa"){
+        return;
+    }
     document.getElementById(
         "modalAlarmasPrensa"
     ).style.display = "block";
