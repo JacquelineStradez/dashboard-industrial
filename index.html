@@ -8070,6 +8070,7 @@ document.getElementById(
     "contadorAlarmasPrensa"
 )
 .addEventListener("click", function(){
+	actualizarAlarmasPrensa();
     document.getElementById(
         "modalAlarmasPrensa"
     ).style.display = "block";
@@ -8156,7 +8157,6 @@ if(totalAlarmas > 0){
     document.getElementById("contadorAlarmas")
         .style.color = "green";
 };
-actualizarAlarmasPrensa();
 </script>
 </div>
 </body>
