@@ -8203,6 +8203,16 @@ if(totalAlarmas > 0){
     document.getElementById("contadorAlarmas")
         .style.color = "green";
 };
+document.getElementById("contadorAlarmasPrensa")
+    .innerHTML = totalAlarmasPrensa;
+
+document.getElementById("detalleAlarmasPrensa")
+    .innerHTML =
+    listaAlarmasPrensa.length > 0
+    ? "<ul><li>" +
+      listaAlarmasPrensa.join("</li><li>") +
+      "</li></ul>"
+    : "Sin alarmas";
 </script>
 </div>
 </body>
