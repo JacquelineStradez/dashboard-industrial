@@ -8095,10 +8095,14 @@ function actualizarAlarmasPrensa(){
 }
 document.getElementById("contadorAlarmasPrensa")
 .addEventListener("click", function(){
+    console.log("CLICK PRENSA");
     actualizarAlarmasPrensa();
     document.getElementById(
         "modalAlarmasPrensa"
     ).style.display = "block";
+    console.log(
+        document.getElementById("modalAlarmasPrensa").style.display
+    );
 });
 function actualizarModalAlarmas(){
 	document.getElementById("contadorAlarmas")
