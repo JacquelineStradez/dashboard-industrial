@@ -8124,8 +8124,20 @@ document.getElementById("valorLubAceite")
     .innerHTML = "850 L";
 let totalAlarmasPrensa = 0;
 let listaAlarmasPrensa = [];
-document.getElementById("contadorAlarmasPrensa")
-    .innerHTML = totalAlarmasPrensa;
+function actualizarAlarmasPrensa(){
+    document.getElementById(
+        "contadorAlarmasPrensa"
+    ).innerHTML =
+    totalAlarmasPrensa;
+    document.getElementById(
+        "detalleAlarmasPrensa"
+    ).innerHTML =
+    listaAlarmasPrensa.length > 0
+    ? "<ul><li>" +
+      listaAlarmasPrensa.join("</li><li>") +
+      "</li></ul>"
+    : "Sin alarmas";
+}
 document.getElementById("contadorAlarmas")
     .innerHTML = totalAlarmas;
 document.getElementById("detalleAlarmas")
@@ -8203,16 +8215,7 @@ if(totalAlarmas > 0){
     document.getElementById("contadorAlarmas")
         .style.color = "green";
 };
-document.getElementById("contadorAlarmasPrensa")
-    .innerHTML = totalAlarmasPrensa;
-
-document.getElementById("detalleAlarmasPrensa")
-    .innerHTML =
-    listaAlarmasPrensa.length > 0
-    ? "<ul><li>" +
-      listaAlarmasPrensa.join("</li><li>") +
-      "</li></ul>"
-    : "Sin alarmas";
+actualizarAlarmasPrensa();
 </script>
 </div>
 </body>
