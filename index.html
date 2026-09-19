@@ -3362,6 +3362,8 @@ let vistaActual = "";
 document.getElementById("btnCalentador")
 .addEventListener("click", function(){
 	vistaActual = "calentador";
+	document.getElementById("modalAlarmasPrensa")
+    	.style.display = "none";
     document.getElementById("vistaPrensa")
         .style.display = "none";
     document.getElementById("vistaGrafito")
