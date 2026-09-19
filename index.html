@@ -3358,8 +3358,10 @@ document.getElementById("btnConductividad")
     document.getElementById("vistaCalidadAgua")
         .style.display = "block";
 });
+let vistaActual = "";
 document.getElementById("btnCalentador")
 .addEventListener("click", function(){
+	vistaActual = "calentador";
     document.getElementById("vistaPrensa")
         .style.display = "none";
     document.getElementById("vistaGrafito")
@@ -3444,6 +3446,7 @@ document.getElementById("btnColector1200")
 });
 document.getElementById("btnPrensa")
 .addEventListener("click", function(){
+	vistaActual = "prensa";
     document.getElementById("vistaCalentador")
         .style.display = "none";
     document.getElementById("vistaGrafito")
@@ -3469,6 +3472,7 @@ document.getElementById("btnPrensa")
 });
 document.getElementById("btnGrafito")
 .addEventListener("click", function(){
+	vistaActual = "grafito";
     document.getElementById("vistaCalentador")
         .style.display = "none";
     document.getElementById("vistaPrensa")
@@ -3485,6 +3489,7 @@ document.getElementById("btnGrafito")
 });
 document.getElementById("btnColector")
 .addEventListener("click", function(){
+	vistaActual = "colector";
     document.getElementById("vistaCalentador")
         .style.display = "none";
     document.getElementById("vistaPrensa")
@@ -8060,6 +8065,9 @@ document.getElementById(
     "contadorAlarmasPrensa"
 )
 .addEventListener("click", function(){
+    if(vistaActual !== "prensa"){
+        return;
+    }
     document.getElementById(
         "modalAlarmasPrensa"
     ).style.display = "block";
