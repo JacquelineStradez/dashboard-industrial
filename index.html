@@ -8033,7 +8033,6 @@ document.getElementById("valorLubAceite")
     .innerHTML = "850 L";
 let totalAlarmasPrensa = 0;
 let listaAlarmasPrensa = [];
-let moduloActivo = "";
 function actualizarAlarmasPrensa(){
     document.getElementById(
         "contadorAlarmasPrensa"
@@ -8067,10 +8066,6 @@ document.getElementById(
     "contadorAlarmasPrensa"
 )
 .addEventListener("click", function(){
-    console.log("MODULO ACTIVO:", moduloActivo);
-    if(moduloActivo !== "prensa"){
-        return;
-    }
     console.log("ABRIENDO MODAL PRENSA");
     document.getElementById(
         "modalAlarmasPrensa"
