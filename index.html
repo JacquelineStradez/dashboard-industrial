@@ -3476,6 +3476,8 @@ document.getElementById("btnPrensa")
 document.getElementById("btnGrafito")
 .addEventListener("click", function(){
 	vistaActual = "grafito";
+	document.getElementById("modalAlarmasPrensa")
+    .style.display = "none";
     document.getElementById("vistaCalentador")
         .style.display = "none";
     document.getElementById("vistaPrensa")
@@ -3493,6 +3495,8 @@ document.getElementById("btnGrafito")
 document.getElementById("btnColector")
 .addEventListener("click", function(){
 	vistaActual = "colector";
+	document.getElementById("modalAlarmasPrensa")
+    .style.display = "none";
     document.getElementById("vistaCalentador")
         .style.display = "none";
     document.getElementById("vistaPrensa")
@@ -8158,6 +8162,8 @@ if(totalAlarmas > 0){
     document.getElementById("contadorAlarmas")
         .style.color = "green";
 };
+console.log(listaAlarmasPrensa);
+console.log(totalAlarmasPrensa);
 actualizarAlarmasPrensa();
 </script>
 </div>
