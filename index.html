@@ -1031,9 +1031,18 @@ canvas{
         border-radius:10px;
         border-top:5px solid #0078D4;
     ">
-        <h2 id="tituloAlarmasPrensaModal">
-            ⚠ Alarmas Prensa
-        </h2>
+        <span id="cerrarModalPrensa"
+		      style="
+		        float:right;
+		        cursor:pointer;
+		        font-size:24px;
+		        font-weight:bold;
+		      ">
+		    ×
+		</span>
+		<h2 id="tituloAlarmasPrensaModal">
+		    ⚠ Alarmas Prensa
+		</h2>
         <div id="contenidoAlarmasPrensaModal">
         </div>
     </div>
@@ -8083,6 +8092,14 @@ document.getElementById(
             "modalAlarmasPrensa"
         ).style.display = "none";
     }
+});
+document.getElementById(
+    "cerrarModalPrensa"
+)
+.addEventListener("click", function(){
+    document.getElementById(
+        "modalAlarmasPrensa"
+    ).style.display = "none";
 });
 if(totalAlarmas > 0){
     document.getElementById("tarjetaAlarmas")
