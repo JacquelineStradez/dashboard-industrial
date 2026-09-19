@@ -6067,7 +6067,6 @@ Promise.all([
     valuesTemp[valuesTemp.length - 1];
     const ultimoValorAceite =
     valuesAceite[valuesAceite.length - 1];
-    // TARJETAS
     document.getElementById("valorLubPresion")
         .innerHTML =
         ultimoValorPresion.toFixed(2) + " MPa";
@@ -6077,7 +6076,6 @@ Promise.all([
     document.getElementById("valorLubAceite")
         .innerHTML =
         ultimoValorAceite.toFixed(0) + " mm";
-    // ALARMAS
     if(
         ultimoValorPresion > 7 ||
         ultimoValorPresion < 5
@@ -6105,7 +6103,7 @@ Promise.all([
             " mm)"
         );
     }
-    // GRAFICA PRESION
+    actualizarAlarmasPrensa();
     const ctxPresion =
     document.getElementById("graficaLubPresion");
     new Chart(ctxPresion, {
@@ -6154,7 +6152,6 @@ Promise.all([
             maintainAspectRatio: false
         }
     });
-    // GRAFICA TEMPERATURA
     const ctxTemp =
     document.getElementById("graficaLubTemperatura");
     new Chart(ctxTemp, {
@@ -6191,7 +6188,6 @@ Promise.all([
             maintainAspectRatio: false
         }
     });
-    // GRAFICA ACEITE
     const ctxAceite =
     document.getElementById("graficaLubAceite");
     new Chart(ctxAceite, {
@@ -6282,9 +6278,6 @@ Promise.all([
     valuesRV1[valuesRV1.length - 1];
     const ultimoValorRV2 =
     valuesRV2[valuesRV2.length - 1];
-    // ==========================
-    // TARJETAS
-    // ==========================
     document.getElementById("valorHiLockP1")
         .innerHTML =
         ultimoValorP1.toFixed(2);
@@ -6300,9 +6293,6 @@ Promise.all([
     document.getElementById("valorHiLockRV2")
         .innerHTML =
         ultimoValorRV2.toFixed(2) + " MPa";
-    // ==========================
-    // ALARMAS
-    // ==========================
     if (ultimoValorAceite > 103) {
         totalAlarmasPrensa++;
         listaAlarmasPrensa.push(
@@ -6327,10 +6317,7 @@ Promise.all([
             " MPa)"
         );
     }
-    // ==========================
-    // ITEM 4 Y 5
-    // PRESION BOMBAS
-    // ==========================
+	actualizarAlarmasPrensa();
     new Chart(
         document.getElementById(
             "graficaHiLockPresion"
@@ -6362,10 +6349,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 6
-    // ACEITE
-    // ==========================
     new Chart(
         document.getElementById(
             "graficaHiLockAceite"
@@ -6406,10 +6389,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 7
-    // RV1
-    // ==========================
     new Chart(
         document.getElementById(
             "graficaHiLockRV1"
@@ -6452,10 +6431,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 8
-    // RV2
-    // ==========================
     new Chart(
         document.getElementById(
             "graficaHiLockRV2"
@@ -6545,9 +6520,6 @@ Promise.all([
     valuesTemperatura[valuesTemperatura.length - 1];
     const ultimoTotalLub =
     valuesTotalLub[valuesTotalLub.length - 1];
-    // ==========================
-    // TARJETAS
-    // ==========================
     document.getElementById("valorGIBAceiteBomba")
         .innerHTML =
         ultimoAceiteBomba.toFixed(2);
@@ -6563,9 +6535,6 @@ Promise.all([
     document.getElementById("valorGIBTemperatura")
         .innerHTML =
         ultimoTemperatura.toFixed(1) + " °C";
-    // ==========================
-    // ALARMAS
-    // ==========================
     if(ultimoTotalLub > 210){
         totalAlarmasPrensa++;
         listaAlarmasPrensa.push(
@@ -6590,10 +6559,7 @@ Promise.all([
             " °C)"
         );
     }
-    // ==========================
-    // ITEM 9
-    // TOTAL LUB
-    // ==========================
+	actualizarAlarmasPrensa();
     new Chart(
         document.getElementById("graficaGIBTotalLub"),
         {
@@ -6624,10 +6590,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 10 Y 11
-    // BOMBAS
-    // ==========================
     new Chart(
         document.getElementById("graficaGIBBombas"),
         {
@@ -6657,10 +6619,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 12
-    // ACEITE
-    // ==========================
     new Chart(
         document.getElementById("graficaGIBAceite"),
         {
@@ -6691,10 +6649,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 13
-    // DESFOGUE
-    // ==========================
     new Chart(
         document.getElementById("graficaGIBDesfogue"),
         {
@@ -6717,10 +6671,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 14
-    // TEMPERATURA
-    // ==========================
     new Chart(
         document.getElementById("graficaGIBTemperatura"),
         {
@@ -6790,7 +6740,6 @@ Promise.all([
     valuesEnvio[valuesEnvio.length - 1];
     const ultimoTemp =
     valuesTemp[valuesTemp.length - 1];
-    // TARJETAS
     document.getElementById("valorPrincipalPresionAceite")
         .innerHTML =
         ultimoPAceite.toFixed(2);
@@ -6809,7 +6758,6 @@ Promise.all([
     document.getElementById("valorPrincipalTemperatura")
         .innerHTML =
         ultimoTemp.toFixed(1) + " °C";
-    // ALARMAS
     if(ultimoAceite > 580){
         totalAlarmasPrensa++;
         listaAlarmasPrensa.push(
@@ -6826,10 +6774,7 @@ Promise.all([
             " °C)"
         );
     }
-    // ==========================
-    // ITEM 15 Y 16
-    // PRESIONES
-    // ==========================
+	actualizarAlarmasPrensa();
     new Chart(
         document.getElementById("graficaPrincipalPresiones"),
         {
@@ -6859,10 +6804,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 17
-    // ACEITE
-    // ==========================
     new Chart(
         document.getElementById("graficaPrincipalAceite"),
         {
@@ -6903,10 +6844,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 18 Y 19
-    // DESFOGUES
-    // ==========================
     new Chart(
         document.getElementById("graficaPrincipalDesfogue"),
         {
@@ -6936,10 +6873,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 20
-    // TEMPERATURA
-    // ==========================
     new Chart(
         document.getElementById("graficaPrincipalTemperatura"),
         {
@@ -7009,7 +6942,6 @@ Promise.all([
     valuesPresionDer[valuesPresionDer.length - 1];
     const ultimoAceiteDer =
     valuesAceiteDer[valuesAceiteDer.length - 1];
-    // TARJETAS
     document.getElementById("valorTransIzqPresion")
         .innerHTML =
         ultimoPresionIzq.toFixed(2) + " MPa";
@@ -7022,7 +6954,6 @@ Promise.all([
     document.getElementById("valorTransDerAceite")
         .innerHTML =
         ultimoAceiteDer.toFixed(0) + " mm";
-    // ALARMAS
     if(
         ultimoPresionIzq > 0.5 ||
         ultimoPresionIzq < 0.4
@@ -7061,10 +6992,7 @@ Promise.all([
             " mm)"
         );
     }
-    // =================================
-    // GRAFICA PRESIONES
-    // ITEM 21 Y 23
-    // =================================
+	actualizarAlarmasPrensa();
     new Chart(
         document.getElementById("graficaTransportadorIzq"),
         {
@@ -7110,10 +7038,6 @@ Promise.all([
             }
         }
     );
-    // =================================
-    // GRAFICA ACEITES
-    // ITEM 22 Y 24
-    // =================================
     new Chart(
         document.getElementById("graficaTransportadorDer"),
         {
@@ -7201,9 +7125,6 @@ Promise.all([
     valuesTemp[valuesTemp.length - 1];
     const ultimoSensor =
     valuesSensor[valuesSensor.length - 1];
-    // ==========================
-    // TARJETAS
-    // ==========================
     document.getElementById("valorBKOPaso2")
         .innerHTML = ultimoP2.toFixed(2);
     document.getElementById("valorBKOPaso3")
@@ -7220,9 +7141,6 @@ Promise.all([
         .innerHTML = ultimoTemp.toFixed(1) + " °C";
     document.getElementById("valorBKOSoftware")
         .innerHTML = ultimoSensor;
-    // ==========================
-    // ALARMAS
-    // ==========================
     if(ultimoAceite > 340){
         totalAlarmasPrensa++;
         listaAlarmasPrensa.push(
@@ -7239,10 +7157,7 @@ Promise.all([
             " °C)"
         );
     }
-    // ==========================
-    // ITEM 25 Y 28
-    // PRESIONES 6 MPa
-    // ==========================
+	actualizarAlarmasPrensa();
     new Chart(
         document.getElementById("graficaBKOPresiones6"),
         {
@@ -7280,10 +7195,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 26 Y 27
-    // PRESIONES 13 MPa
-    // ==========================
     new Chart(
         document.getElementById("graficaBKOPresiones13"),
         {
@@ -7321,10 +7232,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 29
-    // ACEITE
-    // ==========================
     new Chart(
         document.getElementById("graficaBKOAceite"),
         {
@@ -7355,10 +7262,7 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 30
-    // AGUA
-    // ==========================
+
     new Chart(
         document.getElementById("graficaBKOAgua"),
         {
@@ -7381,10 +7285,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 31
-    // TEMPERATURA
-    // ==========================
     new Chart(
         document.getElementById("graficaBKOTemperatura"),
         {
@@ -7415,10 +7315,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 32
-    // SENSOR SOFTWARE
-    // ==========================
     new Chart(
         document.getElementById("graficaBKOSensor"),
         {
@@ -7471,7 +7367,6 @@ Promise.all([
     i38.values.map(x => Number(x.Value));
     const values39 =
     i39.values.map(x => Number(x.Value));
-    // TARJETAS
     document.getElementById("valorDistPrinMov")
         .innerHTML =
         values33[values33.length - 1].toFixed(2);
@@ -7493,10 +7388,6 @@ Promise.all([
     document.getElementById("valorDistGrasaMov")
         .innerHTML =
         values39[values39.length - 1].toFixed(2);
-    // ==========================
-    // MOVIMIENTOS
-    // 33 - 36 - 39
-    // ==========================
     new Chart(
         document.getElementById(
             "graficaDistribucionMovimiento"
@@ -7535,9 +7426,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // 34 y 35
-    // ==========================
     new Chart(
         document.getElementById(
             "graficaDistribucionOn"
@@ -7569,9 +7457,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // 37 y 38
-    // ==========================
     new Chart(
         document.getElementById(
             "graficaDistribucionOff"
@@ -7634,9 +7519,6 @@ Promise.all([
     valuesCarga[valuesCarga.length - 1];
     const ultimoSinCarga =
     valuesSinCarga[valuesSinCarga.length - 1];
-    // ==========================
-    // TARJETAS
-    // ==========================
     document.getElementById("valorMotorPMS")
         .innerHTML =
         ultimoPMS.toFixed(1) + "°";
@@ -7646,9 +7528,6 @@ Promise.all([
     document.getElementById("valorMotorSinCarga")
         .innerHTML =
         ultimoSinCarga.toFixed(0) + " A";
-    // ==========================
-    // ALARMAS
-    // ==========================
     if(ultimoCarga > 200){
         totalAlarmasPrensa++;
         listaAlarmasPrensa.push(
@@ -7665,10 +7544,7 @@ Promise.all([
             " A)"
         );
     }
-    // ==========================
-    // ITEM 40
-    // PMS
-    // ==========================
+	actualizarAlarmasPrensa();
     new Chart(
         document.getElementById("graficaMotorPMS"),
         {
@@ -7697,10 +7573,6 @@ Promise.all([
 			}
         }
     );
-    // ==========================
-    // ITEM 41
-    // CORRIENTE CON CARGA
-    // ==========================
     new Chart(
         document.getElementById("graficaMotorCarga"),
         {
@@ -7739,10 +7611,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // ITEM 42
-    // CORRIENTE SIN CARGA
-    // ==========================
     new Chart(
         document.getElementById("graficaMotorSinCarga"),
         {
@@ -7822,7 +7690,6 @@ Promise.all([
     const v54 = i54.values.map(x => Number(x.Value));
     const v55 = i55.values.map(x => Number(x.Value));
     const v56 = i56.values.map(x => Number(x.Value));
-    // TARJETAS
     document.getElementById("valorTempEjeDer")
         .innerHTML = v43.at(-1).toFixed(1) + " °C";
     document.getElementById("valorTempEjeIzq")
@@ -7851,7 +7718,6 @@ Promise.all([
         .innerHTML = v55.at(-1).toFixed(1);
     document.getElementById("valorTempServomotor")
         .innerHTML = v56.at(-1).toFixed(1);
-    // ALARMAS
     [v43.at(-1),v44.at(-1),v45.at(-1),
      v46.at(-1),v47.at(-1),v48.at(-1)]
     .forEach(v => {
@@ -7877,10 +7743,7 @@ Promise.all([
             "BANDAS MOTOR (" + v51.at(-1).toFixed(1) + " °C)"
         );
     }
-    // ==========================
-    // GRAFICA 1
-    // ITEMS 43-48
-    // ==========================
+	actualizarAlarmasPrensa();
     new Chart(
         document.getElementById("graficaTempEjes"),
         {
@@ -7910,10 +7773,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // GRAFICA 2
-    // ITEM 49
-    // ==========================
     new Chart(
         document.getElementById("graficaTempFreno"),
         {
@@ -7949,10 +7808,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // GRAFICA 3
-    // ITEM 50
-    // ==========================
     new Chart(
         document.getElementById("graficaTempFlujo"),
         {
@@ -7988,10 +7843,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // GRAFICA 4
-    // ITEM 51
-    // ==========================
     new Chart(
         document.getElementById("graficaTempBandas"),
         {
@@ -8027,10 +7878,6 @@ Promise.all([
             }
         }
     );
-    // ==========================
-    // GRAFICA 5
-    // ITEMS 52-56
-    // ==========================
     new Chart(
         document.getElementById("graficaTempClutch"),
         {
