@@ -8048,11 +8048,14 @@ document.getElementById("contadorAlarmas")
     document.getElementById("modalAlarmas")
         .style.display = "block";
 });
-document.getElementById("cerrarModal")
-.addEventListener("click", function(){
-    document.getElementById("modalAlarmas")
-        .style.display = "none";
-});
+const cerrarModal =
+document.getElementById("cerrarModal");
+if(cerrarModal){
+    cerrarModal.addEventListener("click", function(){
+        document.getElementById("modalAlarmas")
+            .style.display = "none";
+    });
+}
 document.getElementById(
     "modalAlarmasPrensa"
 )
