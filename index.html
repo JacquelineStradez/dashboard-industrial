@@ -990,84 +990,6 @@ canvas{
 </div>
 <div id="tarjetas">
 </div>
-<div id="modalAlarmas"
-     style="
-     display:none;
-     position:fixed;
-     top:0;
-     left:0;
-     width:100%;
-     height:100%;
-     background:rgba(0,0,0,0.5);
-     z-index:9999;">   
-     <div style="
-	    background:white;
-	    width:400px;
-	    margin:80px auto;
-	    padding:20px;
-	    border-radius:10px;
-	    border-top:5px solid #d32f2f;
-	">
-        <span id="cerrarModal"
-		      style="
-		        float:left;
-		        cursor:pointer;
-		        font-size:24px;
-		        font-weight:bold;
-		        margin-right:10px;
-		      ">
-		    ×
-		</span>  
-        <h2 id="tituloAlarmas"
-	    style="
-	        margin-left:20px;
-	        color:#d32f2f;
-	        font-size:24px;
-	    ">
-            ⚠ Alarmas Activas
-        </h2>
-        <div id="contenidoModalAlarmas"></div>
-    </div>
-</div>
-<div id="modalAlarmasPrensa"
-     style="
-        display:none;
-        position:fixed;
-        z-index:10000;
-        left:0;
-        top:0;
-        width:100%;
-        height:100%;
-        background:rgba(0,0,0,.4);
-     ">
-	    <div style="
-		    background:white;
-		    width:400px;
-		    margin:80px auto;
-		    padding:20px;
-		    border-radius:10px;
-		    border-top:5px solid #0078D4;
-		">
-        <span id="cerrarModalPrensa"
-		      style="
-		        float:left;
-		        cursor:pointer;
-		        font-size:20px;
-		        font-weight:bold;
-		        color:#0078D4;
-		        padding:4px 10px;
-		        border-radius:6px;
-		        transition:.2s;
-		      ">
-		    ×
-		</span>
-		<h2 id="tituloAlarmasPrensaModal">
-		    ⚠ Alarmas Prensa
-		</h2>
-        <div id="contenidoAlarmasPrensaModal">
-        </div>
-    </div>
-</div>
 <div class="gridGraficas">
 </div>
 </div>
@@ -3263,7 +3185,7 @@ document.getElementById("btnT3000")
     document.getElementById("panelAlarmas1200")
         .style.display = "none";
     document.getElementById("panelAlarmas")
-        .style.display = "grid";
+        .style.display = "none";
     document.getElementById("panelAlarmasCorte")
         .style.display = "none";
     document.getElementById("vistaCorte")
@@ -3375,15 +3297,12 @@ document.getElementById("btnCalentador")
 	    .style.display = "block";
 	document.getElementById("tarjetaAlarmasPrensa")
 	    .style.display = "none";
-	console.log(
-	    document.getElementById("tarjetaAlarmasPrensa").style.display
-	);
 	document.getElementById("tarjetaAlarmasGrafito")
 	    .style.display = "none";
 	document.getElementById("tarjetaAlarmasColector")
 	    .style.display = "none";
 	document.getElementById("panelAlarmas")
-	    .style.display = "grid";
+	    .style.display = "none";
 });
 document.getElementById("btnCalentador1200")
 .addEventListener("click", function(){
@@ -3484,7 +3403,7 @@ document.getElementById("btnPrensa")
 	document.getElementById("tarjetaAlarmasColector")
 	    .style.display = "none";
 	document.getElementById("panelAlarmas")
-	    .style.display = "grid";
+	    .style.display = "none";
 });
 document.getElementById("btnGrafito")
 .addEventListener("click", function(){
@@ -3508,7 +3427,7 @@ document.getElementById("btnGrafito")
 	document.getElementById("tarjetaAlarmasColector")
 	    .style.display = "none";
 	document.getElementById("panelAlarmas")
-	    .style.display = "grid";
+	    .style.display = "none";
 });
 document.getElementById("btnColector")
 .addEventListener("click", function(){
@@ -3533,7 +3452,7 @@ document.getElementById("btnColector")
 	document.getElementById("tarjetaAlarmasColector")
 	    .style.display = "block";
 	document.getElementById("panelAlarmas")
-	    .style.display = "grid";
+	    .style.display = "none";
 });
 document.getElementById("btnPreFiltro")
 .addEventListener("click", function(){
@@ -8095,14 +8014,11 @@ function actualizarAlarmasPrensa(){
 }
 document.getElementById("contadorAlarmasPrensa")
 .addEventListener("click", function(){
-    console.log("CLICK PRENSA");
     actualizarAlarmasPrensa();
     document.getElementById(
         "modalAlarmasPrensa"
     ).style.display = "block";
-    console.log(
-        document.getElementById("modalAlarmasPrensa").style.display
-    );
+
 });
 function actualizarModalAlarmas(){
 	document.getElementById("contadorAlarmas")
@@ -8187,6 +8103,84 @@ if(totalAlarmas > 0){
         .style.color = "green";
 };
 </script>
+</div>
+<div id="modalAlarmas"
+     style="
+     display:none;
+     position:fixed;
+     top:0;
+     left:0;
+     width:100%;
+     height:100%;
+     background:rgba(0,0,0,0.5);
+     z-index:9999;">   
+     <div style="
+	    background:white;
+	    width:400px;
+	    margin:80px auto;
+	    padding:20px;
+	    border-radius:10px;
+	    border-top:5px solid #d32f2f;
+	">
+        <span id="cerrarModal"
+		      style="
+		        float:left;
+		        cursor:pointer;
+		        font-size:24px;
+		        font-weight:bold;
+		        margin-right:10px;
+		      ">
+		    ×
+		</span>  
+        <h2 id="tituloAlarmas"
+	    style="
+	        margin-left:20px;
+	        color:#d32f2f;
+	        font-size:24px;
+	    ">
+            ⚠ Alarmas Activas
+        </h2>
+        <div id="contenidoModalAlarmas"></div>
+    </div>
+</div>
+<div id="modalAlarmasPrensa"
+     style="
+        display:none;
+        position:fixed;
+        z-index:10000;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,.4);
+     ">
+	    <div style="
+		    background:white;
+		    width:400px;
+		    margin:80px auto;
+		    padding:20px;
+		    border-radius:10px;
+		    border-top:5px solid #0078D4;
+		">
+        <span id="cerrarModalPrensa"
+		      style="
+		        float:left;
+		        cursor:pointer;
+		        font-size:20px;
+		        font-weight:bold;
+		        color:#0078D4;
+		        padding:4px 10px;
+		        border-radius:6px;
+		        transition:.2s;
+		      ">
+		    ×
+		</span>
+		<h2 id="tituloAlarmasPrensaModal">
+		    ⚠ Alarmas Prensa
+		</h2>
+        <div id="contenidoAlarmasPrensaModal">
+        </div>
+    </div>
 </div>
 </body>
 </html>
