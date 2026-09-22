@@ -2912,11 +2912,8 @@ canvas{
         <button id="btnFiltroCiclon">
             Filtro Ciclón
         </button>
-        <button id="btnBombaDerecha">
-           Bomba Prensa Derecha
-        </button>
-        <button id="btnBombaIzquierda">
-           Bomba Prensa Izquierda
+        <button id="btnBombasGrafito">
+            Bombas Prensa
         </button>
     </div>
     <div id="vistaFiltroBombas"
@@ -2961,34 +2958,19 @@ canvas{
             </div>
         </div>
     </div>
-    <div id="vistaBombaDerecha"
+    <div id="vistaBombasGrafito"
          class="panelModulo"
          style="display:none;">
-        <h2>Bomba Prensa Derecha</h2>
+        <h2>Bombas Prensa Grafito</h2>
         <div class="tarjetasModulo">
             <div class="tarjeta">
-                <h3>Presión de Abastecimiento</h3>
+                <h3>Bomba Prensa Derecha</h3>
                 <h2 id="valorBombaDerecha">
                     --
                 </h2>
             </div>
-        </div>
-        <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Presión de Abastecimiento</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaBombaDerecha"></canvas>
-            </div>
-        </div>
-    </div>
-    <div id="vistaBombaIzquierda"
-         class="panelModulo"
-         style="display:none;">
-        <h2>Bomba Prensa Izquierda</h2>
-        <div class="tarjetasModulo">
             <div class="tarjeta">
-                <h3>Presión de Abastecimiento</h3>
+                <h3>Bomba Prensa Izquierda</h3>
                 <h2 id="valorBombaIzquierda">
                     --
                 </h2>
@@ -2999,10 +2981,10 @@ canvas{
                 <h2>Presión de Abastecimiento</h2>
             </div>
             <div class="grafica-contenedor">
-                <canvas id="graficaBombaIzquierda"></canvas>
+                <canvas id="graficaBombasGrafito"></canvas>
             </div>
         </div>
-    </div>  
+    </div>
 </div>
 <div id="vistaColector"
      class="panelModulo"
@@ -3418,16 +3400,16 @@ document.getElementById("btnGrafito")
     ocultarVistasColector();
     document.getElementById("vistaGrafito")
         .style.display = "block";
-	document.getElementById("tarjetaAlarmas")
-	    .style.display = "none";
-	document.getElementById("tarjetaAlarmasPrensa")
-	    .style.display = "none";
-	document.getElementById("tarjetaAlarmasGrafito")
-	    .style.display = "block";
-	document.getElementById("tarjetaAlarmasColector")
-	    .style.display = "none";
-	document.getElementById("panelAlarmas")
-	    .style.display = "none";
+    document.getElementById("tarjetaAlarmas")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasPrensa")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasGrafito")
+        .style.display = "block";
+    document.getElementById("tarjetaAlarmasColector")
+        .style.display = "none";
+    document.getElementById("panelAlarmas")
+        .style.display = "grid";
 });
 document.getElementById("btnColector")
 .addEventListener("click", function(){
