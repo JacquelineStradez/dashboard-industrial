@@ -4108,7 +4108,11 @@ document.getElementById("btnTemperaturas")
 let hayAlarma = false;
 let totalAlarmas = 0;
 let listaAlarmas = [];
-
+let totalAlarmasPrensa = 0;
+let listaAlarmasPrensa = [];
+let totalAlarmasGrafito = 0;
+let listaAlarmasGrafito = [];
+	
 let dataA;
 let dataB;
 let dataC;
@@ -8106,7 +8110,7 @@ Promise.all([
     const labelsGrafito =
     bombaDerecha.labels.map(x => x.Fecha);
     const labelsGrafito7 =
-    labels.slice(-7);
+    labelsGrafito.slice(-7);
     const valuesDer =
     bombaDerecha.values.map(x =>
         Number(x.Value)
@@ -8288,8 +8292,7 @@ document.getElementById("valorLubTemperatura")
     .innerHTML = "42 °C";
 document.getElementById("valorLubAceite")
     .innerHTML = "850 L";
-let totalAlarmasPrensa = 0;
-let listaAlarmasPrensa = [];
+
 function actualizarAlarmasPrensa(){
     document.getElementById(
         "contadorAlarmasPrensa"
