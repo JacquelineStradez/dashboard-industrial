@@ -2216,13 +2216,21 @@ canvas{
             </div>
         </div>
         <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Unidad Bus de Aceite</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaCorteBusAceite"></canvas>
-            </div>
-        </div>
+		    <div class="seccionTitulo">
+		        <h2>Nivel de Aceite</h2>
+		    </div>
+		    <div class="grafica-contenedor">
+		        <canvas id="graficaCorteBusAceiteNivel"></canvas>
+		    </div>
+		</div>
+		<div class="bloqueGrafica">
+		    <div class="seccionTitulo">
+		        <h2>Presión de Bomba</h2>
+		    </div>
+		    <div class="grafica-contenedor">
+		        <canvas id="graficaCorteBusAceitePresion"></canvas>
+		    </div>
+		</div>
     </div>
     <div id="vistaCorteUnidadPresion"
          class="panelModulo"
@@ -2251,14 +2259,47 @@ canvas{
             </div>
         </div>
         <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Unidad de Presión de Aceite</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaCorteUnidadPresion"></canvas>
-            </div>
-        </div>
+		    <div class="seccionTitulo">
+		        <h2>Cantidad de Aceite</h2>
+		    </div>
+		    <div class="grafica-contenedor">
+		        <canvas id="graficaCorteUnidadPresionAceite"></canvas>
+		    </div>
+		</div>
     </div>
+	<div class="bloqueGrafica">
+
+	    <div class="seccionTitulo">
+	        <h2>Presión de Filtro</h2>
+	    </div>
+	    <div class="grafica-contenedor">
+	        <canvas id="graficaCorteUnidadPresionFiltro"></canvas>
+	    </div>
+	</div>
+	<div class="bloqueGrafica">
+	    <div class="seccionTitulo">
+	        <h2>Presión C/B</h2>
+	    </div>
+	    <div class="grafica-contenedor">
+	        <canvas id="graficaCorteUnidadPresionCB"></canvas>
+	    </div>
+	</div>
+	<div class="bloqueGrafica">
+	    <div class="seccionTitulo">
+	        <h2>Cantidad de Agua</h2>
+	    </div>
+	    <div class="grafica-contenedor">
+	        <canvas id="graficaCorteUnidadPresionAgua"></canvas>
+	    </div>
+	</div>
+	<div class="bloqueGrafica">
+	    <div class="seccionTitulo">
+	        <h2>Temperatura de Aceite</h2>
+	    </div>
+	    <div class="grafica-contenedor">
+	        <canvas id="graficaCorteUnidadPresionTemp"></canvas>
+	    </div>
+	</div>
     <div id="vistaCortePresionAire"
          class="panelModulo"
          style="display:none;">
@@ -2282,13 +2323,29 @@ canvas{
             </div>
         </div>
         <div class="bloqueGrafica">
-            <div class="seccionTitulo">
-                <h2>Presión de Aire</h2>
-            </div>
-            <div class="grafica-contenedor">
-                <canvas id="graficaCortePresionAire"></canvas>
-            </div>
-        </div>
+		    <div class="seccionTitulo">
+		        <h2>Pinch Roller</h2>
+		    </div>
+		    <div class="grafica-contenedor">
+		        <canvas id="graficaCortePinchRoller"></canvas>
+		    </div>
+		</div>
+		<div class="bloqueGrafica">
+		    <div class="seccionTitulo">
+		        <h2>Clamper</h2>
+		    </div>
+		    <div class="grafica-contenedor">
+		        <canvas id="graficaCorteClamper"></canvas>
+		    </div>
+		</div>
+		<div class="bloqueGrafica">
+		    <div class="seccionTitulo">
+		        <h2>Pistón Empuja / Levanta Barra</h2>
+		    </div>
+		    <div class="grafica-contenedor">
+		        <canvas id="graficaCortePistonBarra"></canvas>
+		    </div>
+		</div>
     </div>
 </div>
 <div id="vistaPrensa" style="display:none;">
@@ -4260,6 +4317,57 @@ document.getElementById("btnTemperaturas")
     document.getElementById("vistaTemperaturas")
         .style.display = "block";
 });
+
+// =====================================
+//  Cisterna
+// =====================================
+	
+let dataCisterna;
+fetch("Item1CalentadorT3000.json")
+.then(r => r.json())
+.then(data => {
+    dataCisterna = data;
+    let nivelCisterna =
+    Number(
+        dataCisterna.values[
+            dataCisterna.values.length - 1
+        ].Value
+    );
+	const porcentajeCisterna =
+	(nivelCisterna / 1950) * 100;
+	const estadoCisterna =
+	porcentajeCisterna < 25
+	? "🔴 Nivel Bajo"
+	: "✅ Normal";
+    document.getElementById("nivelLitros").innerHTML =
+    nivelCisterna + " L<br>" + estadoCisterna;
+	document.getElementById("textoTanque").innerHTML =
+	porcentajeCisterna.toFixed(0) + "%";
+	document.getElementById("nivelTanque").style.height =
+	porcentajeCisterna + "%";
+	const barraCisterna =
+	document.getElementById("nivelTanque");
+	if (porcentajeCisterna < 25) {
+	    barraCisterna.style.background = "red";
+	}
+	else if (porcentajeCisterna < 50) {
+	    barraCisterna.style.background = "orange";
+	}
+	else {
+	    barraCisterna.style.background =
+	    "linear-gradient(to top,#0097a7,#4dd0e1)";
+	}
+});
+document.getElementById("valorLubPresion")
+    .innerHTML = "5.2 bar";
+document.getElementById("valorLubTemperatura")
+    .innerHTML = "42 °C";
+document.getElementById("valorLubAceite")
+    .innerHTML = "850 L";
+
+// =====================================
+//  T3000
+// =====================================
 	
 let dataA;
 let dataB;
@@ -6165,12 +6273,6 @@ Promise.all([
         }
     });
 });
-	
-// =====================================
-// PRENSA T3000
-// LUBRICACIÓN UNIDAD HIDRÁULICA DESLIZANTE
-// ITEMS 1, 2 y 3
-// =====================================
 
 let dataLubPresion;
 let dataLubTemperatura;
@@ -8953,50 +9055,1104 @@ fetch("Item6PolvoT3000.json")
     });
     actualizarAlarmasColector();
 });
+
+// =====================================
+//  Corte
+// =====================================
 	
-let dataCisterna;
-fetch("Item1CalentadorT3000.json")
+fetch("Item1Corte.json")
 .then(r => r.json())
 .then(data => {
-    dataCisterna = data;
-    let nivelCisterna =
-    Number(
-        dataCisterna.values[
-            dataCisterna.values.length - 1
-        ].Value
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesPMS =
+    data.values.map(x => {
+        let valor =
+        Number(x.Value);
+        if(valor <= 30){
+            valor += 360;
+        }
+        return valor;
+    });
+    const ultimoValor =
+    valuesPMS[valuesPMS.length - 1];
+    document.getElementById(
+        "valorCortePuntoMuerto"
+    ).innerHTML =
+    ultimoValor.toFixed(1) + "°";
+    if(
+        ultimoValor < 350 ||
+        ultimoValor > 390
+    ){
+        totalAlarmasCorte++;
+        listaAlarmasCorte.push(
+            "PUNTO MUERTO (" +
+            ultimoValor.toFixed(1) +
+            "°)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "graficaCortePuntoMuerto"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Ángulo PMS",
+                    data:valuesPMS.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false,
+                scales:{
+                    y:{
+                        min:350,
+                        max:390
+                    }
+                }
+            }
+        }
     );
-	const porcentajeCisterna =
-	(nivelCisterna / 1950) * 100;
-	const estadoCisterna =
-	porcentajeCisterna < 25
-	? "🔴 Nivel Bajo"
-	: "✅ Normal";
-    document.getElementById("nivelLitros").innerHTML =
-    nivelCisterna + " L<br>" + estadoCisterna;
-	document.getElementById("textoTanque").innerHTML =
-	porcentajeCisterna.toFixed(0) + "%";
-	document.getElementById("nivelTanque").style.height =
-	porcentajeCisterna + "%";
-	const barraCisterna =
-	document.getElementById("nivelTanque");
-	if (porcentajeCisterna < 25) {
-	    barraCisterna.style.background = "red";
-	}
-	else if (porcentajeCisterna < 50) {
-	    barraCisterna.style.background = "orange";
-	}
-	else {
-	    barraCisterna.style.background =
-	    "linear-gradient(to top,#0097a7,#4dd0e1)";
-	}
+	actualizarAlarmasCorte();
 });
-document.getElementById("valorLubPresion")
-    .innerHTML = "5.2 bar";
-document.getElementById("valorLubTemperatura")
-    .innerHTML = "42 °C";
-document.getElementById("valorLubAceite")
-    .innerHTML = "850 L";
 
+fetch("Item2Corte.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorCorteTanqueAceite"
+    ).innerHTML =
+    ultimoValor.toFixed(1) +
+    " mm";
+    const labelsAceite =
+    data.labels.map(x => x.Fecha);
+    const labelsAceite7 =
+    labelsAceite.slice(-7);
+    const valuesAceite7 =
+    values.slice(-7);
+    if(ultimoValor > 25){
+        totalAlarmasCorte++;
+        listaAlarmasCorte.push(
+            "TANQUE ACEITE (" +
+            ultimoValor.toFixed(1) +
+            " mm)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "graficaCorteTanqueAceite"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsAceite7,
+                datasets:[
+                {
+                    label:"Cantidad Aceite",
+                    data:valuesAceite7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesAceite7.map(v =>
+                        v > 25 ? 8 : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesAceite7.map(v =>
+                        v > 25 ? "red" : "blue"
+                    )
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(25),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+	actualizarAlarmasCorte();
+});
+
+Promise.all([
+    fetch("Item3Corte.json").then(r => r.json()),
+    fetch("Item4Corte.json").then(r => r.json())
+])
+.then(([sinCarga, conCarga]) => {
+    const labelsMotor =
+    sinCarga.labels.map(x => x.Fecha);
+    const labelsMotor7 =
+    labelsMotor.slice(-7);
+    const valuesSinCarga =
+    sinCarga.values.map(x =>
+        Number(x.Value)
+    );
+    const valuesConCarga =
+    conCarga.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoSinCarga =
+    valuesSinCarga[
+        valuesSinCarga.length - 1
+    ];
+    const ultimoConCarga =
+    valuesConCarga[
+        valuesConCarga.length - 1
+    ];
+    document.getElementById(
+        "valorCorteMotorSinCarga"
+    ).innerHTML =
+    ultimoSinCarga.toFixed(2) +
+    " A";
+    document.getElementById(
+        "valorCorteMotorConCarga"
+    ).innerHTML =
+    ultimoConCarga.toFixed(2) +
+    " A";
+    new Chart(
+        document.getElementById(
+            "graficaCorteMotorPrincipal"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsMotor7,
+                datasets:[
+                {
+                    label:"Sin Carga",
+                    data:
+                    valuesSinCarga.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Con Carga",
+                    data:
+                    valuesConCarga.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+Promise.all([
+    fetch("Item5Corte.json").then(r => r.json()),
+    fetch("Item6Corte.json").then(r => r.json())
+])
+.then(([desactivado, activado]) => {
+    const labelsStopper =
+    desactivado.labels.map(x => x.Fecha);
+    const labelsStopper7 =
+    labelsStopper.slice(-7);
+    const valuesDesactivado =
+    desactivado.values.map(x =>
+        Number(x.Value)
+    );
+    const valuesActivado =
+    activado.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoDesactivado =
+    valuesDesactivado[
+        valuesDesactivado.length - 1
+    ];
+    const ultimoActivado =
+    valuesActivado[
+        valuesActivado.length - 1
+    ];
+    document.getElementById(
+        "valorCorteStopperDesactivado"
+    ).innerHTML =
+    ultimoDesactivado.toFixed(2);
+    document.getElementById(
+        "valorCorteStopperActivado"
+    ).innerHTML =
+    ultimoActivado.toFixed(2);
+    new Chart(
+        document.getElementById(
+            "graficaCorteStopper"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsStopper7,
+                datasets:[
+                {
+                    label:"Desactivado",
+                    data:
+                    valuesDesactivado.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Activado",
+                    data:
+                    valuesActivado.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+Promise.all([
+    fetch("Item7Corte.json").then(r => r.json()),
+    fetch("Item8Corte.json").then(r => r.json())
+])
+.then(([cantidad,presion]) => {
+    const labelsBus =
+    cantidad.labels.map(x => x.Fecha);
+    const labelsBus7 =
+    labelsBus.slice(-7);
+    const valuesCantidad =
+    cantidad.values.map(x =>
+        Number(x.Value)
+    );
+    const valuesPresion =
+    presion.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoCantidad =
+    valuesCantidad[
+        valuesCantidad.length - 1
+    ];
+    const ultimoPresion =
+    valuesPresion[
+        valuesPresion.length - 1
+    ];
+    document.getElementById(
+        "valorCorteBusAceiteCantidad"
+    ).innerHTML =
+    ultimoCantidad.toFixed(1) +
+    " mm";
+    document.getElementById(
+        "valorCorteBusAceitePresion"
+    ).innerHTML =
+    ultimoPresion.toFixed(2) +
+    " MPa";
+    if(
+        ultimoCantidad < 115 ||
+        ultimoCantidad > 170
+    ){
+        totalAlarmasCorte++;
+        listaAlarmasCorte.push(
+            "BUS ACEITE NIVEL (" +
+            ultimoCantidad.toFixed(1) +
+            " mm)"
+        );
+    }
+    if(
+        ultimoPresion < 0.19 ||
+        ultimoPresion > 0.50
+    ){
+        totalAlarmasCorte++;
+        listaAlarmasCorte.push(
+            "BUS ACEITE PRESIÓN (" +
+            ultimoPresion.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "graficaCorteBusAceiteNivel"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsBus7,
+                datasets:[
+                {
+                    label:"Nivel Aceite",
+                    data:
+                    valuesCantidad.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesCantidad
+                    .slice(-7)
+                    .map(v =>
+                        (
+                            v < 115 ||
+                            v > 170
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesCantidad
+                    .slice(-7)
+                    .map(v =>
+                        (
+                            v < 115 ||
+                            v > 170
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(115),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(170),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    new Chart(
+        document.getElementById(
+            "graficaCorteBusAceitePresion"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsBus7,
+                datasets:[
+                {
+                    label:"Presión Bomba",
+                    data:
+                    valuesPresion.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesPresion
+                    .slice(-7)
+                    .map(v =>
+                        (
+                            v < 0.19 ||
+                            v > 0.50
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesPresion
+                    .slice(-7)
+                    .map(v =>
+                        (
+                            v < 0.19 ||
+                            v > 0.50
+                        )
+                        ? "red"
+                        : "green"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(0.19),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(0.50),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+	actualizarAlarmasCorte();
+});
+
+fetch("Item9Corte.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorCorteUnidadPresionAceite"
+    ).innerHTML =
+    ultimoValor.toFixed(1) +
+    " mm";
+    const labelsAceite =
+    data.labels.map(x => x.Fecha);
+    const labelsAceite7 =
+    labelsAceite.slice(-7);
+    const valuesAceite7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 115 ||
+        ultimoValor > 170
+    ){
+        totalAlarmasCorte++;
+        listaAlarmasCorte.push(
+            "UNIDAD PRESIÓN ACEITE (" +
+            ultimoValor.toFixed(1) +
+            " mm)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "graficaCorteUnidadPresionAceite"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsAceite7,
+                datasets:[
+                {
+                    label:"Cantidad Aceite",
+                    data:valuesAceite7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesAceite7.map(v =>
+                        (
+                            v < 115 ||
+                            v > 170
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesAceite7.map(v =>
+                        (
+                            v < 115 ||
+                            v > 170
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(115),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(170),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+	actualizarAlarmasCorte();
+});
+
+fetch("Item10Corte.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorCorteUnidadPresionFiltro"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labelsFiltro =
+    data.labels.map(x => x.Fecha);
+    const labelsFiltro7 =
+    labelsFiltro.slice(-7);
+    const valuesFiltro7 =
+    values.slice(-7);
+    if(ultimoValor > 0.4){
+        totalAlarmasCorte++;
+        listaAlarmasCorte.push(
+            "PRESIÓN FILTRO (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "graficaCorteUnidadPresionFiltro"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsFiltro7,
+                datasets:[
+                {
+                    label:"Presión Filtro",
+                    data:valuesFiltro7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesFiltro7.map(v =>
+                        v > 0.4 ? 8 : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesFiltro7.map(v =>
+                        v > 0.4 ? "red" : "blue"
+                    )
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7)
+                        .fill(0.4),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+	actualizarAlarmasCorte();
+});
+
+fetch("Item11Corte.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorCorteUnidadPresionCB"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labelsCB =
+    data.labels.map(x => x.Fecha);
+    const labelsCB7 =
+    labelsCB.slice(-7);
+    const valuesCB7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 4.9 ||
+        ultimoValor > 6.0
+    ){
+        totalAlarmasCorte++;
+        listaAlarmasCorte.push(
+            "PRESIÓN C/B (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "graficaCorteUnidadPresionCB"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsCB7,
+                datasets:[
+                {
+                    label:"Presión C/B",
+                    data:valuesCB7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesCB7.map(v =>
+                        (
+                            v < 4.9 ||
+                            v > 6.0
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesCB7.map(v =>
+                        (
+                            v < 4.9 ||
+                            v > 6.0
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(4.9),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(6.0),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+	actualizarAlarmasCorte();
+});
+
+fetch("Item12Corte.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorCorteUnidadPresionAgua"
+    ).innerHTML =
+    ultimoValor.toFixed(2);
+    const labelsAgua =
+    data.labels.map(x => x.Fecha);
+    const labelsAgua7 =
+    labelsAgua.slice(-7);
+    const valuesAgua7 =
+    values.slice(-7);
+    new Chart(
+        document.getElementById(
+            "graficaCorteUnidadPresionAgua"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsAgua7,
+                datasets:[
+                {
+                    label:"Cantidad Agua",
+                    data:valuesAgua7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+fetch("Item13Corte.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorCorteUnidadPresionTemp"
+    ).innerHTML =
+    ultimoValor.toFixed(1) +
+    " °C";
+    const labelsTemp =
+    data.labels.map(x => x.Fecha);
+    const labelsTemp7 =
+    labelsTemp.slice(-7);
+    const valuesTemp7 =
+    values.slice(-7);
+    new Chart(
+        document.getElementById(
+            "graficaCorteUnidadPresionTemp"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsTemp7,
+                datasets:[
+                {
+                    label:"Temperatura Aceite",
+                    data:valuesTemp7,
+                    borderColor:"orange",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+Promise.all([
+    fetch("Item14Corte.json").then(r => r.json()),
+    fetch("Item15Corte.json").then(r => r.json())
+])
+.then(([clamperPinch,clutchPinch]) => {
+    const labelsPinch =
+    clamperPinch.labels.map(x => x.Fecha);
+    const labelsPinch7 =
+    labelsPinch.slice(-7);
+    const valuesClamperPinch =
+    clamperPinch.values.map(x =>
+        Number(x.Value)
+    );
+    const valuesClutchPinch =
+    clutchPinch.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoClamperPinch =
+    valuesClamperPinch[
+        valuesClamperPinch.length - 1
+    ];
+    const ultimoClutchPinch =
+    valuesClutchPinch[
+        valuesClutchPinch.length - 1
+    ];
+    document.getElementById(
+        "valorCorteClamperPinch"
+    ).innerHTML =
+    ultimoClamperPinch.toFixed(2) +
+    " MPa";
+    document.getElementById(
+        "valorCorteClutchPinch"
+    ).innerHTML =
+    ultimoClutchPinch.toFixed(2) +
+    " MPa";
+    if(
+        ultimoClamperPinch < 0.2 ||
+        ultimoClamperPinch > 0.4
+    ){
+        totalAlarmasCorte++;
+        listaAlarmasCorte.push(
+            "CLAMPER PINCH (" +
+            ultimoClamperPinch.toFixed(2) +
+            " MPa)"
+        );
+    }
+    if(
+        ultimoClutchPinch < 0.2 ||
+        ultimoClutchPinch > 0.4
+    ){
+        totalAlarmasCorte++;
+        listaAlarmasCorte.push(
+            "CLUTCH PINCH (" +
+            ultimoClutchPinch.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "graficaCortePinchRoller"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsPinch7,
+                datasets:[
+                {
+                    label:"Clamper Pinch",
+                    data:
+                    valuesClamperPinch.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Clutch Pinch",
+                    data:
+                    valuesClutchPinch.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(0.2),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(0.4),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+fetch("Item16Corte.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorCorteClamper"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labelsClamper =
+    data.labels.map(x => x.Fecha);
+    const labelsClamper7 =
+    labelsClamper.slice(-7);
+    const valuesClamper7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 0.3 ||
+        ultimoValor > 0.4
+    ){
+        totalAlarmasCorte++;
+        listaAlarmasCorte.push(
+            "CLAMPER (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "graficaCorteClamper"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsClamper7,
+                datasets:[
+                {
+                    label:"Clamper",
+                    data:valuesClamper7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesClamper7.map(v =>
+                        (
+                            v < 0.3 ||
+                            v > 0.4
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesClamper7.map(v =>
+                        (
+                            v < 0.3 ||
+                            v > 0.4
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7).fill(0.3),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7).fill(0.4),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+	actualizarAlarmasCorte();
+});
+
+fetch("Item17Corte.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorCortePistonBarra"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labelsPiston =
+    data.labels.map(x => x.Fecha);
+    const labelsPiston7 =
+    labelsPiston.slice(-7);
+    const valuesPiston7 =
+    values.slice(-7);
+    if(ultimoValor > 0.5){
+        totalAlarmasCorte++;
+        listaAlarmasCorte.push(
+            "PISTÓN BARRA (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "graficaCortePistonBarra"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsPiston7,
+                datasets:[
+                {
+                    label:"Pistón Barra",
+                    data:valuesPiston7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesPiston7.map(v =>
+                        v > 0.5 ? 8 : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesPiston7.map(v =>
+                        v > 0.5 ? "red" : "blue"
+                    )
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(0.5),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+	actualizarAlarmasCorte();
+});
+	
+// =====================================
+//  Tarjetas de alarmas codigos de listas
+// =====================================
+	
 let hayAlarma = false;
 let totalAlarmas = 0;
 let listaAlarmas = [];
@@ -9281,6 +10437,80 @@ if(modalColector){
         }
     );
 }
+
+let totalAlarmasCorte = 0;
+let listaAlarmasCorte = [];
+function actualizarAlarmasCorte(){
+	document.getElementById(
+	    "contadorAlarmasCorte"
+	)
+	.addEventListener("click", function(){
+	    actualizarAlarmasCorte();
+	    document.getElementById(
+	        "modalAlarmasCorte"
+	    ).style.display = "block";
+	});
+    document.getElementById(
+        "contadorAlarmasCorte"
+    ).innerHTML =
+    totalAlarmasCorte;
+    document.getElementById(
+        "tituloAlarmasCorteModal"
+    ).innerHTML =
+    "⚠ Alarmas Corte (" +
+    totalAlarmasCorte +
+    ")";
+    document.getElementById(
+        "contenidoAlarmasCorteModal"
+    ).innerHTML =
+    listaAlarmasCorte.map(a => {
+        return `
+            <div style="
+                padding:10px;
+                margin:8px 0;
+                background:#fafafa;
+                border-left:6px solid #0078D4;
+                border-radius:6px;
+                font-weight:bold;
+            ">
+                ⚠ ${a}
+            </div>
+        `;
+    }).join("");
+}	
+const cerrarModalCorte =
+document.getElementById(
+    "cerrarModalCorte"
+);
+if(cerrarModalCorte){
+    cerrarModalCorte.addEventListener(
+        "click",
+        function(){
+            document.getElementById(
+                "modalAlarmasCorte"
+            ).style.display = "none";
+        }
+    );
+}
+const modalCorte =
+document.getElementById(
+    "modalAlarmasCorte"
+);
+if(modalCorte){
+    modalCorte.addEventListener(
+        "click",
+        function(event){
+            if(
+                event.target.id ===
+                "modalAlarmasCorte"
+            ){
+                modalCorte.style.display =
+                "none";
+            }
+        }
+    );
+}
+	
 </script>
 </div>
 </body>
