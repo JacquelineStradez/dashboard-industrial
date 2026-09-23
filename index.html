@@ -7913,6 +7913,191 @@ Promise.all([
         }
     );
 });
+
+fetch("Item1GrafitoT3000.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorFiltroBombas"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(
+        ultimoValor > data.upperLimit ||
+        ultimoValor < data.lowerLimit
+    ){
+        totalAlarmasGrafito++;
+        listaAlarmasGrafito.push(
+            "FILTRO BOMBAS (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    const ctx =
+    document.getElementById(
+        "graficaFiltroBombas"
+    );
+    new Chart(ctx,{
+        type:"line",
+        data:{
+            labels:labels7,
+            datasets:[
+            {
+                label:"Presión Entrada",
+                data:values7,
+                borderColor:"blue",
+                fill:false,
+                tension:0.3,
+                pointRadius:
+                values7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? 8
+                    : 2
+                ),
+                pointBackgroundColor:
+                values7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? "red"
+                    : "blue"
+                )
+            },
+            {
+                label:"Límite Inferior",
+                data:Array(7)
+                    .fill(data.lowerLimit),
+                borderColor:"green",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            },
+            {
+                label:"Límite Superior",
+                data:Array(7)
+                    .fill(data.upperLimit),
+                borderColor:"red",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            }
+            ]
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false
+        }
+    });
+});
+
+fetch("Item2GrafitoT3000.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorFiltroCiclon"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+	const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(
+        ultimoValor > data.upperLimit ||
+        ultimoValor < data.lowerLimit
+    ){
+        totalAlarmasGrafito++;
+        listaAlarmasGrafito.push(
+            "FILTRO CICLON (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    const ctx =
+    document.getElementById(
+        "graficaFiltroCiclon"
+    );
+    new Chart(ctx,{
+        type:"line",
+        data:{
+            labels:labels7,
+            datasets:[
+            {
+                label:"Presión Salida",
+                data:values7,
+                borderColor:"blue",
+                fill:false,
+                tension:0.3,
+                pointRadius:
+                values7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? 8
+                    : 2
+                ),
+                pointBackgroundColor:
+                values7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? "red"
+                    : "blue"
+                )
+            },
+            {
+                label:"Límite Inferior",
+                data:Array(7)
+                    .fill(data.lowerLimit),
+                borderColor:"green",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            },
+            {
+                label:"Límite Superior",
+                data:Array(7)
+                    .fill(data.upperLimit),
+                borderColor:"red",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            }
+            ]
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false
+        }
+    });
+});
+
 Promise.all([
     fetch("Item3GrafitoT3000.json").then(r => r.json()),
     fetch("Item4GrafitoT3000.json").then(r => r.json())
@@ -7940,8 +8125,127 @@ Promise.all([
     document.getElementById("valorBombaIzquierda")
         .innerHTML =
         ultimoIzq.toFixed(2) + " MPa";
+	    const labels =
+    bombaDerecha.labels.map(x => x.Fecha);
+
+    const labels7 =
+    labels.slice(-7);
+
+    const valuesDer7 =
+    valuesDer.slice(-7);
+
+    const valuesIzq7 =
+    valuesIzq.slice(-7);
+
+    if(
+        ultimoDer > bombaDerecha.upperLimit ||
+        ultimoDer < bombaDerecha.lowerLimit
+    ){
+        totalAlarmasGrafito++;
+
+        listaAlarmasGrafito.push(
+            "BOMBA DERECHA (" +
+            ultimoDer.toFixed(2) +
+            " MPa)"
+        );
+    }
+    if(
+        ultimoIzq > bombaIzquierda.upperLimit ||
+        ultimoIzq < bombaIzquierda.lowerLimit
+    ){
+        totalAlarmasGrafito++;
+        listaAlarmasGrafito.push(
+            "BOMBA IZQUIERDA (" +
+            ultimoIzq.toFixed(2) +
+            " MPa)"
+        );
+    }
+    const ctx =
+    document.getElementById(
+        "graficaBombasGrafito"
+    );
+    new Chart(ctx,{
+        type:"line",
+        data:{
+            labels:labels7,
+            datasets:[
+            {
+                label:"Bomba Derecha",
+                data:valuesDer7,
+                borderColor:"blue",
+                fill:false,
+                tension:0.3,
+                pointRadius:
+                valuesDer7.map(v =>
+                    (
+                        v > bombaDerecha.upperLimit ||
+                        v < bombaDerecha.lowerLimit
+                    )
+                    ? 8
+                    : 2
+                ),
+                pointBackgroundColor:
+                valuesDer7.map(v =>
+                    (
+                        v > bombaDerecha.upperLimit ||
+                        v < bombaDerecha.lowerLimit
+                    )
+                    ? "red"
+                    : "blue"
+                )
+            },
+            {
+                label:"Bomba Izquierda",
+                data:valuesIzq7,
+                borderColor:"green",
+                fill:false,
+                tension:0.3,
+                pointRadius:
+                valuesIzq7.map(v =>
+                    (
+                        v > bombaIzquierda.upperLimit ||
+                        v < bombaIzquierda.lowerLimit
+                    )
+                    ? 8
+                    : 2
+                ),
+                pointBackgroundColor:
+                valuesIzq7.map(v =>
+                    (
+                        v > bombaIzquierda.upperLimit ||
+                        v < bombaIzquierda.lowerLimit
+                    )
+                    ? "red"
+                    : "green"
+                )
+            },
+            {
+                label:"Límite Inferior",
+                data:Array(7)
+                    .fill(0.6),
+                borderColor:"green",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            },
+            {
+                label:"Límite Superior",
+                data:Array(7)
+                    .fill(1.0),
+                borderColor:"red",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            }
+            ]
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false
+        }
+    });
 });
-	
+
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
 .then(r => r.json())
