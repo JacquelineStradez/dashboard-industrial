@@ -10441,43 +10441,58 @@ if(modalColector){
 let totalAlarmasCorte = 0;
 let listaAlarmasCorte = [];
 function actualizarAlarmasCorte(){
-	document.getElementById(
-	    "contadorAlarmasCorte"
-	)
-	.addEventListener("click", function(){
-	    actualizarAlarmasCorte();
-	    document.getElementById(
-	        "modalAlarmasCorte"
-	    ).style.display = "block";
-	});
+    const contadorCorte =
     document.getElementById(
         "contadorAlarmasCorte"
-    ).innerHTML =
-    totalAlarmasCorte;
+    );
+    if(contadorCorte){
+        contadorCorte.innerHTML =
+        totalAlarmasCorte;
+    }
+    const tituloCorte =
     document.getElementById(
         "tituloAlarmasCorteModal"
-    ).innerHTML =
-    "⚠ Alarmas Corte (" +
-    totalAlarmasCorte +
-    ")";
+    );
+    if(tituloCorte){
+        tituloCorte.innerHTML =
+        "⚠ Alarmas Corte (" +
+        totalAlarmasCorte +
+        ")";
+    }
+    const contenidoCorte =
     document.getElementById(
         "contenidoAlarmasCorteModal"
-    ).innerHTML =
-    listaAlarmasCorte.map(a => {
-        return `
-            <div style="
-                padding:10px;
-                margin:8px 0;
-                background:#fafafa;
-                border-left:6px solid #0078D4;
-                border-radius:6px;
-                font-weight:bold;
-            ">
-                ⚠ ${a}
-            </div>
-        `;
-    }).join("");
-}	
+    );
+    if(contenidoCorte){
+        contenidoCorte.innerHTML =
+        listaAlarmasCorte.map(a => {
+            return `
+                <div style="
+                    padding:10px;
+                    margin:8px 0;
+                    background:#fafafa;
+                    border-left:6px solid #0078D4;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+                    ⚠ ${a}
+                </div>
+            `;
+        }).join("");
+    }
+}
+document.getElementById(
+    "contadorAlarmasCorte"
+)
+.addEventListener(
+    "click",
+    function(){
+        actualizarAlarmasCorte();
+        document.getElementById(
+            "modalAlarmasCorte"
+        ).style.display = "block";
+    }
+);
 const cerrarModalCorte =
 document.getElementById(
     "cerrarModalCorte"
@@ -10509,8 +10524,7 @@ if(modalCorte){
             }
         }
     );
-}
-	
+}	
 </script>
 </div>
 </body>
