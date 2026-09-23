@@ -8504,42 +8504,26 @@ if(cerrarModalGrafito){
 function actualizarModalAlarmas(){
 	document.getElementById("contadorAlarmas")
     	.innerHTML = totalAlarmas;
-	document.getElementById("tituloAlarmas")
-	    .innerHTML =
-	    "⚠ Alarmas Calentador";
+	document.getElementById(
+	    "tituloAlarmas"
+	).innerHTML =
+	"⚠ Alarmas Calentador (" +
+	totalAlarmas +
+	")";
     document.getElementById("contenidoModalAlarmas")
     .innerHTML = listaAlarmas.map(a => {
-        let color = "red";
-        if(a.includes("INV")){
-            color = "#0078D4";
-        }
-        if(a.includes("COIL")){
-            color = "#7B1FA2";
-        }
-        if(a.includes("TERM")){
-            color = "#D32F2F";
-        }
-        if(a.includes("RODILLO")){
-            color = "#F57C00";
-        }
-        if(a.includes("INTERCAMBIADOR")){
-            color = "#0097A7";
-        }
-        if(a.includes("PANEL")){
-            color = "#795548";
-        }
         return `
-            <div style="
-                padding:10px;
-                margin:8px 0;
-                background:#fafafa;
-                border-left:6px solid ${color};
-                border-radius:6px;
-                font-weight:bold;
-            ">
-                ⚠ ${a}
-            </div>
-        `;
+		<div style="
+		padding:10px;
+		margin:8px 0;
+		background:#fafafa;
+		border-left:6px solid #0078D4;
+		border-radius:6px;
+		font-weight:bold;
+		">
+		⚠ ${a}
+		</div>
+		`;
     }).join("");
 }
 document.getElementById("contadorAlarmas")
