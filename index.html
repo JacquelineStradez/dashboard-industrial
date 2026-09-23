@@ -9694,8 +9694,12 @@ fetch("Item11Corte.json")
 .then(r => r.json())
 .then(data => {
     const values =
-    data.values.map(x =>
-	    Number(x["Value "] ?? x["Value"])
+	data.values.map(x =>
+	    Number(
+	        x["Value "] ??
+	        x["Value"]
+	    )
+	);
     const ultimoValor =
     values[values.length - 1];
     document.getElementById(
