@@ -8408,22 +8408,20 @@ document.getElementById("valorLubTemperatura")
     .innerHTML = "42 °C";
 document.getElementById("valorLubAceite")
     .innerHTML = "850 L";
-
-function actualizarAlarmasGrafito(){
+	
+function actualizarModalAlarmas(){
+    document.getElementById("contadorAlarmas")
+        .innerHTML = totalAlarmas;
     document.getElementById(
-        "contadorAlarmasGrafito"
+        "tituloAlarmas"
     ).innerHTML =
-    totalAlarmasGrafito;
-	document.getElementById(
-	    "tituloAlarmasGrafitoModal"
-	).innerHTML =
-	"⚠ Alarmas Grafito (" +
-	totalAlarmasGrafito +
-	")";
+    "⚠ Alarmas Calentador (" +
+    totalAlarmas +
+    ")";
     document.getElementById(
-        "contenidoAlarmasGrafitoModal"
+        "contenidoModalAlarmas"
     ).innerHTML =
-    listaAlarmasGrafito.map(a => {
+    listaAlarmas.map(a => {
         return `
             <div style="
                 padding:10px;
@@ -8438,29 +8436,53 @@ function actualizarAlarmasGrafito(){
         `;
     }).join("");
 }
-const cerrarModalPrensa =
+document.getElementById("contadorAlarmas")
+.addEventListener("click", function(){
+    actualizarModalAlarmas();
+    document.getElementById("modalAlarmas")
+        .style.display = "block";
+});
+const cerrarModal =
+document.getElementById("cerrarModal");
+if(cerrarModal){
+    cerrarModal.addEventListener(
+        "click",
+        function(){
+            document.getElementById(
+                "modalAlarmas"
+            ).style.display = "none";
+        }
+    );
+}
+const modalCalentador =
 document.getElementById(
-    "cerrarModalPrensa"
+    "modalAlarmas"
 );
-if(cerrarModalPrensa){
-    cerrarModalPrensa
-    .addEventListener("click", function(){
-        document.getElementById(
-            "modalAlarmasPrensa"
-        ).style.display = "none";
-    });
+if(modalCalentador){
+    modalCalentador.addEventListener(
+        "click",
+        function(event){
+            if(
+                event.target.id ===
+                "modalAlarmas"
+            ){
+                modalCalentador.style.display =
+                "none";
+            }
+        }
+    );
 }
 function actualizarAlarmasPrensa(){
     document.getElementById(
         "contadorAlarmasPrensa"
     ).innerHTML =
     totalAlarmasPrensa;
-	document.getElementById(
-	    "tituloAlarmasPrensaModal"
-	).innerHTML =
-	"⚠ Alarmas Prensa (" +
-	totalAlarmasPrensa +
-	")";
+    document.getElementById(
+        "tituloAlarmasPrensaModal"
+    ).innerHTML =
+    "⚠ Alarmas Prensa (" +
+    totalAlarmasPrensa +
+    ")";
     document.getElementById(
         "contenidoAlarmasPrensaModal"
     ).innerHTML =
@@ -8479,57 +8501,28 @@ function actualizarAlarmasPrensa(){
         `;
     }).join("");
 }
-const cerrarModalGrafito =
 document.getElementById(
-    "cerrarModalGrafito"
+    "contadorAlarmasPrensa"
+)
+.addEventListener("click", function(){
+    actualizarAlarmasPrensa();
+    document.getElementById(
+        "modalAlarmasPrensa"
+    ).style.display = "block";
+});
+const cerrarModalPrensa =
+document.getElementById(
+    "cerrarModalPrensa"
 );
-if(cerrarModalGrafito){
-    cerrarModalGrafito.addEventListener(
+if(cerrarModalPrensa){
+    cerrarModalPrensa.addEventListener(
         "click",
         function(){
             document.getElementById(
-                "modalAlarmasGrafito"
+                "modalAlarmasPrensa"
             ).style.display = "none";
         }
     );
-}
-function actualizarModalAlarmas(){
-	document.getElementById("contadorAlarmas")
-    	.innerHTML = totalAlarmas;
-	document.getElementById(
-	    "tituloAlarmas"
-	).innerHTML =
-	"⚠ Alarmas Calentador (" +
-	totalAlarmas +
-	")";
-    document.getElementById("contenidoModalAlarmas")
-    .innerHTML = listaAlarmas.map(a => {
-        return `
-		<div style="
-		padding:10px;
-		margin:8px 0;
-		background:#fafafa;
-		border-left:6px solid #0078D4;
-		border-radius:6px;
-		font-weight:bold;
-		">
-		⚠ ${a}
-		</div>
-		`;
-    }).join("");
-}
-document.getElementById("contadorAlarmas")
-.addEventListener("click", function(){
-    document.getElementById("modalAlarmas")
-        .style.display = "block";
-});
-const cerrarModal =
-document.getElementById("cerrarModal");
-if(cerrarModal){
-    cerrarModal.addEventListener("click", function(){
-        document.getElementById("modalAlarmas")
-            .style.display = "none";
-    });
 }
 const modalPrensa =
 document.getElementById(
@@ -8546,6 +8539,58 @@ if(modalPrensa){
                 modalPrensa.style.display =
                 "none";
             }
+        }
+    );
+}
+function actualizarAlarmasGrafito(){
+    document.getElementById(
+        "contadorAlarmasGrafito"
+    ).innerHTML =
+    totalAlarmasGrafito;
+    document.getElementById(
+        "tituloAlarmasGrafitoModal"
+    ).innerHTML =
+    "⚠ Alarmas Grafito (" +
+    totalAlarmasGrafito +
+    ")";
+    document.getElementById(
+        "contenidoAlarmasGrafitoModal"
+    ).innerHTML =
+    listaAlarmasGrafito.map(a => {
+        return `
+            <div style="
+                padding:10px;
+                margin:8px 0;
+                background:#fafafa;
+                border-left:6px solid #0078D4;
+                border-radius:6px;
+                font-weight:bold;
+            ">
+                ⚠ ${a}
+            </div>
+        `;
+    }).join("");
+}
+document.getElementById(
+    "contadorAlarmasGrafito"
+)
+.addEventListener("click", function(){
+    actualizarAlarmasGrafito();
+    document.getElementById(
+        "modalAlarmasGrafito"
+    ).style.display = "block";
+});
+const cerrarModalGrafito =
+document.getElementById(
+    "cerrarModalGrafito"
+);
+if(cerrarModalGrafito){
+    cerrarModalGrafito.addEventListener(
+        "click",
+        function(){
+            document.getElementById(
+                "modalAlarmasGrafito"
+            ).style.display = "none";
         }
     );
 }
@@ -8567,15 +8612,6 @@ if(modalGrafito){
         }
     );
 }
-document.getElementById("tarjetaAlarmas")
-    .style.borderLeft = "6px solid #0078D4";
-
-document.getElementById("tarjetaAlarmas")
-    .style.background = "white";
-
-document.getElementById("contadorAlarmas")
-    .style.color = "#000000";
-
 </script>
 </div>
 </body>
