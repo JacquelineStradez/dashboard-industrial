@@ -3481,27 +3481,20 @@ document.getElementById("btnPrensa")
     ocultarVistasGrafito();
     ocultarVistasColector();
     ocultarVistasCalentador();
-    document.getElementById("vistaGrafito")
-        .style.display = "none";
-    ocultarVistasGrafito();
     document.getElementById("vistaPrensa")
         .style.display = "block";
     document.getElementById("vistaLubDeslizante")
         .style.display = "block";
-    document.getElementById("contadorAlarmasPrensa")
-        .style.color = "#000000";
+    document.getElementById("tarjetaAlarmas")
+        .style.display = "none";
     document.getElementById("tarjetaAlarmasPrensa")
-        .style.borderLeft = "6px solid #0078D4";
-	document.getElementById("tarjetaAlarmas")
-	    .style.display = "none";
-	document.getElementById("tarjetaAlarmasPrensa")
-	    .style.display = "block";
-	document.getElementById("tarjetaAlarmasGrafito")
-	    .style.display = "none";
-	document.getElementById("tarjetaAlarmasColector")
-	    .style.display = "none";
-	document.getElementById("panelAlarmas")
-	    .style.display = "none";
+        .style.display = "block";
+    document.getElementById("tarjetaAlarmasGrafito")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasColector")
+        .style.display = "none";
+    document.getElementById("panelAlarmas")
+        .style.display = "grid";
 });
 document.getElementById("btnGrafito")
 .addEventListener("click", function(){
