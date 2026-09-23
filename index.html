@@ -3253,6 +3253,44 @@ canvas{
         </div>
     </div>
 </div>
+<div id="modalAlarmasColector"
+     style="
+        display:none;
+        position:fixed;
+        z-index:10000;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,.4);
+     ">
+    <div style="
+        background:white;
+        width:400px;
+        margin:80px auto;
+        padding:20px;
+        border-radius:10px;
+        border-top:5px solid #0078D4;
+    ">
+        <span id="cerrarModalColector"
+              style="
+                float:left;
+                cursor:pointer;
+                font-size:20px;
+                font-weight:bold;
+                color:#0078D4;
+                padding:4px 10px;
+                border-radius:6px;
+              ">
+            ×
+        </span>
+        <h2 id="tituloAlarmasColectorModal">
+            ⚠ Alarmas Colector
+        </h2>
+        <div id="contenidoAlarmasColectorModal">
+        </div>
+    </div>
+</div>
 <script>
 document.getElementById("btnT3000")
 .addEventListener("click", function(){
@@ -3542,17 +3580,16 @@ document.getElementById("btnColector")
     ocultarVistasGrafito();
     document.getElementById("vistaColector")
         .style.display = "block";
-    ocultarVistasGrafito();
-	document.getElementById("tarjetaAlarmas")
-	    .style.display = "none";
-	document.getElementById("tarjetaAlarmasPrensa")
-	    .style.display = "none";
-	document.getElementById("tarjetaAlarmasGrafito")
-	    .style.display = "none";
-	document.getElementById("tarjetaAlarmasColector")
-	    .style.display = "block";
-	document.getElementById("panelAlarmas")
-	    .style.display = "none";
+    document.getElementById("tarjetaAlarmas")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasPrensa")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasGrafito")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasColector")
+        .style.display = "block";
+    document.getElementById("panelAlarmas")
+        .style.display = "grid";
 });
 document.getElementById("btnBombasGrafito")
 .addEventListener("click", function(){
@@ -4223,13 +4260,6 @@ document.getElementById("btnTemperaturas")
     document.getElementById("vistaTemperaturas")
         .style.display = "block";
 });
-let hayAlarma = false;
-let totalAlarmas = 0;
-let listaAlarmas = [];
-let totalAlarmasPrensa = 0;
-let listaAlarmasPrensa = [];
-let totalAlarmasGrafito = 0;
-let listaAlarmasGrafito = [];
 	
 let dataA;
 let dataB;
@@ -8366,6 +8396,564 @@ Promise.all([
     });
 });
 
+fetch("Item1PolvoT3000.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorPreFiltro"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " KPa";
+    const labelsPreFiltro =
+    data.labels.map(x => x.Fecha);
+    const labelsPreFiltro7 =
+    labelsPreFiltro.slice(-7);
+    const valuesPreFiltro7 =
+    values.slice(-7);
+    if(
+        ultimoValor > data.upperLimit ||
+        ultimoValor < data.lowerLimit
+    ){
+        totalAlarmasColector++;
+        listaAlarmasColector.push(
+            "PREFILTRO (" +
+            ultimoValor.toFixed(2) +
+            " KPa)"
+        );
+    }
+    const ctxPreFiltro =
+    document.getElementById(
+        "graficaPreFiltro"
+    );
+    new Chart(ctxPreFiltro, {
+        type: "line",
+        data: {
+            labels: labelsPreFiltro7,
+            datasets: [
+            {
+                label: "Prefiltro",
+                data: valuesPreFiltro7,
+                borderColor: "blue",
+                fill: false,
+                tension: 0.3,
+                pointRadius:
+                valuesPreFiltro7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? 8
+                    : 2
+                ),
+                pointBackgroundColor:
+                valuesPreFiltro7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? "red"
+                    : "blue"
+                )
+            },
+            {
+                label: "Límite Inferior",
+                data: Array(7)
+                    .fill(data.lowerLimit),
+                borderColor: "green",
+                borderDash: [5,5],
+                fill: false,
+                pointRadius: 0
+            },
+            {
+                label: "Límite Superior",
+                data: Array(7)
+                    .fill(data.upperLimit),
+                borderColor: "red",
+                borderDash: [5,5],
+                fill: false,
+                pointRadius: 0
+            }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+    actualizarAlarmasColector();
+});
+
+fetch("Item2PolvoT3000.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorFiltroPrimario"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " KPa";
+    const labelsFiltroPrimario =
+    data.labels.map(x => x.Fecha);
+    const labelsFiltroPrimario7 =
+    labelsFiltroPrimario.slice(-7);
+    const valuesFiltroPrimario7 =
+    values.slice(-7);
+    if(
+        ultimoValor > data.upperLimit ||
+        ultimoValor < data.lowerLimit
+    ){
+        totalAlarmasColector++;
+        listaAlarmasColector.push(
+            "FILTRO PRIMARIO (" +
+            ultimoValor.toFixed(2) +
+            " KPa)"
+        );
+    }
+    const ctxFiltroPrimario =
+    document.getElementById(
+        "graficaFiltroPrimario"
+    );
+    new Chart(ctxFiltroPrimario, {
+        type:"line",
+        data:{
+            labels:labelsFiltroPrimario7,
+            datasets:[
+            {
+                label:"Filtro Primario",
+                data:valuesFiltroPrimario7,
+                borderColor:"blue",
+                fill:false,
+                tension:0.3,
+                pointRadius:
+                valuesFiltroPrimario7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? 8
+                    : 2
+                ),
+                pointBackgroundColor:
+                valuesFiltroPrimario7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? "red"
+                    : "blue"
+                )
+            },
+            {
+                label:"Límite Inferior",
+                data:Array(7)
+                    .fill(data.lowerLimit),
+                borderColor:"green",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            },
+            {
+                label:"Límite Superior",
+                data:Array(7)
+                    .fill(data.upperLimit),
+                borderColor:"red",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            }
+            ]
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false
+        }
+    });
+    actualizarAlarmasColector();
+});	
+
+fetch("Item3PolvoT3000.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorFiltroSecundario"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " KPa";
+    const labelsFiltroSecundario =
+    data.labels.map(x => x.Fecha);
+    const labelsFiltroSecundario7 =
+    labelsFiltroSecundario.slice(-7);
+    const valuesFiltroSecundario7 =
+    values.slice(-7);
+    if(
+        ultimoValor > data.upperLimit ||
+        ultimoValor < data.lowerLimit
+    ){
+        totalAlarmasColector++;
+        listaAlarmasColector.push(
+            "FILTRO SECUNDARIO (" +
+            ultimoValor.toFixed(2) +
+            " KPa)"
+        );
+    }
+    const ctxFiltroSecundario =
+    document.getElementById(
+        "graficaFiltroSecundario"
+    );
+    new Chart(ctxFiltroSecundario, {
+        type:"line",
+        data:{
+            labels:labelsFiltroSecundario7,
+            datasets:[
+            {
+                label:"Filtro Secundario",
+                data:valuesFiltroSecundario7,
+                borderColor:"blue",
+                fill:false,
+                tension:0.3,
+                pointRadius:
+                valuesFiltroSecundario7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? 8
+                    : 2
+                ),
+                pointBackgroundColor:
+                valuesFiltroSecundario7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? "red"
+                    : "blue"
+                )
+            },
+            {
+                label:"Límite Inferior",
+                data:Array(7)
+                    .fill(data.lowerLimit),
+                borderColor:"green",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            },
+            {
+                label:"Límite Superior",
+                data:Array(7)
+                    .fill(data.upperLimit),
+                borderColor:"red",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            }
+            ]
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false
+        }
+    });
+    actualizarAlarmasColector();
+});
+
+fetch("Item4PolvoT3000.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorDiferencial"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " KPa";
+    const labelsDiferencial =
+    data.labels.map(x => x.Fecha);
+    const labelsDiferencial7 =
+    labelsDiferencial.slice(-7);
+    const valuesDiferencial7 =
+    values.slice(-7);
+    if(
+        ultimoValor > data.upperLimit ||
+        ultimoValor < data.lowerLimit
+    ){
+        totalAlarmasColector++;
+        listaAlarmasColector.push(
+            "DIFERENCIAL TOTAL (" +
+            ultimoValor.toFixed(2) +
+            " KPa)"
+        );
+    }
+    const ctxDiferencial =
+    document.getElementById(
+        "graficaDiferencial"
+    );
+    new Chart(ctxDiferencial, {
+        type:"line",
+        data:{
+            labels:labelsDiferencial7,
+            datasets:[
+            {
+                label:"Diferencial",
+                data:valuesDiferencial7,
+                borderColor:"blue",
+                fill:false,
+                tension:0.3,
+                pointRadius:
+                valuesDiferencial7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? 8
+                    : 2
+                ),
+                pointBackgroundColor:
+                valuesDiferencial7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? "red"
+                    : "blue"
+                )
+            },
+            {
+                label:"Límite Inferior",
+                data:Array(7)
+                    .fill(data.lowerLimit),
+                borderColor:"green",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            },
+            {
+                label:"Límite Superior",
+                data:Array(7)
+                    .fill(data.upperLimit),
+                borderColor:"red",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            }
+            ]
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false
+        }
+    });
+    actualizarAlarmasColector();
+});
+
+fetch("Item5PolvoT3000.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorFiltroAire"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " KPa";
+    const labelsFiltroAire =
+    data.labels.map(x => x.Fecha);
+    const labelsFiltroAire7 =
+    labelsFiltroAire.slice(-7);
+    const valuesFiltroAire7 =
+    values.slice(-7);
+    if(
+        ultimoValor > data.upperLimit ||
+        ultimoValor < data.lowerLimit
+    ){
+        totalAlarmasColector++;
+        listaAlarmasColector.push(
+            "FILTRO AIRE (" +
+            ultimoValor.toFixed(2) +
+            " KPa)"
+        );
+    }
+    const ctxFiltroAire =
+    document.getElementById(
+        "graficaFiltroAire"
+    );
+    new Chart(ctxFiltroAire, {
+        type:"line",
+        data:{
+            labels:labelsFiltroAire7,
+            datasets:[
+            {
+                label:"Filtro Aire",
+                data:valuesFiltroAire7,
+                borderColor:"blue",
+                fill:false,
+                tension:0.3,
+                pointRadius:
+                valuesFiltroAire7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? 8
+                    : 2
+                ),
+                pointBackgroundColor:
+                valuesFiltroAire7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? "red"
+                    : "blue"
+                )
+            },
+            {
+                label:"Límite Inferior",
+                data:Array(7)
+                    .fill(data.lowerLimit),
+                borderColor:"green",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            },
+            {
+                label:"Límite Superior",
+                data:Array(7)
+                    .fill(data.upperLimit),
+                borderColor:"red",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            }
+            ]
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false
+        }
+    });
+    actualizarAlarmasColector();
+});	
+
+fetch("Item6PolvoT3000.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valorMotorColector"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " A";
+    const labelsMotor =
+    data.labels.map(x => x.Fecha);
+    const labelsMotor7 =
+    labelsMotor.slice(-7);
+    const valuesMotor7 =
+    values.slice(-7);
+    if(
+        ultimoValor > data.upperLimit ||
+        ultimoValor < data.lowerLimit
+    ){
+        totalAlarmasColector++;
+        listaAlarmasColector.push(
+            "MOTOR PRINCIPAL (" +
+            ultimoValor.toFixed(2) +
+            " A)"
+        );
+    }
+    const ctxMotor =
+    document.getElementById(
+        "graficaMotorColector"
+    );
+    new Chart(ctxMotor, {
+        type:"line",
+        data:{
+            labels:labelsMotor7,
+            datasets:[
+            {
+                label:"Motor Principal",
+                data:valuesMotor7,
+                borderColor:"blue",
+                fill:false,
+                tension:0.3,
+                pointRadius:
+                valuesMotor7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? 8
+                    : 2
+                ),
+                pointBackgroundColor:
+                valuesMotor7.map(v =>
+                    (
+                        v > data.upperLimit ||
+                        v < data.lowerLimit
+                    )
+                    ? "red"
+                    : "blue"
+                )
+            },
+            {
+                label:"Límite Inferior",
+                data:Array(7)
+                    .fill(data.lowerLimit),
+                borderColor:"green",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            },
+            {
+                label:"Límite Superior",
+                data:Array(7)
+                    .fill(data.upperLimit),
+                borderColor:"red",
+                borderDash:[5,5],
+                fill:false,
+                pointRadius:0
+            }
+            ]
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false
+        }
+    });
+    actualizarAlarmasColector();
+});
+	
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
 .then(r => r.json())
@@ -8408,7 +8996,10 @@ document.getElementById("valorLubTemperatura")
     .innerHTML = "42 °C";
 document.getElementById("valorLubAceite")
     .innerHTML = "850 L";
-	
+
+let hayAlarma = false;
+let totalAlarmas = 0;
+let listaAlarmas = [];
 function actualizarModalAlarmas(){
     document.getElementById("contadorAlarmas")
         .innerHTML = totalAlarmas;
@@ -8472,6 +9063,9 @@ if(modalCalentador){
         }
     );
 }
+
+let totalAlarmasPrensa = 0;
+let listaAlarmasPrensa = [];
 function actualizarAlarmasPrensa(){
     document.getElementById(
         "contadorAlarmasPrensa"
@@ -8542,6 +9136,9 @@ if(modalPrensa){
         }
     );
 }
+
+let totalAlarmasGrafito = 0;
+let listaAlarmasGrafito = [];
 function actualizarAlarmasGrafito(){
     document.getElementById(
         "contadorAlarmasGrafito"
@@ -8607,6 +9204,78 @@ if(modalGrafito){
                 "modalAlarmasGrafito"
             ){
                 modalGrafito.style.display =
+                "none";
+            }
+        }
+    );
+}
+let totalAlarmasColector = 0;
+let listaAlarmasColector = [];
+function actualizarAlarmasColector(){
+    document.getElementById(
+        "contadorAlarmasColector"
+    ).innerHTML =
+    totalAlarmasColector;
+    document.getElementById(
+        "tituloAlarmasColectorModal"
+    ).innerHTML =
+    "⚠ Alarmas Colector (" +
+    totalAlarmasColector +
+    ")";
+    document.getElementById(
+        "contenidoAlarmasColectorModal"
+    ).innerHTML =
+    listaAlarmasColector.map(a => {
+        return `
+            <div style="
+                padding:10px;
+                margin:8px 0;
+                background:#fafafa;
+                border-left:6px solid #0078D4;
+                border-radius:6px;
+                font-weight:bold;
+            ">
+                ⚠ ${a}
+            </div>
+        `;
+    }).join("");
+}
+document.getElementById(
+    "contadorAlarmasColector"
+)
+.addEventListener("click", function(){
+    actualizarAlarmasColector();
+    document.getElementById(
+        "modalAlarmasColector"
+    ).style.display = "block";
+});
+const cerrarModalColector =
+document.getElementById(
+    "cerrarModalColector"
+);
+if(cerrarModalColector){
+    cerrarModalColector.addEventListener(
+        "click",
+        function(){
+            document.getElementById(
+                "modalAlarmasColector"
+            ).style.display = "none";
+        }
+    );
+}
+const modalColector =
+document.getElementById(
+    "modalAlarmasColector"
+);
+if(modalColector){
+    modalColector.addEventListener(
+        "click",
+        function(event){
+            if(
+                event.target.id ===
+                "modalAlarmasColector"
+            ){
+                modalColector.style.display =
                 "none";
             }
         }
