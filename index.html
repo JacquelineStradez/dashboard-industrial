@@ -8066,20 +8066,6 @@ if(modalPrensa){
         }
     );
 }
-const cerrarModalPrensa =
-document.getElementById(
-    "cerrarModalPrensa"
-);
-if(cerrarModalPrensa){
-    cerrarModalPrensa.addEventListener(
-        "click",
-        function(){
-            document.getElementById(
-                "modalAlarmasPrensa"
-            ).style.display = "none";
-        }
-    );
-}
 if(totalAlarmas > 0){
     document.getElementById("tarjetaAlarmas")
         .style.borderLeft = "6px solid #0078D4";
