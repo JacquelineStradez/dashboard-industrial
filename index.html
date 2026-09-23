@@ -7982,14 +7982,18 @@ function actualizarAlarmasPrensa(){
         `;
     }).join("");
 }
-document.getElementById("contadorAlarmasPrensa")
-.addEventListener("click", function(){
-    actualizarAlarmasPrensa();
-    document.getElementById(
-        "modalAlarmasPrensa"
-    ).style.display = "block";
-
-});
+const cerrarModalPrensa =
+document.getElementById(
+    "cerrarModalPrensa"
+);
+if(cerrarModalPrensa){
+    cerrarModalPrensa
+    .addEventListener("click", function(){
+        document.getElementById(
+            "modalAlarmasPrensa"
+        ).style.display = "none";
+    });
+}
 function actualizarModalAlarmas(){
 	document.getElementById("contadorAlarmas")
     	.innerHTML = totalAlarmas;
