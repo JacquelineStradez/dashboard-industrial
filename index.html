@@ -8044,16 +8044,24 @@ if(cerrarModal){
             .style.display = "none";
     });
 }
+const modalPrensa =
 document.getElementById(
     "modalAlarmasPrensa"
-)
-.addEventListener("click", function(event){
-    if(event.target.id === "modalAlarmasPrensa"){
-        document.getElementById(
-            "modalAlarmasPrensa"
-        ).style.display = "none";
-    }
-});
+);
+if(modalPrensa){
+    modalPrensa.addEventListener(
+        "click",
+        function(event){
+            if(
+                event.target.id ===
+                "modalAlarmasPrensa"
+            ){
+                modalPrensa.style.display =
+                "none";
+            }
+        }
+    );
+}
 document.getElementById(
     "cerrarModalPrensa"
 )
