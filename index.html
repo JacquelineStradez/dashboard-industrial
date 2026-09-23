@@ -3436,6 +3436,12 @@ document.getElementById("btnColector")
 	document.getElementById("panelAlarmas")
 	    .style.display = "none";
 });
+document.getElementById("btnBombasGrafito")
+.addEventListener("click", function(){
+    ocultarVistasGrafito();
+    document.getElementById("vistaBombasGrafito")
+        .style.display = "block";
+});
 document.getElementById("btnPreFiltro")
 .addEventListener("click", function(){
     ocultarVistasColector();
