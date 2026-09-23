@@ -7913,6 +7913,35 @@ Promise.all([
         }
     );
 });
+Promise.all([
+    fetch("Item3GrafitoT3000.json").then(r => r.json()),
+    fetch("Item4GrafitoT3000.json").then(r => r.json())
+])
+.then(([bombaDerecha, bombaIzquierda]) => {
+    const labels =
+    bombaDerecha.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesDer =
+    bombaDerecha.values.map(x =>
+        Number(x.Value)
+    );
+    const valuesIzq =
+    bombaIzquierda.values.map(x =>
+        Number(x.Value)
+    );
+    const ultimoDer =
+    valuesDer[valuesDer.length - 1];
+    const ultimoIzq =
+    valuesIzq[valuesIzq.length - 1];
+    document.getElementById("valorBombaDerecha")
+        .innerHTML =
+        ultimoDer.toFixed(2) + " MPa";
+    document.getElementById("valorBombaIzquierda")
+        .innerHTML =
+        ultimoIzq.toFixed(2) + " MPa";
+});
+	
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
 .then(r => r.json())
