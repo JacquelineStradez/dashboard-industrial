@@ -8103,9 +8103,9 @@ Promise.all([
     fetch("Item4GrafitoT3000.json").then(r => r.json())
 ])
 .then(([bombaDerecha, bombaIzquierda]) => {
-    const labels =
+    const labelsGrafito =
     bombaDerecha.labels.map(x => x.Fecha);
-    const labels7 =
+    const labelsGrafito7 =
     labels.slice(-7);
     const valuesDer =
     bombaDerecha.values.map(x =>
@@ -8167,7 +8167,7 @@ Promise.all([
     new Chart(ctx,{
         type:"line",
         data:{
-            labels:labels7,
+            labels:labelsGrafito7,
             datasets:[
             {
                 label:"Bomba Derecha",
