@@ -3410,6 +3410,15 @@ document.getElementById("btnGrafito")
         .style.display = "none";
     document.getElementById("panelAlarmas")
         .style.display = "grid";
+	document.getElementById(
+	    "contadorAlarmasGrafito"
+	)
+	.addEventListener("click", function(){
+	    actualizarAlarmasGrafito();
+	    document.getElementById(
+	        "modalAlarmasGrafito"
+	    ).style.display = "block";
+	});
 });
 document.getElementById("btnColector")
 .addEventListener("click", function(){
@@ -8131,22 +8140,17 @@ Promise.all([
         ultimoIzq.toFixed(2) + " MPa";
 	    const labels =
     bombaDerecha.labels.map(x => x.Fecha);
-
     const labels7 =
     labels.slice(-7);
-
     const valuesDer7 =
     valuesDer.slice(-7);
-
     const valuesIzq7 =
     valuesIzq.slice(-7);
-
     if(
         ultimoDer > bombaDerecha.upperLimit ||
         ultimoDer < bombaDerecha.lowerLimit
     ){
         totalAlarmasGrafito++;
-
         listaAlarmasGrafito.push(
             "BOMBA DERECHA (" +
             ultimoDer.toFixed(2) +
@@ -8293,6 +8297,36 @@ document.getElementById("valorLubTemperatura")
 document.getElementById("valorLubAceite")
     .innerHTML = "850 L";
 
+function actualizarAlarmasGrafito(){
+    document.getElementById(
+        "contadorAlarmasGrafito"
+    ).innerHTML =
+    totalAlarmasGrafito;
+	document.getElementById(
+	    "tituloAlarmasGrafitoModal"
+	).innerHTML =
+	"⚠ Alarmas Grafito (" +
+	totalAlarmasGrafito +
+	")";
+    document.getElementById(
+        "contenidoAlarmasGrafitoModal"
+    ).innerHTML =
+    listaAlarmasGrafito.map(a => {
+        return `
+            <div style="
+                padding:10px;
+                margin:8px 0;
+                background:#fafafa;
+                border-left:6px solid #0078D4;
+                border-radius:6px;
+                font-weight:bold;
+            ">
+                ⚠ ${a}
+            </div>
+        `;
+    }).join("");
+}
+	
 function actualizarAlarmasPrensa(){
     document.getElementById(
         "contadorAlarmasPrensa"
@@ -8322,6 +8356,7 @@ function actualizarAlarmasPrensa(){
         `;
     }).join("");
 }
+
 const cerrarModalPrensa =
 document.getElementById(
     "cerrarModalPrensa"
@@ -8333,6 +8368,20 @@ if(cerrarModalPrensa){
             "modalAlarmasPrensa"
         ).style.display = "none";
     });
+}
+const cerrarModalGrafito =
+document.getElementById(
+    "cerrarModalGrafito"
+);
+if(cerrarModalGrafito){
+    cerrarModalGrafito.addEventListener(
+        "click",
+        function(){
+            document.getElementById(
+                "modalAlarmasGrafito"
+            ).style.display = "none";
+        }
+    );
 }
 function actualizarModalAlarmas(){
 	document.getElementById("contadorAlarmas")
@@ -8401,6 +8450,24 @@ if(modalPrensa){
                 "modalAlarmasPrensa"
             ){
                 modalPrensa.style.display =
+                "none";
+            }
+        }
+    );
+}
+const modalGrafito =
+document.getElementById(
+    "modalAlarmasGrafito"
+);
+if(modalGrafito){
+    modalGrafito.addEventListener(
+        "click",
+        function(event){
+            if(
+                event.target.id ===
+                "modalAlarmasGrafito"
+            ){
+                modalGrafito.style.display =
                 "none";
             }
         }
@@ -8496,6 +8563,44 @@ if(totalAlarmas > 0){
 		    ⚠ Alarmas Prensa
 		</h2>
         <div id="contenidoAlarmasPrensaModal">
+        </div>
+    </div>
+</div>
+<div id="modalAlarmasGrafito"
+     style="
+        display:none;
+        position:fixed;
+        z-index:10000;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,.4);
+     ">
+    <div style="
+        background:white;
+        width:400px;
+        margin:80px auto;
+        padding:20px;
+        border-radius:10px;
+        border-top:5px solid #0078D4;
+    ">
+        <span id="cerrarModalGrafito"
+              style="
+                float:left;
+                cursor:pointer;
+                font-size:20px;
+                font-weight:bold;
+                color:#0078D4;
+                padding:4px 10px;
+                border-radius:6px;
+              ">
+            ×
+        </span>
+        <h2 id="tituloAlarmasGrafitoModal">
+            ⚠ Alarmas Grafito
+        </h2>
+        <div id="contenidoAlarmasGrafitoModal">
         </div>
     </div>
 </div>
