@@ -3347,6 +3347,44 @@ canvas{
         </div>
     </div>
 </div>
+<div id="modalAlarmasCorte"
+     style="
+        display:none;
+        position:fixed;
+        z-index:10000;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,.4);
+     ">
+    <div style="
+        background:white;
+        width:400px;
+        margin:80px auto;
+        padding:20px;
+        border-radius:10px;
+        border-top:5px solid #0078D4;
+    ">
+        <span id="cerrarModalCorte"
+              style="
+                float:left;
+                cursor:pointer;
+                font-size:20px;
+                font-weight:bold;
+                color:#0078D4;
+                padding:4px 10px;
+                border-radius:6px;
+              ">
+            ×
+        </span>
+        <h2 id="tituloAlarmasCorteModal">
+            ⚠ Alarmas Corte
+        </h2>
+        <div id="contenidoAlarmasCorteModal">
+        </div>
+    </div>
+</div>	
 <script>
 document.getElementById("btnT3000")
 .addEventListener("click", function(){
