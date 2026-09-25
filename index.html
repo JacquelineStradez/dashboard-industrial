@@ -11797,38 +11797,61 @@ fetch("Item26CalentadorT1200.json")
 //  Tarjetas de alarmas codigos de listas
 // =====================================
 function actualizarModalAlarmas(){
-    document.getElementById("contadorAlarmas")
-        .innerHTML = totalAlarmas;
+    const contador =
+    document.getElementById(
+        "contadorAlarmas"
+    );
+    if(contador){
+        contador.innerHTML =
+        totalAlarmas;
+    }
+    const titulo =
     document.getElementById(
         "tituloAlarmas"
-    ).innerHTML =
-    "⚠ Alarmas Calentador (" +
-    totalAlarmas +
-    ")";
+    );
+    if(titulo){
+        titulo.innerHTML =
+        "⚠ Alarmas Calentador (" +
+        totalAlarmas +
+        ")";
+    }
+    const contenido =
     document.getElementById(
         "contenidoModalAlarmas"
-    ).innerHTML =
-    listaAlarmas.map(a => {
-        return `
-            <div style="
-                padding:10px;
-                margin:8px 0;
-                background:#fafafa;
-                border-left:6px solid #0078D4;
-                border-radius:6px;
-                font-weight:bold;
-            ">
-                ⚠ ${a}
-            </div>
-        `;
-    }).join("");
+    );
+    if(contenido){
+        contenido.innerHTML =
+        listaAlarmas.map(a => {
+            return `
+                <div style="
+                    padding:10px;
+                    margin:8px 0;
+                    background:#fafafa;
+                    border-left:6px solid #0078D4;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+                    ⚠ ${a}
+                </div>
+            `;
+        }).join("");
+    }
 }
-document.getElementById("contadorAlarmas")
-.addEventListener("click", function(){
-    actualizarModalAlarmas();
-    document.getElementById("modalAlarmas")
-        .style.display = "block";
-});
+const contadorCalentador =
+document.getElementById(
+    "contadorAlarmas"
+);
+if(contadorCalentador){
+    contadorCalentador.addEventListener(
+        "click",
+        function(){
+            actualizarModalAlarmas();
+            document.getElementById(
+                "modalAlarmas"
+            ).style.display = "block";
+        }
+    );
+}
 const cerrarModal =
 document.getElementById("cerrarModal");
 if(cerrarModal){
