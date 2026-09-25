@@ -4399,9 +4399,25 @@ document.getElementById("btnTemperaturas")
 });
 
 // =====================================
+//  VARIABLES
+// =====================================
+let hayAlarma = false;
+let totalAlarmas = 0;
+let listaAlarmas = [];
+let totalAlarmasPrensa = 0;
+let listaAlarmasPrensa = [];
+let totalAlarmasGrafito = 0;
+let listaAlarmasGrafito = [];
+let totalAlarmasColector = 0;
+let listaAlarmasColector = [];
+let totalAlarmasCorte = 0;
+let listaAlarmasCorte = [];
+let totalAlarmas1200 = 0;
+let listaAlarmas1200 = [];
+	
+// =====================================
 //  Cisterna
 // =====================================
-	
 let dataCisterna;
 fetch("Item1CalentadorT3000.json")
 .then(r => r.json())
@@ -4448,7 +4464,6 @@ document.getElementById("valorLubAceite")
 // =====================================
 //  T3000
 // =====================================
-	
 let dataA;
 let dataB;
 let dataC;
@@ -9139,7 +9154,6 @@ fetch("Item6PolvoT3000.json")
 // =====================================
 //  Corte
 // =====================================
-	
 fetch("Item1Corte.json")
 .then(r => r.json())
 .then(data => {
@@ -11782,10 +11796,6 @@ fetch("Item26CalentadorT1200.json")
 // =====================================
 //  Tarjetas de alarmas codigos de listas
 // =====================================
-	
-let hayAlarma = false;
-let totalAlarmas = 0;
-let listaAlarmas = [];
 function actualizarModalAlarmas(){
     document.getElementById("contadorAlarmas")
         .innerHTML = totalAlarmas;
@@ -11850,8 +11860,6 @@ if(modalCalentador){
     );
 }
 
-let totalAlarmasPrensa = 0;
-let listaAlarmasPrensa = [];
 function actualizarAlarmasPrensa(){
     const contador =
     document.getElementById(
@@ -11935,8 +11943,6 @@ if(modalPrensa){
     );
 }
 
-let totalAlarmasGrafito = 0;
-let listaAlarmasGrafito = [];
 function actualizarAlarmasGrafito(){
     const contador =
     document.getElementById(
@@ -12019,9 +12025,7 @@ if(modalGrafito){
         }
     );
 }
-	
-let totalAlarmasColector = 0;
-let listaAlarmasColector = [];
+
 function actualizarAlarmasColector(){
     const contador =
     document.getElementById(
@@ -12105,8 +12109,6 @@ if(modalColector){
     );
 }
 
-let totalAlarmasCorte = 0;
-let listaAlarmasCorte = [];
 function actualizarAlarmasCorte(){
     const contadorCorte =
     document.getElementById(
@@ -12193,8 +12195,6 @@ if(modalCorte){
     );
 }
 
-let totalAlarmas1200 = 0;
-let listaAlarmas1200 = [];
 function actualizarAlarmas1200(){
     document.getElementById(
         "contadorAlarmas1200"
