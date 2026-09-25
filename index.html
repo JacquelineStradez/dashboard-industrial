@@ -590,17 +590,22 @@ canvas{
          </div>
          <div id="panelAlarmas">
              <div class="tarjeta"
-                  id="tarjetaAlarmas"
-                  style="display:none;">
-                 <h3>Alarmas Calentador</h3>
-                 <h2 id="contadorAlarmas"
-                     style="font-size:40px;cursor:pointer;">
-                     0
-                 </h2>
-                 <div id="detalleAlarmas"
-                      style="display:none;font-size:12px;">
-                 </div>
-             </div>
+			     id="tarjetaAlarmas1200">
+			     <h3>Alarmas Calentador</h3>
+			     <h2 id="contadorAlarmas1200"
+			        style="
+			            font-size:40px;
+			            cursor:pointer;
+			        ">
+			        0
+			     </h2>
+			     <div id="detalleAlarmas1200"
+			         style="
+			            display:none;
+			            font-size:12px;
+			         ">
+			     </div>
+			 </div>
              <div class="tarjeta"
 			     id="tarjetaAlarmasPrensa"
 			     style="display:none;">
@@ -3384,7 +3389,45 @@ canvas{
         <div id="contenidoAlarmasCorteModal">
         </div>
     </div>
-</div>	
+</div>
+<div id="modalAlarmas1200"
+     style="
+        display:none;
+        position:fixed;
+        z-index:10000;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,.4);
+     ">
+    <div style="
+        background:white;
+        width:400px;
+        margin:80px auto;
+        padding:20px;
+        border-radius:10px;
+        border-top:5px solid #0078D4;
+    ">
+        <span id="cerrarModal1200"
+              style="
+                float:left;
+                cursor:pointer;
+                font-size:20px;
+                font-weight:bold;
+                color:#0078D4;
+                padding:4px 10px;
+                border-radius:6px;
+              ">
+            ×
+        </span>
+        <h2 id="tituloAlarmas1200Modal">
+            ⚠ Alarmas Calentador T1200
+        </h2>
+        <div id="contenidoAlarmas1200Modal">
+        </div>
+    </div>
+</div>
 <script>
 document.getElementById("btnT3000")
 .addEventListener("click", function(){
@@ -10188,6 +10231,1553 @@ fetch("Item17Corte.json")
     );
 	actualizarAlarmasCorte();
 });
+
+// =====================================
+//  T1200
+// =====================================
+fetch("Item1CalentadorT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Rodillo"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " kg/cm²";
+    const labelsRodillo =
+    data.labels.map(x => x.Fecha);
+    const labelsRodillo7 =
+    labelsRodillo.slice(-7);
+    const valuesRodillo7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 0.2 ||
+        ultimoValor > 0.5
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "RODILLO (" +
+            ultimoValor.toFixed(2) +
+            " kg/cm²)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Rodillo"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsRodillo7,
+                datasets:[
+                {
+                    label:"Presión Rodillo",
+                    data:valuesRodillo7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesRodillo7.map(v =>
+                        (
+                            v < 0.2 ||
+                            v > 0.5
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesRodillo7.map(v =>
+                        (
+                            v < 0.2 ||
+                            v > 0.5
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(0.2),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(0.5),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+Promise.all([
+    fetch("Item2CalentadorT1200.json").then(r => r.json()),
+    fetch("Item3CalentadorT1200.json").then(r => r.json()),
+    fetch("Item4CalentadorT1200.json").then(r => r.json()),
+    fetch("Item5CalentadorT1200.json").then(r => r.json())
+])
+.then(([coil1,coil2,coil3,coil4]) => {
+    const labels =
+    coil1.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesCoil1 =
+    coil1.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesCoil2 =
+    coil2.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesCoil3 =
+    coil3.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesCoil4 =
+    coil4.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoCoil1 =
+    valuesCoil1[valuesCoil1.length - 1];
+    const ultimoCoil2 =
+    valuesCoil2[valuesCoil2.length - 1];
+    const ultimoCoil3 =
+    valuesCoil3[valuesCoil3.length - 1];
+    const ultimoCoil4 =
+    valuesCoil4[valuesCoil4.length - 1];
+    document.getElementById(
+        "valor1200Coil1"
+    ).innerHTML =
+    ultimoCoil1.toFixed(2) +
+    " kg/cm²";
+    document.getElementById(
+        "valor1200Coil2"
+    ).innerHTML =
+    ultimoCoil2.toFixed(2) +
+    " kg/cm²";
+    document.getElementById(
+        "valor1200Coil3"
+    ).innerHTML =
+    ultimoCoil3.toFixed(2) +
+    " kg/cm²";
+    document.getElementById(
+        "valor1200Coil4"
+    ).innerHTML =
+    ultimoCoil4.toFixed(2) +
+    " kg/cm²";
+    if(
+        ultimoCoil1 < 3 ||
+        ultimoCoil1 > 5
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "COIL 1 (" +
+            ultimoCoil1.toFixed(2) +
+            " kg/cm²)"
+        );
+    }
+    if(
+        ultimoCoil2 < 3 ||
+        ultimoCoil2 > 5
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "COIL 2 (" +
+            ultimoCoil2.toFixed(2) +
+            " kg/cm²)"
+        );
+    }
+    if(
+        ultimoCoil3 < 3 ||
+        ultimoCoil3 > 5
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "COIL 3 (" +
+            ultimoCoil3.toFixed(2) +
+            " kg/cm²)"
+        );
+    }
+    if(
+        ultimoCoil4 < 3 ||
+        ultimoCoil4 > 5
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "COIL 4 (" +
+            ultimoCoil4.toFixed(2) +
+            " kg/cm²)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Manometros"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Coil 1",
+                    data:valuesCoil1.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Coil 2",
+                    data:valuesCoil2.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Coil 3",
+                    data:valuesCoil3.slice(-7),
+                    borderColor:"orange",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Coil 4",
+                    data:valuesCoil4.slice(-7),
+                    borderColor:"purple",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7).fill(3),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7).fill(5),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+Promise.all([
+    fetch("Item6CalentadorT1200.json").then(r => r.json()),
+    fetch("Item7CalentadorT1200.json").then(r => r.json()),
+    fetch("Item8CalentadorT1200.json").then(r => r.json()),
+    fetch("Item9CalentadorT1200.json").then(r => r.json())
+])
+.then(([coil1,coil2,coil3,coil4]) => {
+    const labels =
+    coil1.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesCoil1 =
+    coil1.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesCoil2 =
+    coil2.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesCoil3 =
+    coil3.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesCoil4 =
+    coil4.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoCoil1 =
+    valuesCoil1[valuesCoil1.length - 1];
+    const ultimoCoil2 =
+    valuesCoil2[valuesCoil2.length - 1];
+    const ultimoCoil3 =
+    valuesCoil3[valuesCoil3.length - 1];
+    const ultimoCoil4 =
+    valuesCoil4[valuesCoil4.length - 1];
+    document.getElementById(
+        "valor1200TempCoil1"
+    ).innerHTML =
+    ultimoCoil1.toFixed(1) +
+    " °C";
+    document.getElementById(
+        "valor1200TempCoil2"
+    ).innerHTML =
+    ultimoCoil2.toFixed(1) +
+    " °C";
+    document.getElementById(
+        "valor1200TempCoil3"
+    ).innerHTML =
+    ultimoCoil3.toFixed(1) +
+    " °C";
+    document.getElementById(
+        "valor1200TempCoil4"
+    ).innerHTML =
+    ultimoCoil4.toFixed(1) +
+    " °C";
+    if(ultimoCoil1 > 30){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "TEMP COIL 1 (" +
+            ultimoCoil1.toFixed(1) +
+            " °C)"
+        );
+    }
+    if(ultimoCoil2 > 30){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "TEMP COIL 2 (" +
+            ultimoCoil2.toFixed(1) +
+            " °C)"
+        );
+    }
+    if(ultimoCoil3 > 30){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "TEMP COIL 3 (" +
+            ultimoCoil3.toFixed(1) +
+            " °C)"
+        );
+    }
+    if(ultimoCoil4 > 30){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "TEMP COIL 4 (" +
+            ultimoCoil4.toFixed(1) +
+            " °C)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Termometros"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Coil 1",
+                    data:valuesCoil1.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Coil 2",
+                    data:valuesCoil2.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Coil 3",
+                    data:valuesCoil3.slice(-7),
+                    borderColor:"orange",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Coil 4",
+                    data:valuesCoil4.slice(-7),
+                    borderColor:"purple",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(30),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+Promise.all([
+    fetch("Item10CalentadorT1200.json").then(r => r.json()),
+    fetch("Item11CalentadorT1200.json").then(r => r.json())
+])
+.then(([inverter1,inverter2]) => {
+    const labels =
+    inverter1.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesInverter1 =
+    inverter1.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesInverter2 =
+    inverter2.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoInverter1 =
+    valuesInverter1[
+        valuesInverter1.length - 1
+    ];
+    const ultimoInverter2 =
+    valuesInverter2[
+        valuesInverter2.length - 1
+    ];
+    document.getElementById(
+        "valor1200Inverter1"
+    ).innerHTML =
+    ultimoInverter1.toFixed(2) +
+    " kg/cm²";
+    document.getElementById(
+        "valor1200Inverter2"
+    ).innerHTML =
+    ultimoInverter2.toFixed(2) +
+    " kg/cm²";
+    if(
+        ultimoInverter1 < 3 ||
+        ultimoInverter1 > 5
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "INVERTER 1 (" +
+            ultimoInverter1.toFixed(2) +
+            " kg/cm²)"
+        );
+    }
+    if(
+        ultimoInverter2 < 3 ||
+        ultimoInverter2 > 5
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "INVERTER 2 (" +
+            ultimoInverter2.toFixed(2) +
+            " kg/cm²)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Inverters"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Inverter 1",
+                    data:
+                    valuesInverter1.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Inverter 2",
+                    data:
+                    valuesInverter2.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(3),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(5),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+fetch("Item12CalentadorT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200TempBobina"
+    ).innerHTML =
+    ultimoValor.toFixed(1) +
+    " °C";
+    const labelsTemp =
+    data.labels.map(x => x.Fecha);
+    const labelsTemp7 =
+    labelsTemp.slice(-7);
+    const valuesTemp7 =
+    values.slice(-7);
+    if(ultimoValor > 30){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "TEMP BOBINA (" +
+            ultimoValor.toFixed(1) +
+            " °C)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200TempBobina"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsTemp7,
+                datasets:[
+                {
+                    label:"Temperatura Bobina",
+                    data:valuesTemp7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesTemp7.map(v =>
+                        v > 30 ? 8 : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesTemp7.map(v =>
+                        v > 30 ? "red" : "blue"
+                    )
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7)
+                        .fill(30),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+fetch("Item14CalentadorT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Flujo"
+    ).innerHTML =
+    ultimoValor.toFixed(0) +
+    " L/min";
+    const labelsFlujo =
+    data.labels.map(x => x.Fecha);
+    const labelsFlujo7 =
+    labelsFlujo.slice(-7);
+    const valuesFlujo7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 480 ||
+        ultimoValor > 550
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "INTERCAMBIADOR (" +
+            ultimoValor.toFixed(0) +
+            " L/min)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Intercambiador"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsFlujo7,
+                datasets:[
+                {
+                    label:"Flujo",
+                    data:valuesFlujo7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesFlujo7.map(v =>
+                        (
+                            v < 480 ||
+                            v > 550
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesFlujo7.map(v =>
+                        (
+                            v < 480 ||
+                            v > 550
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7).fill(480),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7).fill(550),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+fetch("Item16CalentadorT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200PresionAguaBobina"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " kg/cm²";
+    const labelsPresion =
+    data.labels.map(x => x.Fecha);
+    const labelsPresion7 =
+    labelsPresion.slice(-7);
+    const valuesPresion7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 6.0 ||
+        ultimoValor > 8.0
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "AGUA BOBINA (" +
+            ultimoValor.toFixed(2) +
+            " kg/cm²)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200PresionAguaBobina"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsPresion7,
+                datasets:[
+                {
+                    label:"Agua Bobina",
+                    data:valuesPresion7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesPresion7.map(v =>
+                        (
+                            v < 6.0 ||
+                            v > 8.0
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesPresion7.map(v =>
+                        (
+                            v < 6.0 ||
+                            v > 8.0
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(6.0),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(8.0),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+Promise.all([
+    fetch("Item17CalentadorT1200.json").then(r => r.json()),
+    fetch("Item18CalentadorT1200.json").then(r => r.json()),
+    fetch("Item19CalentadorT1200.json").then(r => r.json())
+])
+.then(([gldA,gldB,gldC]) => {
+    const labels =
+    gldA.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesGLDA =
+    gldA.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesGLDB =
+    gldB.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesGLDC =
+    gldC.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoGLDA =
+    valuesGLDA[valuesGLDA.length - 1];
+    const ultimoGLDB =
+    valuesGLDB[valuesGLDB.length - 1];
+    const ultimoGLDC =
+    valuesGLDC[valuesGLDC.length - 1];
+    document.getElementById(
+        "valor1200GLDA"
+    ).innerHTML =
+    ultimoGLDA.toFixed(2);
+    document.getElementById(
+        "valor1200GLDB"
+    ).innerHTML =
+    ultimoGLDB.toFixed(2);
+    document.getElementById(
+        "valor1200GLDC"
+    ).innerHTML =
+    ultimoGLDC.toFixed(2);
+    if(ultimoGLDA > 9){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "GLD A (" +
+            ultimoGLDA.toFixed(2) +
+            ")"
+        );
+    }
+    if(ultimoGLDB > 9){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "GLD B (" +
+            ultimoGLDB.toFixed(2) +
+            ")"
+        );
+    }
+    if(ultimoGLDC > 9){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "GLD C (" +
+            ultimoGLDC.toFixed(2) +
+            ")"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200GLD"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"GLD A",
+                    data:valuesGLDA.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"GLD B",
+                    data:valuesGLDB.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"GLD C",
+                    data:valuesGLDC.slice(-7),
+                    borderColor:"orange",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(9),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+fetch("Item20CalentadorT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Conductividad"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " μs/cm";
+    const labelsConductividad =
+    data.labels.map(x => x.Fecha);
+    const labelsConductividad7 =
+    labelsConductividad.slice(-7);
+    const valuesConductividad7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 0 ||
+        ultimoValor > 20
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "CONDUCTIVIDAD (" +
+            ultimoValor.toFixed(2) +
+            " μs/cm)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Conductividad"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsConductividad7,
+                datasets:[
+                {
+                    label:"Conductividad",
+                    data:valuesConductividad7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesConductividad7.map(v =>
+                        (
+                            v < 0 ||
+                            v > 20
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesConductividad7.map(v =>
+                        (
+                            v < 0 ||
+                            v > 20
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7).fill(0),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7).fill(20),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+fetch("Item21CalentadorT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200PresionInterna"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " kg/cm²";
+    const labelsPresion =
+    data.labels.map(x => x.Fecha);
+    const labelsPresion7 =
+    labelsPresion.slice(-7);
+    const valuesPresion7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 4.0 ||
+        ultimoValor > 5.2
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "PRESIÓN INTERNA (" +
+            ultimoValor.toFixed(2) +
+            " kg/cm²)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200PresionInterna"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsPresion7,
+                datasets:[
+                {
+                    label:"Presión Interna",
+                    data:valuesPresion7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesPresion7.map(v =>
+                        (
+                            v < 4.0 ||
+                            v > 5.2
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesPresion7.map(v =>
+                        (
+                            v < 4.0 ||
+                            v > 5.2
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(4.0),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(5.2),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+fetch("Item22CalentadorT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200PresionBobina"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " kg/cm²";
+    const labelsPresion =
+    data.labels.map(x => x.Fecha);
+    const labelsPresion7 =
+    labelsPresion.slice(-7);
+    const valuesPresion7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 3.3 ||
+        ultimoValor > 5.2
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "PRESIÓN BOBINA (" +
+            ultimoValor.toFixed(2) +
+            " kg/cm²)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200PresionBobina"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsPresion7,
+                datasets:[
+                {
+                    label:"Presión Bobina",
+                    data:valuesPresion7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesPresion7.map(v =>
+                        (
+                            v < 3.3 ||
+                            v > 5.2
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesPresion7.map(v =>
+                        (
+                            v < 3.3 ||
+                            v > 5.2
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(3.3),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(5.2),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+fetch("Item23CalentadorT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200PresionAire"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " kg/cm²";
+    const labelsPresion =
+    data.labels.map(x => x.Fecha);
+    const labelsPresion7 =
+    labelsPresion.slice(-7);
+    const valuesPresion7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 5.0 ||
+        ultimoValor > 6.5
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "PRESIÓN AIRE (" +
+            ultimoValor.toFixed(2) +
+            " kg/cm²)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200PresionAire"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsPresion7,
+                datasets:[
+                {
+                    label:"Presión Aire",
+                    data:valuesPresion7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesPresion7.map(v =>
+                        (
+                            v < 5.0 ||
+                            v > 6.5
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesPresion7.map(v =>
+                        (
+                            v < 5.0 ||
+                            v > 6.5
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(5.0),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(6.5),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+Promise.all([
+    fetch("Item24CalentadorT1200.json").then(r => r.json()),
+    fetch("Item25CalentadorT1200.json").then(r => r.json())
+])
+.then(([inversor,bobina]) => {
+    const labels =
+    inversor.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesInversor =
+    inversor.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesBobina =
+    bobina.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoInversor =
+    valuesInversor[
+        valuesInversor.length - 1
+    ];
+    const ultimoBobina =
+    valuesBobina[
+        valuesBobina.length - 1
+    ];
+    document.getElementById(
+        "valor1200PanelInversor"
+    ).innerHTML =
+    ultimoInversor.toFixed(1) +
+    " °C";
+    document.getElementById(
+        "valor1200PanelBobina"
+    ).innerHTML =
+    ultimoBobina.toFixed(1) +
+    " °C";
+    if(ultimoInversor > 30){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "PANEL INVERSOR (" +
+            ultimoInversor.toFixed(1) +
+            " °C)"
+        );
+    }
+    if(ultimoBobina > 30){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "PANEL BOBINA (" +
+            ultimoBobina.toFixed(1) +
+            " °C)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Panel"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Panel Inversor",
+                    data:
+                    valuesInversor.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Panel Bobina",
+                    data:
+                    valuesBobina.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7)
+                        .fill(30),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+fetch("Item26CalentadorT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200UnidadHidraulica"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labelsHidraulica =
+    data.labels.map(x => x.Fecha);
+    const labelsHidraulica7 =
+    labelsHidraulica.slice(-7);
+    const valuesHidraulica7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 0.25 ||
+        ultimoValor > 0.35
+    ){
+        totalAlarmas1200++;
+        listaAlarmas1200.push(
+            "UNIDAD HIDRÁULICA (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200UnidadHidraulica"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsHidraulica7,
+                datasets:[
+                {
+                    label:"Presión Entrada Filtro",
+                    data:valuesHidraulica7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesHidraulica7.map(v =>
+                        (
+                            v < 0.25 ||
+                            v > 0.35
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesHidraulica7.map(v =>
+                        (
+                            v < 0.25 ||
+                            v > 0.35
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(0.25),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(0.35),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmas1200();
+});
+
+
 	
 // =====================================
 //  Tarjetas de alarmas codigos de listas
@@ -10564,7 +12154,113 @@ if(modalCorte){
             }
         }
     );
-}	
+}
+
+let totalAlarmas1200 = 0;
+let listaAlarmas1200 = [];
+function actualizarAlarmas1200(){
+    document.getElementById(
+        "contadorAlarmas1200"
+    ).innerHTML =
+    totalAlarmas1200;
+    const detalle =
+    document.getElementById(
+        "detalleAlarmas1200"
+    );
+    if(detalle){
+        detalle.innerHTML =
+        listaAlarmas1200.map(a => {
+            return `
+                <div style="
+                    margin:4px 0;
+                    padding:4px;
+                    border-left:4px solid red;
+                ">
+                    ${a}
+                </div>
+            `;
+        }).join("");
+    }
+    const titulo =
+    document.getElementById(
+        "tituloAlarmas1200Modal"
+    );
+    if(titulo){
+        titulo.innerHTML =
+        "⚠ Alarmas Calentador T1200 (" +
+        totalAlarmas1200 +
+        ")";
+    }
+    const contenido =
+    document.getElementById(
+        "contenidoAlarmas1200Modal"
+    );
+    if(contenido){
+        contenido.innerHTML =
+        listaAlarmas1200.map(a => {
+            return `
+                <div style="
+                    padding:10px;
+                    margin:8px 0;
+                    background:#fafafa;
+                    border-left:6px solid #0078D4;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+                    ⚠ ${a}
+                </div>
+            `;
+        }).join("");
+    }
+}
+document.getElementById(
+    "contadorAlarmas1200"
+)
+.addEventListener(
+    "click",
+    function(){
+        actualizarAlarmas1200();
+        document.getElementById(
+            "modalAlarmas1200"
+        ).style.display =
+        "block";
+    }
+);
+const cerrarModal1200 =
+document.getElementById(
+    "cerrarModal1200"
+);
+if(cerrarModal1200){
+    cerrarModal1200.addEventListener(
+        "click",
+        function(){
+            document.getElementById(
+                "modalAlarmas1200"
+            ).style.display =
+            "none";
+        }
+    );
+}
+const modal1200 =
+document.getElementById(
+    "modalAlarmas1200"
+);
+if(modal1200){
+    modal1200.addEventListener(
+        "click",
+        function(event){
+            if(
+                event.target.id ===
+                "modalAlarmas1200"
+            ){
+                modal1200.style.display =
+                "none";
+            }
+        }
+    );
+}
+	
+
 </script>
 </div>
 </body>
