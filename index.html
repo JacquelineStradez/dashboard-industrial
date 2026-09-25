@@ -3429,6 +3429,7 @@ canvas{
     </div>
 </div>
 <script>
+
 document.getElementById("btnT3000")
 .addEventListener("click", function(){
     document.getElementById("menuT3000")
@@ -3477,10 +3478,12 @@ document.getElementById("btnT1200")
         .style.display = "none";
     document.getElementById("vistaColector")
         .style.display = "none";
+    document.getElementById("vistaCorte")
+        .style.display = "none";
     document.getElementById("panelAlarmas")
         .style.display = "none";
-    document.getElementById("panelAlarmas1200")
-        .style.display = "grid";
+    document.getElementById("panelAlarmasCorte")
+        .style.display = "none";
     document.getElementById("vistaCalentador1200")
         .style.display = "none";
     document.getElementById("vistaPrensa1200")
@@ -3489,32 +3492,13 @@ document.getElementById("btnT1200")
         .style.display = "none";
     document.getElementById("vistaColector1200")
         .style.display = "none";
+    document.getElementById("panelAlarmas1200")
+        .style.display = "grid";
     document.getElementById("menuT1200")
         .style.display = "flex";
-    document.getElementById("tarjetaAlarmas")
-        .style.display = "block";
-    document.getElementById("tarjetaAlarmasPrensa")
-        .style.display = "block";
-    document.getElementById("tarjetaAlarmasGrafito")
-        .style.display = "block";
-    document.getElementById("tarjetaAlarmasColector")
-        .style.display = "block";
-    document.getElementById("contenedorCisterna")
-        .style.display = "flex";
-    document.querySelector("#tarjetaAlarmas h3")
-        .textContent = "Alarmas Calentador";
-    document.querySelector("#tarjetaAlarmasPrensa h3")
-        .textContent = "Alarmas Prensa";
-    document.querySelector("#tarjetaAlarmasGrafito h3")
-        .textContent = "Alarmas Grafito";
-    document.querySelector("#tarjetaAlarmasColector h3")
-        .textContent = "Alarmas Colector";
-    document.getElementById("panelAlarmasCorte")
-        .style.display = "none";
-    document.getElementById("vistaCorte")
-        .style.display = "none";
     ocultarVistasCorte();
 });
+
 document.getElementById("btnCorte")
 .addEventListener("click", function(){
     document.getElementById("menuT3000")
@@ -4018,12 +4002,26 @@ document.getElementById("btnCortePresionAire")
         .style.display = "block";
 });
 
-document.getElementById("btn1200PreFiltro")
-.addEventListener("click", function(){
-    ocultarVistasColector1200();
-    document.getElementById("vista1200PreFiltro")
-        .style.display = "block";
-});
+const btn1200PreFiltro =
+document.getElementById(
+    "btn1200PreFiltro"
+);
+if(btn1200PreFiltro){
+    btn1200PreFiltro.addEventListener(
+        "click",
+        function(){
+            ocultarVistasColector1200();
+            const vista =
+            document.getElementById(
+                "vista1200PreFiltro"
+            );
+            if(vista){
+                vista.style.display =
+                "block";
+            }
+        }
+    );
+}
 document.getElementById("btn1200FiltroPrimario")
 .addEventListener("click", function(){
     ocultarVistasColector1200();
