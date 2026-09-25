@@ -11853,33 +11853,45 @@ if(modalCalentador){
 let totalAlarmasPrensa = 0;
 let listaAlarmasPrensa = [];
 function actualizarAlarmasPrensa(){
+    const contador =
     document.getElementById(
         "contadorAlarmasPrensa"
-    ).innerHTML =
-    totalAlarmasPrensa;
+    );
+    if(contador){
+        contador.innerHTML =
+        totalAlarmasPrensa;
+    }
+    const titulo =
     document.getElementById(
         "tituloAlarmasPrensaModal"
-    ).innerHTML =
-    "⚠ Alarmas Prensa (" +
-    totalAlarmasPrensa +
-    ")";
+    );
+    if(titulo){
+        titulo.innerHTML =
+        "⚠ Alarmas Prensa (" +
+        totalAlarmasPrensa +
+        ")";
+    }
+    const contenido =
     document.getElementById(
         "contenidoAlarmasPrensaModal"
-    ).innerHTML =
-    listaAlarmasPrensa.map(a => {
-        return `
-            <div style="
-                padding:10px;
-                margin:8px 0;
-                background:#fafafa;
-                border-left:6px solid #0078D4;
-                border-radius:6px;
-                font-weight:bold;
-            ">
-                ⚠ ${a}
-            </div>
-        `;
-    }).join("");
+    );
+    if(contenido){
+        contenido.innerHTML =
+        listaAlarmasPrensa.map(a => {
+            return `
+                <div style="
+                    padding:10px;
+                    margin:8px 0;
+                    background:#fafafa;
+                    border-left:6px solid #0078D4;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+                    ⚠ ${a}
+                </div>
+            `;
+        }).join("");
+    }
 }
 document.getElementById(
     "contadorAlarmasPrensa"
@@ -11926,33 +11938,45 @@ if(modalPrensa){
 let totalAlarmasGrafito = 0;
 let listaAlarmasGrafito = [];
 function actualizarAlarmasGrafito(){
+    const contador =
     document.getElementById(
         "contadorAlarmasGrafito"
-    ).innerHTML =
-    totalAlarmasGrafito;
+    );
+    if(contador){
+        contador.innerHTML =
+        totalAlarmasGrafito;
+    }
+    const titulo =
     document.getElementById(
         "tituloAlarmasGrafitoModal"
-    ).innerHTML =
-    "⚠ Alarmas Grafito (" +
-    totalAlarmasGrafito +
-    ")";
+    );
+    if(titulo){
+        titulo.innerHTML =
+        "⚠ Alarmas Grafito (" +
+        totalAlarmasGrafito +
+        ")";
+    }
+    const contenido =
     document.getElementById(
         "contenidoAlarmasGrafitoModal"
-    ).innerHTML =
-    listaAlarmasGrafito.map(a => {
-        return `
-            <div style="
-                padding:10px;
-                margin:8px 0;
-                background:#fafafa;
-                border-left:6px solid #0078D4;
-                border-radius:6px;
-                font-weight:bold;
-            ">
-                ⚠ ${a}
-            </div>
-        `;
-    }).join("");
+    );
+    if(contenido){
+        contenido.innerHTML =
+        listaAlarmasGrafito.map(a => {
+            return `
+                <div style="
+                    padding:10px;
+                    margin:8px 0;
+                    background:#fafafa;
+                    border-left:6px solid #0078D4;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+                    ⚠ ${a}
+                </div>
+            `;
+        }).join("");
+    }
 }
 document.getElementById(
     "contadorAlarmasGrafito"
@@ -11995,36 +12019,49 @@ if(modalGrafito){
         }
     );
 }
+	
 let totalAlarmasColector = 0;
 let listaAlarmasColector = [];
 function actualizarAlarmasColector(){
+    const contador =
     document.getElementById(
         "contadorAlarmasColector"
-    ).innerHTML =
-    totalAlarmasColector;
+    );
+    if(contador){
+        contador.innerHTML =
+        totalAlarmasColector;
+    }
+    const titulo =
     document.getElementById(
-        "tituloAlarmasColectorModal"
-    ).innerHTML =
-    "⚠ Alarmas Colector (" +
-    totalAlarmasColector +
-    ")";
+       "tituloAlarmasColectorModal"
+    );
+    if(titulo){
+        titulo.innerHTML =
+        "⚠ Alarmas Colector (" +
+        totalAlarmasColector +
+        ")";
+    }
+    const contenido =
     document.getElementById(
         "contenidoAlarmasColectorModal"
-    ).innerHTML =
-    listaAlarmasColector.map(a => {
-        return `
-            <div style="
-                padding:10px;
-                margin:8px 0;
-                background:#fafafa;
-                border-left:6px solid #0078D4;
-                border-radius:6px;
-                font-weight:bold;
-            ">
-                ⚠ ${a}
-            </div>
-        `;
-    }).join("");
+    );
+    if(contenido){
+        contenido.innerHTML =
+        listaAlarmasColector.map(a => {
+            return `
+                <div style="
+                    padding:10px;
+                    margin:8px 0;
+                    background:#fafafa;
+                    border-left:6px solid #0078D4;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+                    ⚠ ${a}
+                </div>
+            `;
+        }).join("");
+    }
 }
 document.getElementById(
     "contadorAlarmasColector"
