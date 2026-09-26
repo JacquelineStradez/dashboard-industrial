@@ -589,7 +589,19 @@ canvas{
              <h2 id="nivelLitros"></h2>
          </div>
          <div id="panelAlarmas">
-                <div class="tarjeta"
+			 <div class="tarjeta"
+			     id="tarjetaAlarmas"
+			     style="display:none;">
+			    <h3>Alarmas Calentador</h3>
+			    <h2 id="contadorAlarmas"
+			        style="font-size:40px;cursor:pointer;">
+			        0
+			    </h2>
+			    <div id="detalleAlarmas"
+			         style="display:none;font-size:12px;">
+			    </div>
+			</div>
+            <div class="tarjeta"
 			     id="tarjetaAlarmasPrensa"
 			     style="display:none;">
 			    <h3>Alarmas Prensa</h3>
@@ -628,37 +640,41 @@ canvas{
          </div>
          <div id="panelAlarmas1200" style="display:none;">
              <div class="tarjeta"
-                  id="tarjetaAlarmas1200">
+			     id="tarjetaAlarmas1200"
+			     style="display:none;">
                  <h3>Alarmas Calentador</h3>
                  <h2 id="contadorAlarmas1200">
                      0
                  </h2>
              </div>
              <div class="tarjeta"
-                 id="tarjetaAlarmasPrensa1200">
-                <h3>Alarmas Prensa</h3>
-                <h2 id="contadorAlarmasPrensa1200">
+			     id="tarjetaAlarmasPrensa1200"
+			     style="display:none;">
+                 <h3>Alarmas Prensa</h3>
+                 <h2 id="contadorAlarmasPrensa1200">
                     0
-                </h2>
-            </div>
-            <div class="tarjeta"
-                 id="tarjetaAlarmasGrafito1200">
-                <h3>Alarmas Grafito</h3>
-                <h2 id="contadorAlarmasGrafito1200">
-                    0
-                </h2>
-            </div>
-            <div class="tarjeta"
-                id="tarjetaAlarmasColector1200">
-               <h3>Alarmas Colector</h3>
-               <h2 id="contadorAlarmasColector1200">
-                   0
-               </h2>
-           </div>
-       </div>
-       <div id="panelAlarmasCorte"
-            style="display:none;">
-            <div class="tarjeta"
+                 </h2>
+             </div>
+             <div class="tarjeta"
+			     id="tarjetaAlarmasGrafito1200"
+			     style="display:none;">
+                 <h3>Alarmas Grafito</h3>
+                 <h2 id="contadorAlarmasGrafito1200">
+                     0
+                 </h2>
+             </div>
+             <div class="tarjeta"
+			     id="tarjetaAlarmasColector1200"
+			     style="display:none;">
+                 <h3>Alarmas Colector</h3>
+                 <h2 id="contadorAlarmasColector1200">
+                     0
+                 </h2>
+             </div>
+         </div>
+         <div id="panelAlarmasCorte"
+             style="display:none;">
+             <div class="tarjeta"
                  id="tarjetaAlarmasCorte">
                 <h3>Alarmas Corte</h3>
                 <h2 id="contadorAlarmasCorte">
@@ -3557,6 +3573,14 @@ document.getElementById("btnCalentador1200")
         .style.display = "none";
     document.getElementById("vistaCalentador1200")
         .style.display = "block";
+    document.getElementById("tarjetaAlarmas1200")
+        .style.display = "block";
+    document.getElementById("tarjetaAlarmasPrensa1200")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasGrafito1200")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasColector1200")
+        .style.display = "none";
 });
 document.getElementById("btnPrensa1200")
 .addEventListener("click", function(){
@@ -3573,6 +3597,14 @@ document.getElementById("btnPrensa1200")
         .style.display = "none";
     document.getElementById("vistaPrensa1200")
         .style.display = "block";
+    document.getElementById("tarjetaAlarmas1200")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasPrensa1200")
+        .style.display = "block";
+    document.getElementById("tarjetaAlarmasGrafito1200")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasColector1200")
+        .style.display = "none";
 });
 document.getElementById("btnGrafito1200")
 .addEventListener("click", function(){
@@ -3591,6 +3623,14 @@ document.getElementById("btnGrafito1200")
         .style.display = "none";
     document.getElementById("vistaGrafito1200")
         .style.display = "block";
+    document.getElementById("tarjetaAlarmas1200")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasPrensa1200")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasGrafito1200")
+        .style.display = "block";
+    document.getElementById("tarjetaAlarmasColector1200")
+        .style.display = "none";
 });
 document.getElementById("btnColector1200")
 .addEventListener("click", function(){
@@ -3610,6 +3650,14 @@ document.getElementById("btnColector1200")
     document.getElementById("vistaColector")
         .style.display = "none";
     document.getElementById("vistaColector1200")
+        .style.display = "block";
+    document.getElementById("tarjetaAlarmas1200")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasPrensa1200")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasGrafito1200")
+        .style.display = "none";
+    document.getElementById("tarjetaAlarmasColector1200")
         .style.display = "block";
 });
 document.getElementById("btnPrensa")
