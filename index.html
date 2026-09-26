@@ -2206,36 +2206,38 @@ canvas{
         </div>
     </div>
     <div id="vistaCorteBusAceite"
-         class="panelModulo"
-         style="display:none;">
-        <h2>Unidad Bus de Aceite</h2>
-        <div class="tarjetasModulo">
-            <div class="tarjeta">
-                <h3>Cantidad</h3>
-                <h2 id="valorCorteBusAceiteCantidad">--</h2>
-            </div>
-            <div class="tarjeta">
-                <h3>Presión de Bomba</h3>
-                <h2 id="valorCorteBusAceitePresion">--</h2>
-            </div>
-        </div>
-        <div class="bloqueGrafica">
-		    <div class="seccionTitulo">
-		        <h2>Nivel de Aceite</h2>
-		    </div>
-		    <div class="grafica-contenedor">
-		        <canvas id="graficaCorteBusAceiteNivel"></canvas>
-		    </div>
-		</div>
-		<div class="bloqueGrafica">
-		    <div class="seccionTitulo">
-		        <h2>Presión de Bomba</h2>
-		    </div>
-		    <div class="grafica-contenedor">
-		        <canvas id="graficaCorteBusAceitePresion"></canvas>
-		    </div>
-		</div>
-    </div>
+	     class="panelModulo"
+	     style="display:none;">
+	    <h2>Unidad Bus de Aceite</h2>
+	    <div class="tarjetasModulo">
+	        <div class="tarjeta">
+	            <h3>Cantidad</h3>
+	            <h2 id="valorCorteBusAceiteCantidad">--</h2>
+	        </div>
+	        <div class="tarjeta">
+	            <h3>Presión de Bomba</h3>
+	            <h2 id="valorCorteBusAceitePresion">--</h2>
+	        </div>
+	    </div>
+	    <div class="gridGraficas">
+	        <div class="bloqueGrafica">
+	            <div class="seccionTitulo">
+	                <h2>Nivel de Aceite</h2>
+	            </div>
+	            <div class="grafica-contenedor">
+	                <canvas id="graficaCorteBusAceiteNivel"></canvas>
+	            </div>
+	        </div>
+	        <div class="bloqueGrafica">
+	            <div class="seccionTitulo">
+	                <h2>Presión de Bomba</h2>
+	            </div>
+	            <div class="grafica-contenedor">
+	                <canvas id="graficaCorteBusAceitePresion"></canvas>
+	            </div>
+	        </div>
+	    </div>
+	</div>
     <div id="vistaCorteUnidadPresion"
          class="panelModulo"
          style="display:none;">
@@ -2262,46 +2264,48 @@ canvas{
                 <h2 id="valorCorteUnidadPresionTemp">--</h2>
             </div>
         </div>
-        <div class="bloqueGrafica">
-		    <div class="seccionTitulo">
-		        <h2>Cantidad de Aceite</h2>
+        <div class="gridGraficas">
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Cantidad de Aceite</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaCorteUnidadPresionAceite"></canvas>
+		        </div>
 		    </div>
-		    <div class="grafica-contenedor">
-		        <canvas id="graficaCorteUnidadPresionAceite"></canvas>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Presión de Filtro</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaCorteUnidadPresionFiltro"></canvas>
+		        </div>
+		    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Presión C/B</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaCorteUnidadPresionCB"></canvas>
+		        </div>
+		    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Cantidad de Agua</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaCorteUnidadPresionAgua"></canvas>
+		        </div>
+		    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Temperatura de Aceite</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaCorteUnidadPresionTemp"></canvas>
+		        </div>
 		    </div>
 		</div>
-	<div class="bloqueGrafica">
-	    <div class="seccionTitulo">
-	        <h2>Presión de Filtro</h2>
-	    </div>
-	    <div class="grafica-contenedor">
-	        <canvas id="graficaCorteUnidadPresionFiltro"></canvas>
-	    </div>
-	</div>
-	<div class="bloqueGrafica">
-	    <div class="seccionTitulo">
-	        <h2>Presión C/B</h2>
-	    </div>
-	    <div class="grafica-contenedor">
-	        <canvas id="graficaCorteUnidadPresionCB"></canvas>
-	    </div>
-	</div>
-	<div class="bloqueGrafica">
-	    <div class="seccionTitulo">
-	        <h2>Cantidad de Agua</h2>
-	    </div>
-	    <div class="grafica-contenedor">
-	        <canvas id="graficaCorteUnidadPresionAgua"></canvas>
-	    </div>
-	</div>
-	<div class="bloqueGrafica">
-	    <div class="seccionTitulo">
-	        <h2>Temperatura de Aceite</h2>
-	    </div>
-	    <div class="grafica-contenedor">
-	        <canvas id="graficaCorteUnidadPresionTemp"></canvas>
-	    </div>
-	</div>
 	</div>
     <div id="vistaCortePresionAire"
          class="panelModulo"
@@ -2325,28 +2329,30 @@ canvas{
                 <h2 id="valorCortePistonBarra">--</h2>
             </div>
         </div>
-        <div class="bloqueGrafica">
-		    <div class="seccionTitulo">
-		        <h2>Pinch Roller</h2>
+        <div class="gridGraficas">
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Pinch Roller</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaCortePinchRoller"></canvas>
+		        </div>
 		    </div>
-		    <div class="grafica-contenedor">
-		        <canvas id="graficaCortePinchRoller"></canvas>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Clamper</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaCorteClamper"></canvas>
+		        </div>
 		    </div>
-		</div>
-		<div class="bloqueGrafica">
-		    <div class="seccionTitulo">
-		        <h2>Clamper</h2>
-		    </div>
-		    <div class="grafica-contenedor">
-		        <canvas id="graficaCorteClamper"></canvas>
-		    </div>
-		</div>
-		<div class="bloqueGrafica">
-		    <div class="seccionTitulo">
-		        <h2>Pistón Empuja / Levanta Barra</h2>
-		    </div>
-		    <div class="grafica-contenedor">
-		        <canvas id="graficaCortePistonBarra"></canvas>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Pistón Empuja / Levanta Barra</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="graficaCortePistonBarra"></canvas>
+		        </div>
 		    </div>
 		</div>
     </div>
