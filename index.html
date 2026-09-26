@@ -648,13 +648,17 @@ canvas{
                  </h2>
              </div>
              <div class="tarjeta"
-			     id="tarjetaAlarmasPrensa1200"
-			     style="display:none;">
-                 <h3>Alarmas Prensa</h3>
-                 <h2 id="contadorAlarmasPrensa1200">
-                    0
-                 </h2>
-             </div>
+			      id="tarjetaAlarmasPrensa1200"
+			      style="display:none;">
+			     <h3>Alarmas Prensa</h3>
+			     <h2 id="contadorAlarmasPrensa1200"
+			         style="font-size:40px;cursor:pointer;">
+			         0
+			     </h2>
+			     <div id="detalleAlarmasPrensa1200"
+			          style="display:none;font-size:12px;">
+			     </div>
+			 </div>
              <div class="tarjeta"
 			     id="tarjetaAlarmasGrafito1200"
 			     style="display:none;">
@@ -1526,15 +1530,37 @@ canvas{
                  <h3>Connecting Derecho</h3>
                  <h2 id="valor1200ConnectingDer">--</h2>
              </div>
+			 <div class="tarjeta">
+			    <h3>Slide</h3>
+			    <h2 id="valor1200Slide">--</h2>
+			</div>
          </div>
-         <div class="bloqueGrafica">
-             <div class="seccionTitulo">
-                 <h2>Lubricación Principal</h2>
-             </div>
-             <div class="grafica-contenedor">
-                 <canvas id="grafica1200Lubricacion"></canvas>
-             </div>
-         </div>
+         <div class="gridGraficas">
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Válvula y Sleeves</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="grafica1200LubricacionA"></canvas>
+		        </div>
+		    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Connecting</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="grafica1200LubricacionB"></canvas>
+		        </div>
+		    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Slide</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="grafica1200LubricacionC"></canvas>
+		        </div>
+		    </div>
+		</div>
      </div>
      <div id="vista1200Angulo"
           class="panelModulo"
@@ -1615,14 +1641,24 @@ canvas{
                  <h2 id="valor1200Cil2PMB">--</h2>
              </div>
          </div>
-         <div class="bloqueGrafica">
-             <div class="seccionTitulo">
-                 <h2>Presión Cilindros Forja Cerrada</h2>
-             </div>
-             <div class="grafica-contenedor">
-                 <canvas id="grafica1200Forja"></canvas>
-             </div>
-         </div>
+         <div class="gridGraficas">
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Presión Cilindros</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="grafica1200ForjaA"></canvas>
+		        </div>
+		    </div>
+		    <div class="bloqueGrafica">
+		        <div class="seccionTitulo">
+		            <h2>Puntos de Carga</h2>
+		        </div>
+		        <div class="grafica-contenedor">
+		            <canvas id="grafica1200ForjaB"></canvas>
+		        </div>
+		    </div>
+		</div>
      </div>
      <div id="vista1200TempAceite"
           class="panelModulo"
@@ -3433,6 +3469,45 @@ canvas{
         </div>
     </div>
 </div>
+<div id="modalAlarmasPrensa1200"
+     style="
+        display:none;
+        position:fixed;
+        z-index:10000;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,.4);
+     ">
+    <div style="
+        background:white;
+        width:400px;
+        margin:80px auto;
+        padding:20px;
+        border-radius:10px;
+        border-top:5px solid #0078D4;
+    ">
+        <span id="cerrarModalPrensa1200"
+              style="
+                float:left;
+                cursor:pointer;
+                font-size:20px;
+                font-weight:bold;
+                color:#0078D4;
+                padding:4px 10px;
+                border-radius:6px;
+              ">
+            ×
+        </span>
+        <h2 id="tituloAlarmasPrensa1200Modal">
+            ⚠ Alarmas Prensa T1200
+        </h2>
+        <div id="contenidoAlarmasPrensa1200Modal">
+        </div>
+    </div>
+</div>
+
 <script>
 
 document.getElementById("btnT3000")
@@ -4449,6 +4524,12 @@ let totalAlarmasCorte = 0;
 let listaAlarmasCorte = [];
 let totalAlarmas1200 = 0;
 let listaAlarmas1200 = [];
+let totalAlarmasPrensa1200 = 0;
+let listaAlarmasPrensa1200 = [];
+
+
+
+	
 	
 // =====================================
 //  Cisterna
@@ -11826,7 +11907,2053 @@ fetch("Item26CalentadorT1200.json")
     actualizarAlarmas1200();
 });
 
+Promise.all([
+    fetch("Item1PrensaT1200.json").then(r => r.json()),
+    fetch("Item2PrensaT1200.json").then(r => r.json())
+])
+.then(([bombaAlta,bombaUnidad]) => {
+    const labels =
+    bombaAlta.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesAlta =
+    bombaAlta.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesUnidad =
+    bombaUnidad.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoAlta =
+    valuesAlta[valuesAlta.length - 1];
+    const ultimoUnidad =
+    valuesUnidad[valuesUnidad.length - 1];
+    document.getElementById(
+        "valor1200BombaAlta"
+    ).innerHTML =
+    ultimoAlta.toFixed(2) +
+    " MPa";
+    document.getElementById(
+        "valor1200BombaUnidad"
+    ).innerHTML =
+    ultimoUnidad.toFixed(2) +
+    " MPa";
+    if(
+        ultimoAlta < 11 ||
+        ultimoAlta > 13
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "BOMBA ALTA (" +
+            ultimoAlta.toFixed(2) +
+            " MPa)"
+        );
+    }
+    if(
+        ultimoUnidad < 11 ||
+        ultimoUnidad > 13
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "BOMBA UNIDAD (" +
+            ultimoUnidad.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200BombasLub"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Bomba Alta Presión",
+                    data:
+                    valuesAlta.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Bomba Unidad",
+                    data:
+                    valuesUnidad.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(11),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(13),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});
 
+fetch("Item3PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Bypass"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labelsBypass =
+    data.labels.map(x => x.Fecha);
+    const labelsBypass7 =
+    labelsBypass.slice(-7);
+    const valuesBypass7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 0.01 ||
+        ultimoValor > 0.35
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "BOMBA BYPASS (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Bypass"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsBypass7,
+                datasets:[
+                {
+                    label:"Bomba Bypass",
+                    data:valuesBypass7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesBypass7.map(v =>
+                        (
+                            v < 0.01 ||
+                            v > 0.35
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesBypass7.map(v =>
+                        (
+                            v < 0.01 ||
+                            v > 0.35
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(0.01),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(0.35),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});
+
+Promise.all([
+    fetch("Item4PrensaT1200.json").then(r => r.json()),
+    fetch("Item5PrensaT1200.json").then(r => r.json())
+])
+.then(([grasaBKO,grasaTF]) => {
+    const labels =
+    grasaBKO.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesBKO =
+    grasaBKO.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesTF =
+    grasaTF.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoBKO =
+    valuesBKO[valuesBKO.length - 1];
+    const ultimoTF =
+    valuesTF[valuesTF.length - 1];
+    document.getElementById(
+        "valor1200GrasaBKO"
+    ).innerHTML =
+    ultimoBKO.toFixed(2);
+    document.getElementById(
+        "valor1200GrasaTF"
+    ).innerHTML =
+    ultimoTF.toFixed(2);
+    new Chart(
+        document.getElementById(
+            "grafica1200Distribucion"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Grasa BKO",
+                    data:
+                    valuesBKO.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Grasa T/F",
+                    data:
+                    valuesTF.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+Promise.all([
+    fetch("Item6PrensaT1200.json").then(r => r.json()),
+    fetch("Item7PrensaT1200.json").then(r => r.json()),
+    fetch("Item8PrensaT1200.json").then(r => r.json())
+])
+.then(([valvula,sleeveIzq,sleeveDer]) => {
+    const labels =
+    valvula.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesValvula =
+    valvula.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesSleeveIzq =
+    sleeveIzq.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesSleeveDer =
+    sleeveDer.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    document.getElementById(
+        "valor1200ValvulaPrincipal"
+    ).innerHTML =
+    valuesValvula[
+        valuesValvula.length - 1
+    ].toFixed(2);
+    document.getElementById(
+        "valor1200SleeveIzq"
+    ).innerHTML =
+    valuesSleeveIzq[
+        valuesSleeveIzq.length - 1
+    ].toFixed(2);
+    document.getElementById(
+        "valor1200SleeveDer"
+    ).innerHTML =
+    valuesSleeveDer[
+        valuesSleeveDer.length - 1
+    ].toFixed(2);
+    new Chart(
+        document.getElementById(
+            "grafica1200Lubricacion"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Válvula Principal",
+                    data:
+                    valuesValvula.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Sleeve Izquierdo",
+                    data:
+                    valuesSleeveIzq.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Sleeve Derecho",
+                    data:
+                    valuesSleeveDer.slice(-7),
+                    borderColor:"orange",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+Promise.all([
+    fetch("Item9PrensaT1200.json").then(r => r.json()),
+    fetch("Item10PrensaT1200.json").then(r => r.json())
+])
+.then(([connectingIzq,connectingDer]) => {
+    const labels =
+    connectingIzq.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesIzq =
+    connectingIzq.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesDer =
+    connectingDer.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    document.getElementById(
+        "valor1200ConnectingIzq"
+    ).innerHTML =
+    valuesIzq[
+        valuesIzq.length - 1
+    ].toFixed(2);
+    document.getElementById(
+        "valor1200ConnectingDer"
+    ).innerHTML =
+    valuesDer[
+        valuesDer.length - 1
+    ].toFixed(2);
+    new Chart(
+        document.getElementById(
+            "grafica1200Lubricacion"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Connecting Izquierdo",
+                    data:
+                    valuesIzq.slice(-7),
+                    borderColor:"purple",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Connecting Derecho",
+                    data:
+                    valuesDer.slice(-7),
+                    borderColor:"red",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});	
+
+Promise.all([
+    fetch("Item9PrensaT1200.json").then(r => r.json()),
+    fetch("Item10PrensaT1200.json").then(r => r.json())
+])
+.then(([connectingIzq,connectingDer]) => {
+    const labels =
+    connectingIzq.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesIzq =
+    connectingIzq.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesDer =
+    connectingDer.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    document.getElementById(
+        "valor1200ConnectingIzq"
+    ).innerHTML =
+    valuesIzq[
+        valuesIzq.length - 1
+    ].toFixed(2);
+    document.getElementById(
+        "valor1200ConnectingDer"
+    ).innerHTML =
+    valuesDer[
+        valuesDer.length - 1
+    ].toFixed(2);
+    new Chart(
+        document.getElementById(
+            "grafica1200LubricacionB"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Connecting Izquierdo",
+                    data:
+                    valuesIzq.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Connecting Derecho",
+                    data:
+                    valuesDer.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+fetch("Item11PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Slide"
+    ).innerHTML =
+    ultimoValor.toFixed(2);
+    new Chart(
+        document.getElementById(
+            "grafica1200LubricacionC"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Slide",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});	
+
+fetch("Item12PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesAngulo =
+    data.values.map(x => {
+        let valor =
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        );
+        if(valor <= 30){
+            valor += 360;
+        }
+        return valor;
+    });
+    const ultimoValor =
+    valuesAngulo[
+        valuesAngulo.length - 1
+    ];
+    document.getElementById(
+        "valor1200Angulo"
+    ).innerHTML =
+    ultimoValor.toFixed(1) +
+    "°";
+    if(
+        ultimoValor < 350 ||
+        ultimoValor > 390
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "ÁNGULO (" +
+            ultimoValor.toFixed(1) +
+            "°)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Angulo"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Ángulo",
+                    data:
+                    valuesAngulo.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false,
+                scales:{
+                    y:{
+                        min:350,
+                        max:390
+                    }
+                }
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});
+
+fetch("Item13PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200MotorSinCarga"
+    ).innerHTML =
+    ultimoValor.toFixed(0) +
+    " A";
+    const labelsMotor =
+    data.labels.map(x => x.Fecha);
+    const labelsMotor7 =
+    labelsMotor.slice(-7);
+    const valuesMotor7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 60 ||
+        ultimoValor > 100
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "MOTOR SIN CARGA (" +
+            ultimoValor.toFixed(0) +
+            " A)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200MotorSinCarga"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsMotor7,
+                datasets:[
+                {
+                    label:"Motor Sin Carga",
+                    data:valuesMotor7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesMotor7.map(v =>
+                        (
+                            v < 60 ||
+                            v > 100
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesMotor7.map(v =>
+                        (
+                            v < 60 ||
+                            v > 100
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(60),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(100),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});	
+
+fetch("Item14PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200MotorConCarga"
+    ).innerHTML =
+    ultimoValor.toFixed(0) +
+    " A";
+    const labelsMotor =
+    data.labels.map(x => x.Fecha);
+    const labelsMotor7 =
+    labelsMotor.slice(-7);
+    const valuesMotor7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 200 ||
+        ultimoValor > 250
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "MOTOR CON CARGA (" +
+            ultimoValor.toFixed(0) +
+            " A)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200MotorConCarga"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labelsMotor7,
+                datasets:[
+                {
+                    label:"Motor Con Carga",
+                    data:valuesMotor7,
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    valuesMotor7.map(v =>
+                        (
+                            v < 200 ||
+                            v > 250
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    valuesMotor7.map(v =>
+                        (
+                            v < 200 ||
+                            v > 250
+                        )
+                        ? "red"
+                        : "green"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(200),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(250),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});	
+	
+fetch("Item12PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesAngulo =
+    data.values.map(x => {
+        let valor =
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        );
+        if(valor <= 30){
+            valor += 360;
+        }
+        return valor;
+    });
+    const ultimoValor =
+    valuesAngulo[
+        valuesAngulo.length - 1
+    ];
+    document.getElementById(
+        "valor1200Angulo"
+    ).innerHTML =
+    ultimoValor.toFixed(1) +
+    "°";
+    if(
+        ultimoValor < 350 ||
+        ultimoValor > 390
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "ÁNGULO (" +
+            ultimoValor.toFixed(1) +
+            "°)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Angulo"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Ángulo",
+                    data:
+                    valuesAngulo.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false,
+                scales:{
+                    y:{
+                        min:350,
+                        max:390
+                    }
+                }
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});
+	
+Promise.all([
+    fetch("Item17PrensaT1200.json").then(r => r.json()),
+    fetch("Item18PrensaT1200.json").then(r => r.json())
+])
+.then(([cil2Max,cil2PMB]) => {
+    const labels =
+    cil2Max.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesMax =
+    cil2Max.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesPMB =
+    cil2PMB.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    document.getElementById(
+        "valor1200Cil2Max"
+    ).innerHTML =
+    valuesMax[
+        valuesMax.length - 1
+    ].toFixed(2);
+    document.getElementById(
+        "valor1200Cil2PMB"
+    ).innerHTML =
+    valuesPMB[
+        valuesPMB.length - 1
+    ].toFixed(2);
+    new Chart(
+        document.getElementById(
+            "grafica1200ForjaB"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Punto Máximo",
+                    data:
+                    valuesMax.slice(-7),
+                    borderColor:"orange",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Punto Muerto Bajo",
+                    data:
+                    valuesPMB.slice(-7),
+                    borderColor:"purple",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+fetch("Item19PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200TempAceite"
+    ).innerHTML =
+    ultimoValor.toFixed(1) +
+    " °C";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(ultimoValor > 50){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "TEMP ACEITE (" +
+            ultimoValor.toFixed(1) +
+            " °C)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200TempAceite"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Temperatura Aceite",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    values7.map(v =>
+                        v > 50 ? 8 : 2
+                    ),
+                    pointBackgroundColor:
+                    values7.map(v =>
+                        v > 50 ? "red" : "blue"
+                    )
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7).fill(50),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});
+
+fetch("Item20PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200CantAceite"
+    ).innerHTML =
+    ultimoValor.toFixed(1) + "%";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    new Chart(
+        document.getElementById(
+            "grafica1200CantAceite"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Cantidad Aceite %",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+fetch("Item21PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Flujometro"
+    ).innerHTML =
+    ultimoValor.toFixed(2);
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    new Chart(
+        document.getElementById(
+            "grafica1200Flujometro"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Flujómetro",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+fetch("Item22PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200PresionBomba"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 10 ||
+        ultimoValor > 21
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "PRESIÓN BOMBA (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200PresionBomba"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Presión Bomba",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    values7.map(v =>
+                        (
+                            v < 10 ||
+                            v > 21
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    values7.map(v =>
+                        (
+                            v < 10 ||
+                            v > 21
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(10),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(21),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});
+
+Promise.all([
+    fetch("Item23PrensaT1200.json").then(r => r.json()),
+    fetch("Item24PrensaT1200.json").then(r => r.json())
+])
+.then(([tf261,tf262]) => {
+    const labels =
+    tf261.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesTF261 =
+    tf261.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesTF262 =
+    tf262.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoTF261 =
+    valuesTF261[valuesTF261.length - 1];
+    const ultimoTF262 =
+    valuesTF262[valuesTF262.length - 1];
+    document.getElementById(
+        "valor1200TF261"
+    ).innerHTML =
+    ultimoTF261.toFixed(2) +
+    " MPa";
+    document.getElementById(
+        "valor1200TF262"
+    ).innerHTML =
+    ultimoTF262.toFixed(2) +
+    " MPa";
+    if(
+        ultimoTF261 < 7 ||
+        ultimoTF261 > 9
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "T/F 26-1 (" +
+            ultimoTF261.toFixed(2) +
+            " MPa)"
+        );
+    }
+    if(
+        ultimoTF262 < 7 ||
+        ultimoTF262 > 10
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "T/F 26-2 (" +
+            ultimoTF262.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Transferencia"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"T/F 26-1",
+                    data:
+                    valuesTF261.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"T/F 26-2",
+                    data:
+                    valuesTF262.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(7),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior T/F 26-1",
+                    data:Array(7)
+                        .fill(9),
+                    borderColor:"orange",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior T/F 26-2",
+                    data:Array(7)
+                        .fill(10),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});
+
+fetch("Item25PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Oiler"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 0.5 ||
+        ultimoValor > 0.7
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "OILER (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Oiler"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Presión Oiler",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    values7.map(v =>
+                        (
+                            v < 0.5 ||
+                            v > 0.7
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    values7.map(v =>
+                        (
+                            v < 0.5 ||
+                            v > 0.7
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(0.5),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(0.7),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});
+
+fetch("Item26PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200FlujoAgua"
+    ).innerHTML =
+    ultimoValor.toFixed(2);
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    new Chart(
+        document.getElementById(
+            "grafica1200FlujoAgua"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Flujo Agua",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});	
+
+fetch("Item27PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Aceite"
+    ).innerHTML =
+    ultimoValor.toFixed(0) +
+    " L";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(ultimoValor < 600){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "ACEITE OCLUSIÓN (" +
+            ultimoValor.toFixed(0) +
+            " L)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Aceite"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Cantidad Aceite",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    values7.map(v =>
+                        v < 600 ? 8 : 2
+                    ),
+                    pointBackgroundColor:
+                    values7.map(v =>
+                        v < 600 ? "red" : "blue"
+                    )
+                },
+                {
+                    label:"Límite Mínimo",
+                    data:Array(7).fill(600),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});
+
+fetch("Item28PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Unidad1"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 20 ||
+        ultimoValor > 22
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "UNIDAD 1 (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Unidad1"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Unidad 1",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    values7.map(v =>
+                        (
+                            v < 20 ||
+                            v > 22
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    values7.map(v =>
+                        (
+                            v < 20 ||
+                            v > 22
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7).fill(20),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7).fill(22),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});	
+
+fetch("Item29PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Unidad2"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 0.5 ||
+        ultimoValor > 2.5
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "UNIDAD 2 (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Unidad2"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Unidad 2",
+                    data:values7,
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    values7.map(v =>
+                        (
+                            v < 0.5 ||
+                            v > 2.5
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    values7.map(v =>
+                        (
+                            v < 0.5 ||
+                            v > 2.5
+                        )
+                        ? "red"
+                        : "green"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7).fill(0.5),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7).fill(2.5),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});
+	
+fetch("Item30PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Clutch"
+    ).innerHTML =
+    ultimoValor.toFixed(2);
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    new Chart(
+        document.getElementById(
+            "grafica1200Clutch"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Clutch Brake",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});	
+
+fetch("Item31PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Balance"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 0.45 ||
+        ultimoValor > 0.55
+    ){
+        totalAlarmasPrensa1200++;
+        listaAlarmasPrensa1200.push(
+            "BALANCE (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200Balance"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Cilindro Balance",
+                    data:values7,
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    values7.map(v =>
+                        (
+                            v < 0.45 ||
+                            v > 0.55
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    values7.map(v =>
+                        (
+                            v < 0.45 ||
+                            v > 0.55
+                        )
+                        ? "red"
+                        : "green"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7).fill(0.45),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7).fill(0.55),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasPrensa1200();
+});
+
+fetch("Item32PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Retorno"
+    ).innerHTML =
+    ultimoValor.toFixed(2);
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    new Chart(
+        document.getElementById(
+            "grafica1200Retorno"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Flujo Retorno",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+fetch("Item33PrensaT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200Filtradora"
+    ).innerHTML =
+    ultimoValor.toFixed(2);
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    new Chart(
+        document.getElementById(
+            "grafica1200Filtradora"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Bomba Filtradora",
+                    data:values7,
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+});
+
+
+
+
+
+
+	
 	
 // =====================================
 //  Tarjetas de alarmas codigos de listas
@@ -12354,6 +14481,113 @@ if(modal1200){
         }
     );
 }
+
+function actualizarAlarmasPrensa1200(){
+    const contador =
+    document.getElementById(
+        "contadorAlarmasPrensa1200"
+    );
+    if(contador){
+        contador.innerHTML =
+        totalAlarmasPrensa1200;
+    }
+    const detalle =
+    document.getElementById(
+        "detalleAlarmasPrensa1200"
+    );
+    if(detalle){
+        detalle.innerHTML =
+        listaAlarmasPrensa1200.map(a => {
+            return `
+                <div style="
+                    margin:4px 0;
+                    padding:4px;
+                    border-left:4px solid red;
+                ">
+                    ${a}
+                </div>
+            `;
+        }).join("");
+    }
+    const titulo =
+    document.getElementById(
+        "tituloAlarmasPrensa1200Modal"
+    );
+    if(titulo){
+        titulo.innerHTML =
+        "⚠ Alarmas Prensa T1200 (" +
+        totalAlarmasPrensa1200 +
+        ")";
+    }
+    const contenido =
+    document.getElementById(
+        "contenidoAlarmasPrensa1200Modal"
+    );
+    if(contenido){
+        contenido.innerHTML =
+        listaAlarmasPrensa1200.map(a => {
+            return `
+                <div style="
+                    padding:10px;
+                    margin:8px 0;
+                    background:#fafafa;
+                    border-left:6px solid #0078D4;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+                    ⚠ ${a}
+                </div>
+            `;
+        }).join("");
+    }
+}	
+document.getElementById(
+    "contadorAlarmasPrensa1200"
+)
+.addEventListener(
+    "click",
+    function(){
+        actualizarAlarmasPrensa1200();
+        document.getElementById(
+            "modalAlarmasPrensa1200"
+        ).style.display = "block";
+    }
+);
+const cerrarModalPrensa1200 =
+document.getElementById(
+    "cerrarModalPrensa1200"
+);
+if(cerrarModalPrensa1200){
+    cerrarModalPrensa1200.addEventListener(
+        "click",
+        function(){
+            document.getElementById(
+                "modalAlarmasPrensa1200"
+            ).style.display = "none";
+        }
+    );
+}
+const modalPrensa1200 =
+document.getElementById(
+    "modalAlarmasPrensa1200"
+);
+if(modalPrensa1200){
+    modalPrensa1200.addEventListener(
+        "click",
+        function(event){
+            if(
+                event.target.id ===
+                "modalAlarmasPrensa1200"
+            ){
+                modalPrensa1200.style.display =
+                "none";
+            }
+        }
+    );
+}
+
+
+
 	
 
 </script>
