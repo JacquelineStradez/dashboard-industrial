@@ -12750,49 +12750,46 @@ fetch("Item14PrensaT1200.json")
     actualizarAlarmasPrensa1200();
 });	
 	
-fetch("Item12PrensaT1200.json")
-.then(r => r.json())
-.then(data => {
+Promise.all([
+    fetch("Item15PrensaT1200.json").then(r => r.json()),
+    fetch("Item16PrensaT1200.json").then(r => r.json())
+])
+.then(([cil1,cil2]) => {
     const labels =
-    data.labels.map(x => x.Fecha);
+    cil1.labels.map(x => x.Fecha);
     const labels7 =
     labels.slice(-7);
-    const valuesAngulo =
-    data.values.map(x => {
-        let valor =
+    const valuesCil1 =
+    cil1.values.map(x =>
         Number(
             x["Value "] ??
             x["Value"] ??
             0
-        );
-        if(valor <= 30){
-            valor += 360;
-        }
-        return valor;
-    });
-    const ultimoValor =
-    valuesAngulo[
-        valuesAngulo.length - 1
-    ];
+        )
+    );
+    const valuesCil2 =
+    cil2.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
     document.getElementById(
-        "valor1200Angulo"
+        "valor1200Cil1"
     ).innerHTML =
-    ultimoValor.toFixed(1) +
-    "°";
-    if(
-        ultimoValor < 350 ||
-        ultimoValor > 390
-    ){
-        totalAlarmasPrensa1200++;
-        listaAlarmasPrensa1200.push(
-            "ÁNGULO (" +
-            ultimoValor.toFixed(1) +
-            "°)"
-        );
-    }
+    valuesCil1[
+        valuesCil1.length - 1
+    ].toFixed(2);
+    document.getElementById(
+        "valor1200Cil2"
+    ).innerHTML =
+    valuesCil2[
+        valuesCil2.length - 1
+    ].toFixed(2);
     new Chart(
         document.getElementById(
-            "grafica1200Angulo"
+            "grafica1200ForjaA"
         ),
         {
             type:"line",
@@ -12800,10 +12797,18 @@ fetch("Item12PrensaT1200.json")
                 labels:labels7,
                 datasets:[
                 {
-                    label:"Ángulo",
+                    label:"Cilindro 1",
                     data:
-                    valuesAngulo.slice(-7),
+                    valuesCil1.slice(-7),
                     borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Cilindro 2",
+                    data:
+                    valuesCil2.slice(-7),
+                    borderColor:"green",
                     fill:false,
                     tension:0.3
                 }
@@ -12811,17 +12816,10 @@ fetch("Item12PrensaT1200.json")
             },
             options:{
                 responsive:true,
-                maintainAspectRatio:false,
-                scales:{
-                    y:{
-                        min:350,
-                        max:390
-                    }
-                }
+                maintainAspectRatio:false
             }
         }
     );
-    actualizarAlarmasPrensa1200();
 });
 	
 Promise.all([
