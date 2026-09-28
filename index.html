@@ -660,25 +660,29 @@ canvas{
 			     </div>
 			 </div>
              <div class="tarjeta"
-			     id="tarjetaAlarmasGrafito1200"
-			     style="display:none;">
-			    <h3>Alarmas Grafito</h3>
-			    <h2 id="contadorAlarmasGrafito1200"
-			        style="font-size:40px;cursor:pointer;">
-			        0
-			    </h2>
-			    <div id="detalleAlarmasGrafito1200"
-			         style="display:none;">
-			    </div>
-			</div>
+			      id="tarjetaAlarmasGrafito1200"
+			      style="display:none;">
+			     <h3>Alarmas Grafito</h3>
+			     <h2 id="contadorAlarmasGrafito1200"
+			         style="font-size:40px;cursor:pointer;">
+			         0
+			     </h2>
+			     <div id="detalleAlarmasGrafito1200"
+			          style="display:none;">
+			     </div>
+			 </div>
              <div class="tarjeta"
-			     id="tarjetaAlarmasColector1200"
-			     style="display:none;">
-                 <h3>Alarmas Colector</h3>
-                 <h2 id="contadorAlarmasColector1200">
-                     0
-                 </h2>
-             </div>
+			      id="tarjetaAlarmasColector1200"
+			      style="display:none;">
+			     <h3>Alarmas Colector</h3>
+			     <h2 id="contadorAlarmasColector1200"
+			         style="font-size:40px;cursor:pointer;">
+			         0
+			     </h2>
+			     <div id="detalleAlarmasColector1200"
+			          style="display:none;">
+			     </div>
+		   	 </div>
          </div>
          <div id="panelAlarmasCorte"
              style="display:none;">
@@ -2075,11 +2079,15 @@ canvas{
          style="display:none;">
         <h2>Diferencia de Presión Filtro Secundario</h2>
         <div class="tarjetasModulo">
-            <div class="tarjeta">
-                <h3>Presión</h3>
-                <h2 id="valor1200FiltroSecundario">--</h2>
-            </div>
-        </div>
+		    <div class="tarjeta">
+		        <h3>Filtro Secundario</h3>
+		        <h2 id="valor1200FiltroSecundario">--</h2>
+		    </div>
+		    <div class="tarjeta">
+		        <h3>Diferencia Total 5MT</h3>
+		        <h2 id="valor12005MT">--</h2>
+		    </div>
+		</div>
         <div class="bloqueGrafica">
             <div class="seccionTitulo">
                 <h2>Diferencia de Presión Filtro Secundario</h2>
@@ -3541,10 +3549,43 @@ canvas{
         </div>
     </div>
 </div>
-
-
+<div id="modalAlarmasColector1200"
+     style="
+        display:none;
+        position:fixed;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,.4);
+        z-index:10000;
+     ">
+    <div style="
+        background:white;
+        width:400px;
+        margin:80px auto;
+        padding:20px;
+        border-radius:10px;
+        border-top:5px solid #0078D4;
+    ">
+        <span id="cerrarModalColector1200"
+              style="
+                cursor:pointer;
+                float:left;
+                font-size:20px;
+                font-weight:bold;
+                color:#0078D4;
+              ">
+            ×
+        </span>
+        <h2 id="tituloAlarmasColector1200Modal">
+            ⚠ Alarmas Colector T1200
+        </h2>
+        <div id="contenidoAlarmasColector1200Modal">
+        </div>
+    </div>
+</div>
 <script>
-
 document.getElementById("btnT3000")
 .addEventListener("click", function(){
     document.getElementById("menuT3000")
@@ -4146,7 +4187,6 @@ document.getElementById("btnCortePresionAire")
     document.getElementById("vistaCortePresionAire")
         .style.display = "block";
 });
-
 const btn1200PreFiltro =
 document.getElementById(
     "btn1200PreFiltro"
@@ -4431,7 +4471,6 @@ document.getElementById("btn1200UnidadHidraulica")
     document.getElementById("vista1200UnidadHidraulica")
         .style.display = "block";
 });
-
 document.getElementById("btnIntercambiador")
 .addEventListener("click", function(){
     ocultarVistasCalentador();
@@ -4555,9 +4594,8 @@ let totalAlarmasPrensa1200 = 0;
 let listaAlarmasPrensa1200 = [];
 let totalAlarmasGrafito1200 = 0;
 let listaAlarmasGrafito1200 = [];
-
-
-	
+let totalAlarmasColector1200 = 0;
+let listaAlarmasColector1200 = [];
 	
 // =====================================
 //  Cisterna
@@ -14212,7 +14250,411 @@ Promise.all([
     );
     actualizarAlarmasGrafito1200();
 });
-	
+
+fetch("Item1PolvoT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200PreFiltro"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " kPa";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(ultimoValor > 0.50){
+        totalAlarmasColector1200++;
+        listaAlarmasColector1200.push(
+            "PRE FILTRO (" +
+            ultimoValor.toFixed(2) +
+            " kPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200PreFiltro"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Pre Filtro",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    values7.map(v =>
+                        v > 0.50 ? 8 : 2
+                    ),
+                    pointBackgroundColor:
+                    values7.map(v =>
+                        v > 0.50 ? "red" : "blue"
+                    )
+
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7)
+                        .fill(0.50),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasColector1200();
+});
+
+fetch("Item2PolvoT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200FiltroPrimario"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " kPa";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(ultimoValor > 1.3){
+        totalAlarmasColector1200++;
+        listaAlarmasColector1200.push(
+            "FILTRO PRIMARIO (" +
+            ultimoValor.toFixed(2) +
+            " kPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200FiltroPrimario"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Filtro Primario",
+                    data:values7,
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    values7.map(v =>
+                        v > 1.3 ? 8 : 2
+                    ),
+                    pointBackgroundColor:
+                    values7.map(v =>
+                        v > 1.3 ? "red" : "green"
+                    )
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7)
+                        .fill(1.3),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasColector1200();
+});
+
+Promise.all([
+    fetch("Item3PolvoT1200.json").then(r => r.json()),
+    fetch("Item4PolvoT1200.json").then(r => r.json())
+])
+.then(([filtroSecundario,diferencia5MT]) => {
+    const labels =
+    filtroSecundario.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesSecundario =
+    filtroSecundario.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const values5MT =
+    diferencia5MT.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoSecundario =
+    valuesSecundario[valuesSecundario.length - 1];
+    const ultimo5MT =
+    values5MT[values5MT.length - 1];
+    document.getElementById(
+        "valor1200FiltroSecundario"
+    ).innerHTML =
+    ultimoSecundario.toFixed(2) +
+    " kPa";
+    document.getElementById(
+        "valor12005MT"
+    ).innerHTML =
+    ultimo5MT.toFixed(2) +
+    " kPa";
+    if(ultimoSecundario > 2.5){
+        totalAlarmasColector1200++;
+        listaAlarmasColector1200.push(
+            "FILTRO SECUNDARIO (" +
+            ultimoSecundario.toFixed(2) +
+            " kPa)"
+        );
+    }
+    if(ultimo5MT > 2.5){
+        totalAlarmasColector1200++;
+        listaAlarmasColector1200.push(
+            "DIFERENCIA TOTAL 5MT (" +
+            ultimo5MT.toFixed(2) +
+            " kPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200FiltroSecundario"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Filtro Secundario",
+                    data:
+                    valuesSecundario.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Diferencia Total 5MT",
+                    data:
+                    values5MT.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7)
+                        .fill(2.5),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasColector1200();
+});
+
+fetch("Item5PolvoT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200FiltroAire"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " kPa";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(ultimoValor > 0.3){
+        totalAlarmasColector1200++;
+        listaAlarmasColector1200.push(
+            "FILTRO AIRE (" +
+            ultimoValor.toFixed(2) +
+            " kPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200FiltroAire"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Filtro Aire",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    values7.map(v =>
+                        v > 0.3 ? 8 : 2
+                    ),
+                    pointBackgroundColor:
+                    values7.map(v =>
+                        v > 0.3 ? "red" : "blue"
+                    )
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7)
+                        .fill(0.3),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasColector1200();
+});	
+
+fetch("Item6PolvoT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200MotorPrincipal"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " A";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(ultimoValor > 20){
+        totalAlarmasColector1200++;
+        listaAlarmasColector1200.push(
+            "MOTOR PRINCIPAL (" +
+            ultimoValor.toFixed(2) +
+            " A)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200MotorPrincipal"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Motor Principal",
+                    data:values7,
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    values7.map(v =>
+                        v > 20 ? 8 : 2
+                    ),
+                    pointBackgroundColor:
+                    values7.map(v =>
+                        v > 20 ? "red" : "green"
+                    )
+                },
+                {
+                    label:"Límite Máximo",
+                    data:Array(7)
+                        .fill(20),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasColector1200();
+});	
 	
 // =====================================
 //  Tarjetas de alarmas codigos de listas
@@ -14950,7 +15392,112 @@ if(modalGrafito1200){
         }
     );
 }
-
+	
+function actualizarAlarmasColector1200(){
+    const contador =
+    document.getElementById(
+        "contadorAlarmasColector1200"
+    );
+    if(contador){
+        contador.innerHTML =
+        totalAlarmasColector1200;
+    }
+    const detalle =
+    document.getElementById(
+        "detalleAlarmasColector1200"
+    );
+    if(detalle){
+        detalle.innerHTML =
+        listaAlarmasColector1200.map(a => {
+            return `
+                <div style="
+                    padding:4px;
+                    margin:4px 0;
+                    border-left:4px solid red;
+                ">
+                    ${a}
+                </div>
+            `;
+        }).join("");
+    }
+    const titulo =
+    document.getElementById(
+        "tituloAlarmasColector1200Modal"
+    );
+    if(titulo){
+        titulo.innerHTML =
+        "⚠ Alarmas Colector T1200 (" +
+        totalAlarmasColector1200 +
+        ")";
+    }
+    const contenido =
+    document.getElementById(
+        "contenidoAlarmasColector1200Modal"
+    );
+    if(contenido){
+        contenido.innerHTML =
+        listaAlarmasColector1200.map(a => {
+            return `
+                <div style="
+                    background:#fafafa;
+                    border-left:6px solid #0078D4;
+                    padding:10px;
+                    margin:8px 0;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+                    ⚠ ${a}
+                </div>
+            `;
+        }).join("");
+    }
+}
+document.getElementById(
+    "contadorAlarmasColector1200"
+)
+.addEventListener(
+    "click",
+    function(){
+        actualizarAlarmasColector1200();
+        document.getElementById(
+            "modalAlarmasColector1200"
+        ).style.display =
+        "block";
+    }
+);	
+const cerrarModalColector1200 =
+document.getElementById(
+    "cerrarModalColector1200"
+);
+if(cerrarModalColector1200){
+    cerrarModalColector1200.addEventListener(
+        "click",
+        function(){
+            document.getElementById(
+                "modalAlarmasColector1200"
+            ).style.display =
+            "none";
+        }
+    );
+}
+const modalColector1200 =
+document.getElementById(
+    "modalAlarmasColector1200"
+);
+if(modalColector1200){
+    modalColector1200.addEventListener(
+        "click",
+        function(event){
+            if(
+                event.target.id ===
+                "modalAlarmasColector1200"
+            ){
+                modalColector1200.style.display =
+                "none";
+            }
+        }
+    );
+}
 </script>
 </div>
 </body>
