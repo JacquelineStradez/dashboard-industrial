@@ -1946,12 +1946,9 @@ canvas{
         <button id="btn1200FiltroCiclon">
             Filtro Ciclón
         </button>
-        <button id="btn1200PrensaGrafito1">
-            Prensa Grafito P1
-        </button>
-        <button id="btn1200PrensaGrafito2">
-           Prensa Grafito P2
-        </button>
+        <button id="btn1200PrensaGrafito">
+		    Prensa Grafito
+		</button>
     </div>
     <div id="vista1200BombaFiltro"
          class="panelModulo"
@@ -1985,30 +1982,23 @@ canvas{
             </div>
         </div>
     </div>
-    <div id="vista1200PrensaGrafito1"
+    <div id="vista1200PrensaGrafito">
          class="panelModulo"
          style="display:none;">
         <h2>Bomba Abastecedora para Prensa de Grafito</h2>
         <div class="tarjetasModulo">
-            <div class="tarjeta">
-                <h3>Presión 1</h3>
-                <h2 id="valor1200PrensaGrafito1">--</h2>
-            </div>
-        </div>
+		    <div class="tarjeta">
+		        <h3>Prensa Grafito P1</h3>
+		        <h2 id="valor1200PrensaGrafito1">--</h2>
+		    </div>
+		    <div class="tarjeta">
+		        <h3>Prensa Grafito P2</h3>
+		        <h2 id="valor1200PrensaGrafito2">--</h2>
+		    </div>
+		</div>
         <div class="bloqueGrafica">
             <div class="grafica-contenedor">
                 <canvas id="grafica1200PrensaGrafito"></canvas>
-            </div>
-        </div>
-    </div>
-    <div id="vista1200PrensaGrafito2"
-         class="panelModulo"
-         style="display:none;">
-        <h2>Bomba Abastecedora para Prensa de Grafito</h2>
-        <div class="tarjetasModulo">
-            <div class="tarjeta">
-                <h3>Presión 2</h3>
-                <h2 id="valor1200PrensaGrafito2">--</h2>
             </div>
         </div>
     </div>
@@ -4074,7 +4064,7 @@ function ocultarVistasGrafito1200(){
         .style.display = "none";
     document.getElementById("vista1200FiltroCiclon")
         .style.display = "none";
-    document.getElementById("vista1200PrensaGrafito1")
+    document.getElementById("vista1200PrensaGrafito")
         .style.display = "none";
     document.getElementById("vista1200PrensaGrafito2")
         .style.display = "none";
@@ -4206,10 +4196,10 @@ document.getElementById("btn1200FiltroCiclon")
     document.getElementById("vista1200FiltroCiclon")
         .style.display = "block";
 });
-document.getElementById("btn1200PrensaGrafito1")
+document.getElementById("btn1200PrensaGrafito")
 .addEventListener("click", function(){
     ocultarVistasGrafito1200();
-    document.getElementById("vista1200PrensaGrafito1")
+    document.getElementById("vista1200PrensaGrafito")
         .style.display = "block";
 });
 document.getElementById("btn1200PrensaGrafito2")
