@@ -662,11 +662,15 @@ canvas{
              <div class="tarjeta"
 			     id="tarjetaAlarmasGrafito1200"
 			     style="display:none;">
-                 <h3>Alarmas Grafito</h3>
-                 <h2 id="contadorAlarmasGrafito1200">
-                     0
-                 </h2>
-             </div>
+			    <h3>Alarmas Grafito</h3>
+			    <h2 id="contadorAlarmasGrafito1200"
+			        style="font-size:40px;cursor:pointer;">
+			        0
+			    </h2>
+			    <div id="detalleAlarmasGrafito1200"
+			         style="display:none;">
+			    </div>
+			</div>
              <div class="tarjeta"
 			     id="tarjetaAlarmasColector1200"
 			     style="display:none;">
@@ -1993,7 +1997,7 @@ canvas{
         </div>
         <div class="bloqueGrafica">
             <div class="grafica-contenedor">
-                <canvas id="grafica1200PrensaGrafito1"></canvas>
+                <canvas id="grafica1200PrensaGrafito"></canvas>
             </div>
         </div>
     </div>
@@ -2005,11 +2009,6 @@ canvas{
             <div class="tarjeta">
                 <h3>Presión 2</h3>
                 <h2 id="valor1200PrensaGrafito2">--</h2>
-            </div>
-        </div>
-        <div class="bloqueGrafica">
-            <div class="grafica-contenedor">
-                <canvas id="grafica1200PrensaGrafito2"></canvas>
             </div>
         </div>
     </div>
@@ -3507,6 +3506,43 @@ canvas{
         </div>
     </div>
 </div>
+<div id="modalAlarmasGrafito1200"
+     style="
+        display:none;
+        position:fixed;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,.4);
+        z-index:10000;
+     ">
+    <div style="
+        background:white;
+        width:400px;
+        margin:80px auto;
+        padding:20px;
+        border-radius:10px;
+        border-top:5px solid #0078D4;
+    ">
+        <span id="cerrarModalGrafito1200"
+              style="
+                cursor:pointer;
+                float:left;
+                font-size:20px;
+                font-weight:bold;
+                color:#0078D4;
+              ">
+            ×
+        </span>
+        <h2 id="tituloAlarmasGrafito1200Modal">
+            ⚠ Alarmas Grafito T1200
+        </h2>
+        <div id="contenidoAlarmasGrafito1200Modal">
+        </div>
+    </div>
+</div>
+
 
 <script>
 
@@ -4526,7 +4562,8 @@ let totalAlarmas1200 = 0;
 let listaAlarmas1200 = [];
 let totalAlarmasPrensa1200 = 0;
 let listaAlarmasPrensa1200 = [];
-
+let totalAlarmasGrafito1200 = 0;
+let listaAlarmasGrafito1200 = [];
 
 
 	
@@ -13874,11 +13911,316 @@ fetch("Item33PrensaT1200.json")
     );
 });
 
+fetch("Item1GrafitoT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200BombaFiltro"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 0.25 ||
+        ultimoValor > 0.35
+    ){
+        totalAlarmasGrafito1200++;
+        listaAlarmasGrafito1200.push(
+            "BOMBA FILTRO (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200BombaFiltro"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Presión Entrada",
+                    data:values7,
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    values7.map(v =>
+                        (
+                            v < 0.25 ||
+                            v > 0.35
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    values7.map(v =>
+                        (
+                            v < 0.25 ||
+                            v > 0.35
+                        )
+                        ? "red"
+                        : "blue"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(0.25),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(0.35),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasGrafito1200();
+});
 
+fetch("Item2GrafitoT1200.json")
+.then(r => r.json())
+.then(data => {
+    const values =
+    data.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoValor =
+    values[values.length - 1];
+    document.getElementById(
+        "valor1200FiltroCiclon"
+    ).innerHTML =
+    ultimoValor.toFixed(2) +
+    " MPa";
+    const labels =
+    data.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const values7 =
+    values.slice(-7);
+    if(
+        ultimoValor < 0.01 ||
+        ultimoValor > 0.15
+    ){
+        totalAlarmasGrafito1200++;
+        listaAlarmasGrafito1200.push(
+            "FILTRO CICLÓN (" +
+            ultimoValor.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200FiltroCiclon"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Presión Salida",
+                    data:values7,
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3,
+                    pointRadius:
+                    values7.map(v =>
+                        (
+                            v < 0.01 ||
+                            v > 0.15
+                        )
+                        ? 8
+                        : 2
+                    ),
+                    pointBackgroundColor:
+                    values7.map(v =>
+                        (
+                            v < 0.01 ||
+                            v > 0.15
+                        )
+                        ? "red"
+                        : "green"
+                    )
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(0.01),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(0.15),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasGrafito1200();
+});
 
-
-
-
+Promise.all([
+    fetch("Item3GrafitoT1200.json").then(r => r.json()),
+    fetch("Item4GrafitoT1200.json").then(r => r.json())
+])
+.then(([prensa1,prensa2]) => {
+    const labels =
+    prensa1.labels.map(x => x.Fecha);
+    const labels7 =
+    labels.slice(-7);
+    const valuesP1 =
+    prensa1.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const valuesP2 =
+    prensa2.values.map(x =>
+        Number(
+            x["Value "] ??
+            x["Value"] ??
+            0
+        )
+    );
+    const ultimoP1 =
+    valuesP1[valuesP1.length - 1];
+    const ultimoP2 =
+    valuesP2[valuesP2.length - 1];
+    document.getElementById(
+        "valor1200PrensaGrafito1"
+    ).innerHTML =
+    ultimoP1.toFixed(2) +
+    " MPa";
+    document.getElementById(
+        "valor1200PrensaGrafito2"
+    ).innerHTML =
+    ultimoP2.toFixed(2) +
+    " MPa";
+    if(
+        ultimoP1 < 0.60 ||
+        ultimoP1 > 1.00
+    ){
+        totalAlarmasGrafito1200++;
+        listaAlarmasGrafito1200.push(
+            "PRENSA GRAFITO P1 (" +
+            ultimoP1.toFixed(2) +
+            " MPa)"
+        );
+    }
+    if(
+        ultimoP2 < 0.60 ||
+        ultimoP2 > 1.00
+    ){
+        totalAlarmasGrafito1200++;
+        listaAlarmasGrafito1200.push(
+            "PRENSA GRAFITO P2 (" +
+            ultimoP2.toFixed(2) +
+            " MPa)"
+        );
+    }
+    new Chart(
+        document.getElementById(
+            "grafica1200PrensaGrafito"
+        ),
+        {
+            type:"line",
+            data:{
+                labels:labels7,
+                datasets:[
+                {
+                    label:"Prensa Grafito P1",
+                    data:
+                    valuesP1.slice(-7),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Prensa Grafito P2",
+                    data:
+                    valuesP2.slice(-7),
+                    borderColor:"green",
+                    fill:false,
+                    tension:0.3
+                },
+                {
+                    label:"Límite Inferior",
+                    data:Array(7)
+                        .fill(0.60),
+                    borderColor:"green",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                },
+                {
+                    label:"Límite Superior",
+                    data:Array(7)
+                        .fill(1.00),
+                    borderColor:"red",
+                    borderDash:[5,5],
+                    fill:false,
+                    pointRadius:0
+                }
+                ]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+    actualizarAlarmasGrafito1200();
+});
 	
 	
 // =====================================
@@ -14512,9 +14854,111 @@ if(modalPrensa1200){
     );
 }
 
-
-
-	
+function actualizarAlarmasGrafito1200(){
+    const contador =
+    document.getElementById(
+        "contadorAlarmasGrafito1200"
+    );
+    if(contador){
+        contador.innerHTML =
+        totalAlarmasGrafito1200;
+    }
+    const detalle =
+    document.getElementById(
+        "detalleAlarmasGrafito1200"
+    );
+    if(detalle){
+        detalle.innerHTML =
+        listaAlarmasGrafito1200.map(a => {
+            return `
+                <div style="
+                    padding:4px;
+                    margin:4px 0;
+                    border-left:4px solid red;
+                ">
+                    ${a}
+                </div>
+            `;
+        }).join("");
+    }
+    const titulo =
+    document.getElementById(
+        "tituloAlarmasGrafito1200Modal"
+    );
+    if(titulo){
+        titulo.innerHTML =
+        "⚠ Alarmas Grafito T1200 (" +
+        totalAlarmasGrafito1200 +
+        ")";
+    }
+    const contenido =
+    document.getElementById(
+        "contenidoAlarmasGrafito1200Modal"
+    );
+    if(contenido){
+        contenido.innerHTML =
+        listaAlarmasGrafito1200.map(a => {
+            return `
+                <div style="
+                    background:#fafafa;
+                    border-left:6px solid #0078D4;
+                    padding:10px;
+                    margin:8px 0;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+                    ⚠ ${a}
+                </div>
+            `;
+        }).join("");
+    }
+}
+document.getElementById(
+    "contadorAlarmasGrafito1200"
+)
+.addEventListener(
+    "click",
+    function(){
+        actualizarAlarmasGrafito1200();
+        document.getElementById(
+            "modalAlarmasGrafito1200"
+        ).style.display =
+        "block";
+    }
+);
+const cerrarModalGrafito1200 =
+document.getElementById(
+    "cerrarModalGrafito1200"
+);
+if(cerrarModalGrafito1200){
+    cerrarModalGrafito1200.addEventListener(
+        "click",
+        function(){
+            document.getElementById(
+                "modalAlarmasGrafito1200"
+            ).style.display =
+            "none";
+        }
+    );
+}	
+const modalGrafito1200 =
+document.getElementById(
+    "modalAlarmasGrafito1200"
+);
+if(modalGrafito1200){
+    modalGrafito1200.addEventListener(
+        "click",
+        function(event){
+            if(
+                event.target.id ===
+                "modalAlarmasGrafito1200"
+            ){
+                modalGrafito1200.style.display =
+                "none";
+            }
+        }
+    );
+}
 
 </script>
 </div>
